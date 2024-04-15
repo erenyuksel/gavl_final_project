@@ -25,7 +25,7 @@ COPY ./backend/requirements.yml /backend/requirements.yml
 RUN /opt/conda/bin/conda env create -f /backend/requirements.yml
 
 # Overwriting PATH enveirment variable to the path to conda env
-ENV PATH /opt/conda/envs/luna/bin:$PATH
+ENV PATH /opt/conda/envs/judgeemall/bin:$PATH
 
 # Stoping python from creating unnescesary files
 ENV PYTHONDONTWRITEBYTECODE=1
