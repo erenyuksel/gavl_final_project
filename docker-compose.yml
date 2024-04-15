@@ -1,0 +1,25 @@
+version: '3'
+services:
+  backend:
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-27-feb-2024/final-projects/judgeemall:latest
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/backend
+    command: 'tail -f /dev/null'
+    env_file:
+      - envs/dev.env
+    depends_on:
+      - database
+  database:
+    image: postgres:16
+    ports:
+      - 5555:5432
+    env_file:
+      - envs/dev.env
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
