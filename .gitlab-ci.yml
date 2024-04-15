@@ -30,7 +30,7 @@ lint:
 push image:
   stage: push
   only:
-    - master
+    - main
     - tags
   script:
     - docker tag "$CI_PIPELINE_ID":"$CI_COMMIT_REF_NAME" "$CI_REGISTRY_IMAGE":"$CI_COMMIT_REF_NAME"
@@ -53,7 +53,7 @@ deploy:
   stage: deploy
   when: manual
   only:
-    - master
+    - main
     - tags
   script:
     - docker compose -f docker-compose.deploy.yml pull

@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: registry.gitlab.propulsion-home.ch/full-stack/batch-27-feb-2024/final-projects/judgeemall:master
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-27-feb-2024/final-projects/judgeemall:main
     command: 'sh /scripts/prod.sh'
     env_file:
       - envs/prod.env
