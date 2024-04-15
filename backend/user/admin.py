@@ -28,5 +28,5 @@ class OrganisationAdmin(admin.ModelAdmin):
 
 
 @admin.register(UserAuthority)
-class OrganisationAdmin(admin.ModelAdmin):
+class UserAuthorityAdmin(admin.ModelAdmin):
     list_display = ('role',)
