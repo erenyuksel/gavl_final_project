@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Organisation, UserAuthority
+from .models import User, Organisation
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -15,7 +15,7 @@ class UserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'avatar', 'organisation')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions', 'user_authority')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions', 'role')}),
         ('Important dates', {'fields': ('last_login', 'created_date')})
     )
     list_display = ('email', 'first_name', 'last_name', 'organisation', 'created_date')
@@ -25,8 +25,3 @@ class UserAdmin(UserAdmin):
 @admin.register(Organisation)
 class OrganisationAdmin(admin.ModelAdmin):
     list_display = ('name', 'logo')
-
-
-@admin.register(UserAuthority)
-class UserAuthorityAdmin(admin.ModelAdmin):
-    list_display = ('role',)
