@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # Our apps
     'user',
+    "evaluation",
 
     # 3rd party apps
     'drf_yasg',

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -24,4 +24,5 @@ urlpatterns = [
     path('backend/auth/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('backend/auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('backend/auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh'),
+    path('backend/api/', include("evaluation.urls"))
 ]
