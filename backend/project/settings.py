@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Our apps
-    'user', 'event', 'contestant_project',
+    'user', 'event', 'contestant_project', 'evaluation',
 
     # 3rd party apps
     'drf_yasg',
