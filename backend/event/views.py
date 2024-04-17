@@ -32,7 +32,7 @@ class UserEventListView(ListAPIView):
     permission_classes = []
 
     def get_queryset(self):
-        user = User.objects.get(id=self.kwarfs['user_id'])
+        user = User.objects.get(id=self.kwargs['user_id'])
         return Event.objects.filter(user=user)
 
 # Get specific Event View --> ListAPIView

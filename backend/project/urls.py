@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
