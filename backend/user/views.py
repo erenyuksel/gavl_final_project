@@ -1,14 +1,15 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import (ListAPIView, RetrieveUpdateDestroyAPIView,
-                                     get_object_or_404, RetrieveAPIView)
+from rest_framework.generics import (RetrieveUpdateDestroyAPIView,
+                                     get_object_or_404, RetrieveAPIView, ListCreateAPIView)
 from rest_framework.response import Response
 from project.permissions import IsSelfOrReadOnly
-from user.serializers import UserSerializer
+from user.models import Organisation
+from user.serializers import UserSerializer, OrganisationSerializer
 
 User = get_user_model()
 
 
-class ListUsersView(ListAPIView):
+class ListUsersView(ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -40,3 +41,8 @@ class RetrieveUserView(RetrieveAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_url_kwarg = 'user_id'
+
+
+class ListOrganisationsView(ListCreateAPIView):
+    queryset = Organisation.objects.all()
+    serializer_class = OrganisationSerializer
