@@ -10,6 +10,7 @@ class Event(models.Model):
     # owner = models.ForeignKey('Organisation', on_delete=models.CASCADE, related_name='owned_events')
     # sponsors = models.ManyToManyField('Organisation', related_name='sponsored_events')
     description = models.TextField()
+    project_file_structure = models.JSONField()
     # judges = models.ManyToManyField('User', related_name='judged_events')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
