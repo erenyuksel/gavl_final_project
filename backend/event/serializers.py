@@ -6,7 +6,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['id', 'name', 'description', 'start_date', 'end_date', 'created_at', 'updated_at', ]
-        read_only_fields = ['user']  # see what other read only fields later
+        read_only_fields = ['user']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
