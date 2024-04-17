@@ -7,6 +7,7 @@ from rest_framework import permissions
 
 from user.urls import user_urlpatterns
 from event.urls import event_urlpatterns
+from contestant_project.urls import contestant_projects_urlpatterns
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -27,6 +28,8 @@ urlpatterns = [
 
     path('backend/', include(user_urlpatterns)),
     path('backend/', include(event_urlpatterns)),
+    path('backend/', include(contestant_projects_urlpatterns)),
+
 
     path('backend/auth/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('backend/auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
