@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+
 # from backend.user.models import User, Organisation
 
 User = get_user_model()
