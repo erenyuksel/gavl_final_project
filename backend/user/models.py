@@ -3,6 +3,7 @@ from django.db import models
 
 from event.models import Event
 
+
 def organisation_directory_path(instance, filename):
     return f'organisation/{instance.name}/{filename}'
 
