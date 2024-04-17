@@ -4,9 +4,8 @@ from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import DestroyAPIView, CreateAPIView, ListAPIView
 
-from backend.event.models import Event
-from backend.event.permissions import IsAuthor
-from backend.event.serializers import EventSerializer
+from .models import Event
+from .serializers import EventSerializer
 
 # Create your views here.
 User = get_user_model()
