@@ -2,8 +2,8 @@ import axios from "axios";
 
 const BASE_URL =
   window.location.hostname === "localhost"
-    ? "http://localhost:8000/backend/api/"
-    : "https://judge.propulsion-learn.ch/backend/api/";
+    ? "http://localhost:8000/backend/"
+    : "https://judge.propulsion-learn.ch/backend/";
 
 const JudgeAxios = axios.create({
   baseURL: BASE_URL,
