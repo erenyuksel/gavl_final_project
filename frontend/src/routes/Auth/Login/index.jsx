@@ -1,4 +1,8 @@
 import { useState } from "react"
+import JudgeAxios from '../../../axios/JudgeAxios'
+import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../../../components/Alerts/ErrorMessage";
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -6,14 +10,19 @@ const Login = () => {
     password: ''
   })
   const [error, setError] = useState()
-
+  const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
-
     try {
-      const response = await JudgeAxios
+      const response = await JudgeAxios.post('auth/token/', {
+        email: formData.email,
+        password: formData.password
+      })
+      // Store Token in localstorage and navigate user to home screen
+      localStorage.setItem("token", response.data.access)
+      navigate("/")
     } catch (error) {
       setError(error.response.data.detail)
     } finally {
@@ -36,6 +45,12 @@ const Login = () => {
   
   
   return (
+    <>
+    {error && (
+      <>
+        <ErrorMessage message={error} />
+      </>
+    )}
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col" >
         <label className="input input-bordered flex items-center gap-2">
@@ -63,6 +78,7 @@ const Login = () => {
         <button className="btn btn-primary" onClick={handleLogin}>Login</button>
       </div>
     </div>
+    </>
   )
 }
 
