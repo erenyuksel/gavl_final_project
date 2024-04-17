@@ -1,5 +1,7 @@
+import AddEventInformation from '../../../components/AddEventInformation'
+
 const AddNewEvent = () => {
-  return <h1>AddNewEvent</h1>
+  return <AddEventInformation />
 }
 
 export default AddNewEvent
