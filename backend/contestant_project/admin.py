@@ -6,4 +6,3 @@ from .models import ContestantProject
 class ContestantProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'content',)
     # exclude = ('events', 'users', 'evaluations')
-
