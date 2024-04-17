@@ -11,4 +11,3 @@ rubric_urlpatterns = [
     path("rubrics/", RubricListCreateAPIView.as_view(), name='rubric-list'),
     path("rubrics/<int:pk>", RubricDetailAPIView.as_view(), name="rubric")
 ]
-
