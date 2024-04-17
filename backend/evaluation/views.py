@@ -1,9 +1,9 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from .models import Evaluation, Rubric
-from .serializers import EvaluationSerializer, RubricSerializer
+from .serializers import RubricSerializer
 
 from rest_framework.generics import ListCreateAPIView
-from .models import Evaluation
+
 from .serializers import EvaluationSerializer
 
 
