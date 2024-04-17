@@ -2,13 +2,16 @@ from rest_framework import serializers
 from .models import Evaluation, Rubric
 
 
-class EvaluationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Evaluation
-        fields = '__all__'  # You can specify fields you want to include in the API response here
-
-
 class RubricSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rubric
-        fields = '__all__'
+        fields = ["id", "criteria_json"]
+
+
+class EvaluationSerializer(serializers.ModelSerializer):
+    rubrics = RubricSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Evaluation
+        fields = ['id', 'rubrics', 'judge', 'json_data_rating']
+        read_only_fields = ['id', 'rubrics', 'judge', 'json_data_rating']
