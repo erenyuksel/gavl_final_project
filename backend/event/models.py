@@ -3,7 +3,7 @@ from django.db import models
 
 # from backend.user.models import User, Organisation
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class Event(models.Model):

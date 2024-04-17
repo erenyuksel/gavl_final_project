@@ -5,7 +5,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 
-from user.urls import user_urlpatterns
+from user.urls import user_urlpatterns, organisation_urlpatterns
 from event.urls import event_urlpatterns
 
 schema_view = get_schema_view(
@@ -26,6 +26,7 @@ urlpatterns = [
     path('backend/api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     path('backend/', include(user_urlpatterns)),
+    path('backend/', include(organisation_urlpatterns)),
     path('backend/', include(event_urlpatterns)),
 
     path('backend/auth/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),

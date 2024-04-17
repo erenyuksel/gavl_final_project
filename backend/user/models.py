@@ -1,18 +1,20 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from event.models import Event
 
 def organisation_directory_path(instance, filename):
-    return f'{instance.id}/organisation/{filename}'
+    return f'organisation/{instance.name}/{filename}'
 
 
 class Organisation(models.Model):
     name = models.CharField(verbose_name="organisation_name", max_length=200, unique=True)
     logo = models.ImageField(verbose_name="logo", upload_to=organisation_directory_path, blank=True, null=True)
+    sponsored_event = models.ForeignKey(to=Event, related_name="sponsors", on_delete=models.DO_NOTHING, blank=True, null=True)
 
 
 def user_directory_path(instance, filename):
-    return f'{instance.id}/user/{filename}'
+    return f'user/{instance.username}/{filename}'
 
 
 class User(AbstractUser):
