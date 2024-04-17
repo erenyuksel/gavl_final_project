@@ -1,5 +1,3 @@
-from django.shortcuts import render
-from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import DestroyAPIView, CreateAPIView, ListAPIView
