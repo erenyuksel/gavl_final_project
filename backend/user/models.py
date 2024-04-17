@@ -11,21 +11,18 @@ class Organisation(models.Model):
     logo = models.ImageField(verbose_name="logo", upload_to=organisation_directory_path, blank=True, null=True)
 
 
-class UserAuthority(models.Model):
+def user_directory_path(instance, filename):
+    return f'{instance.id}/user/{filename}'
+
+
+class User(AbstractUser):
     ROLES = [
         ("Admin", "Admin"),
         ("Organisation Admin", "Organisation Admin"),
         ("Judge", "Judge"),
         ("Contestant", "Contestant")
     ]
-    role = models.CharField(max_length=100, choices=ROLES)
 
-
-def user_directory_path(instance, filename):
-    return f'{instance.id}/user/{filename}'
-
-
-class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -37,7 +34,7 @@ class User(AbstractUser):
     avatar = models.ImageField(verbose_name='picture', upload_to=user_directory_path, blank=True, null=True)
     organisation = models.ForeignKey(to=Organisation, related_name="user_of_organisation", on_delete=models.DO_NOTHING,
                                      blank=True, null=True)
-    user_authority = models.ForeignKey(to=UserAuthority, related_name="user_authority", on_delete=models.DO_NOTHING)
+    role = models.CharField(max_length=100, choices=ROLES, blank=True)
 
     def __str__(self):
         return self.username
