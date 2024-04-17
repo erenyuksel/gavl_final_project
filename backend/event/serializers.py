@@ -11,5 +11,5 @@ class EventSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         # representation['user'] = UserSerializer(instance.user).data
-        # update other representations if needed
+        # update other representations
         return representation
