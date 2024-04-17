@@ -5,7 +5,7 @@ from .models import Event
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'created_at', 'updated_at', ]
         read_only_fields = ['user']  # see what other read only fields later
 
     def to_representation(self, instance):
