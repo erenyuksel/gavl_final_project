@@ -1,6 +1,8 @@
 # from django.contrib.auth import get_user_model
 from django.db import models
-from contestant_project.models import ContestantProject
+
+
+# from contestant_project.models import ContestantProject
 # from evaluation.models import Evaluation
 # from user.models import Organisation
 
