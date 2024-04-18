@@ -24,4 +24,4 @@ class UserAdmin(UserAdmin):
 
 @admin.register(Organisation)
 class OrganisationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'logo', 'sponsored_event')
+    list_display = ('name', 'logo',)
