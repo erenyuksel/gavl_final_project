@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Event
+from user.serializers import UserSerializer
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -10,6 +11,6 @@ class EventSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        # representation['user'] = UserSerializer(instance.user).data
+        representation['user'] = UserSerializer(instance.user).data
         # update other representations
         return representation
