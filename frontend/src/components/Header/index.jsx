@@ -74,7 +74,9 @@ function Header() {
               style={{ backgroundColor: '#f9fafb', color: '#111827' }}
             >
               <li>
-                <a className="justify-between">Profile</a>
+                <Link to="/profile" className="justify-between">
+                  Profile
+                </Link>
               </li>
               <li>
                 <a>Logout</a>
