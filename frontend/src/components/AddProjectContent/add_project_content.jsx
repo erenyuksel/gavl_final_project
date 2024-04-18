@@ -1,15 +1,20 @@
-import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateEventProjectStructure } from '../../store/slices/newEventSlice';
+import DataField from './project_data_field';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const AddProjectContent = () => {
-  //  const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
+    uuid: uuidv4(),
     name: '',
-    type: ''
+    type: 'default',
+    content: ''
   })
 
-
+  const currentStructure = useSelector(state => state.event.eventProjectStructure)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,16 +25,21 @@ const AddProjectContent = () => {
   };
 
   const handlAddField = (e) => {
-    e.peventDefault()
-
+    e.preventDefault()
+    dispatch(updateEventProjectStructure(formData))
+    setFormData({
+      uuid: uuidv4(),
+      name: '',
+      type: formData.type,
+      content: ''
+    })
   }
-
-
 
   return(
     <>
       <h2>Defining project information</h2>
-      <p>Define here the information which the Contestants need to provide to participate in your event</p>
+      <p>Define here the information which the Contestants need to provide to participate in your event.
+      </p>
       <div className="join">
         <div className="flex">
           <div>
@@ -41,13 +51,11 @@ const AddProjectContent = () => {
             name="name"
             onChange={handleInputChange}/>
           </div>
-          <select className="select select-bordered join-item">
-            <option disabled selected>Structure</option>
-            <option>Section</option>
-            <option disabled>File Type</option>
-            <option>Text</option>
-            <option>Image</option>
-            <option>File</option>
+          <select className="select select-bordered join-item" name="type" value={formData.type} onChange={handleInputChange}>
+            <option value='default' disabled selected>File Type</option>
+            <option value='text'>Text</option>
+            <option value='image'>Image</option>
+            <option value='file'>File</option>
           </select>
           <div className="indicator">
             <button 
@@ -56,6 +64,19 @@ const AddProjectContent = () => {
           </div>
         </div>
       </div>
+      {!currentStructure.length === 0 && (
+        <>
+          <p>There are no defined fields yet</p>
+        </>
+      )}
+      {currentStructure && (
+        <>
+          {currentStructure.map(datafield => {
+            return <DataField obj={datafield} key={datafield.uuid}/>
+          }
+          )}
+        </>
+      )}
     </>
   )
 }

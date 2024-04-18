@@ -25,11 +25,17 @@ class DeleteEventView(DestroyAPIView):
 
 
 class UserEventListView(ListAPIView):
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = []
+    # permission_classes = []
 
-    def get_queryset(self):
-        user = User.objects.get(id=self.kwargs['user_id'])
-        return Event.objects.filter(user=user)
+# class EventDetailView(RetrieveAPIView):
+#     queryset = Event.objects.all()
+#     serializer_class = EventSerializer
+#
+#     def get_object(self):
+#         event_id = self.kwargs['pk']
+#         user = self.request.user
+#         return self.get_queryset().filter(id=event_id, user=user).first()
 
 # Get specific Event View --> ListAPIView
