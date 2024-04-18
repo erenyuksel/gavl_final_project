@@ -7,4 +7,3 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ['id', 'name', 'rubrics', 'start_date', 'end_date', 'projects', 'owner', 'sponsors', 'description',
                   'project_file_structure', 'judges', 'created_at', 'updated_at', ]
-
