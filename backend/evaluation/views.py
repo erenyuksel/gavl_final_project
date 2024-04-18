@@ -1,4 +1,5 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
+
 from .models import Evaluation, Rubric
 from .serializers import RubricSerializer
 
@@ -12,6 +13,16 @@ class EvaluationListCreateAPIView(ListCreateAPIView):  # GET, POST evaluations
     serializer_class = EvaluationSerializer
 
     # permission_classes = [IsAuthenticated]
+    def perform_create(self, serializer):
+        # Access the authenticated user who sent the request
+        judge = self.request.user
+        # Assign the judge to the evaluation object before saving
+        serializer.save(judge=judge)
+
+    def create(self, request, *args, **kwargs):
+        # Create the evaluation object using perform_create
+        response = super().create(request, *args, **kwargs)
+        return response
 
 
 class EvaluationDetailAPIView(RetrieveUpdateDestroyAPIView):  # GET, PATCH, DELETE specific evaluations with id.
