@@ -1,15 +1,34 @@
-/* import { useDispatch, useSelector} from 'react-redux';
-import { setEventInformation } from '../../store/slices/newEventSlice'; */
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setEventInformation } from '../../store/slices/newEventSlice'
 
 const AddEventInformation = () => {
-  /*     const dispatch = useDispatch();
-    
-    const UseEffect = () => {
-        const [formData, setFormData] = useState(AddEventInformation);
-    }
-    const handleFormData = async (event) => {
-        event.preventDefault();
-    } */
+  const dispatch = useDispatch()
+  const eventInformation = useSelector((state) => state.event.eventInformation)
+
+  //sets inital value of the event und refers to the Redux store
+  const [formData, setFormData] = useState({
+    eventName: eventInformation.eventName || '',
+    startDate: eventInformation.startDate || '',
+    endDate: eventInformation.endDate || '',
+    description: eventInformation.description || '',
+  })
+  //if user changes something on the form it will store it in the redux
+  useEffect(() => {
+    /* console.log('Form data updated:', formData)
+    console.log('Redux data updated:', eventInformation) */
+    dispatch(setEventInformation(formData))
+  }, [formData])
+
+  //actualises the state of the form
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
   return (
     <div className="p-4 max-w-6xl mx-auto">
       {/* Text input for Event Name */}
@@ -20,6 +39,9 @@ const AddEventInformation = () => {
         <input
           type="text"
           placeholder="Enter event name"
+          name="eventName"
+          value={formData.eventName}
+          onChange={handleChange}
           className="input input-bordered"
         />
       </div>
@@ -29,13 +51,25 @@ const AddEventInformation = () => {
           <label className="label">
             <span className="label-text">Start Date</span>
           </label>
-          <input type="date" className="input input-bordered" />
+          <input
+            type="date"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
+            className="input input-bordered"
+          />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">End Date</span>
           </label>
-          <input type="date" className="input input-bordered" />
+          <input
+            type="date"
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
+            className="input input-bordered"
+          />
         </div>
       </div>
       {/* Text Input for descritption  */}
@@ -45,11 +79,13 @@ const AddEventInformation = () => {
         </label>
         <textarea
           placeholder="Describe the event"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
           className="textarea textarea-bordered h-24"
         ></textarea>
       </div>
     </div>
   )
 }
-
 export default AddEventInformation
