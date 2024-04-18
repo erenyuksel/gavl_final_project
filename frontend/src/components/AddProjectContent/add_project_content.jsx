@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEventProjectStructure } from '../../store/slices/newEventSlice';
 import DataField from './project_data_field';
@@ -52,7 +52,7 @@ const AddProjectContent = () => {
             onChange={handleInputChange}/>
           </div>
           <select className="select select-bordered join-item" name="type" value={formData.type} onChange={handleInputChange}>
-            <option value='default' disabled selected>File Type</option>
+            <option value='default' disabled>File Type</option>
             <option value='text'>Text</option>
             <option value='image'>Image</option>
             <option value='file'>File</option>
