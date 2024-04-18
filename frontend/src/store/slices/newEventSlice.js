@@ -24,6 +24,10 @@ const newEventSlice = createSlice({
       })
       state.eventProjectStructure = newArr
     },
+    // clearing the project structure redux state after an event was created successfully
+    clearEventProjectStructure: (state) => {
+      state.eventProjectStructure = []
+    },
     // identifies an object in the array and reduces the index by one, so its higher in the list
     moveProjectStructureItemUp: (state, action) => {
       const index = state.eventProjectStructure.findIndex(obj => obj.uuid === action.payload.uuid)
@@ -59,6 +63,9 @@ const newEventSlice = createSlice({
       })
       state.eventEvaluationCriteria = newArr
     },
+    clearEventEvaluationCriteria: (state) => {
+      state.eventEvaluationCriteria = []
+    },
     // adds a evaluation criteria scale to the redux store, is then used to complete the evaluation criteria obj 
     updateEventEvaluationCriteriaScales: (state, action) => {
       state.eventEvaluationCriteriaScales = [...state.eventEvaluationCriteriaScales, action.payload]
@@ -70,5 +77,5 @@ const newEventSlice = createSlice({
   },
 })
 
-export const { setEventInformation, updateEventProjectStructure, removeProjectStructureItem, moveProjectStructureItemUp, moveProjectStructureItemDown, updateEventEvaluationCriteriaScales, clearEventEvaluationCriteriaScales, updateEventEvaluationCriteria, removeEventEvaluationCriteria  } = newEventSlice.actions
+export const { clearEventEvaluationCriteria, clearEventProjectStructure, setEventInformation, updateEventProjectStructure, removeProjectStructureItem, moveProjectStructureItemUp, moveProjectStructureItemDown, updateEventEvaluationCriteriaScales, clearEventEvaluationCriteriaScales, updateEventEvaluationCriteria, removeEventEvaluationCriteria  } = newEventSlice.actions
 export default newEventSlice.reducer
