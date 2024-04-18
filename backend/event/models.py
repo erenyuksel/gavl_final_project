@@ -1,21 +1,18 @@
-# from django.contrib.auth import get_user_model
 from django.db import models
 
 
-# from contestant_project.models import ContestantProject
-# from evaluation.models import Evaluation, Rubric
-# from user.models import Organisation
-
 class Event(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    # rubrics = models.ManyToManyField(to=Rubric, related_name='events', blank=True)
+    rubrics = models.ManyToManyField(to='evaluation.Rubric', related_name='rubric_event', blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
-    # projects = models.ManyToManyField(to=ContestantProject, related_name='event_projects', blank=True, many=True)
-    # owner = models.ForeignKey(to=Organisation, on_delete=models.CASCADE, related_name='organisation_admin', blank=True, null=True)
-    # sponsors = models.ManyToManyField(to=Organisation, related_name='sponsored_events', blank=True)
+    projects = models.ManyToManyField(to='contestant_project.ContestantProject', related_name='event_projects',
+                                      blank=True,)
+    owner = models.ForeignKey(to='user.Organisation', on_delete=models.CASCADE, related_name='organisation_admin',
+                              blank=True, null=True)
+    sponsors = models.ManyToManyField(to='user.Organisation', related_name='sponsored_event', blank=True)
     description = models.TextField()
     project_file_structure = models.JSONField()
-    # judges = models.ManyToManyField(to=User, related_name='event_judges', blank=True)
+    judges = models.ManyToManyField(to='user.User', related_name='event_judges', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
