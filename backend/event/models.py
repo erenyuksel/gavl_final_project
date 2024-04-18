@@ -3,12 +3,12 @@ from django.db import models
 
 
 # from contestant_project.models import ContestantProject
-# from evaluation.models import Evaluation
+# from evaluation.models import Evaluation, Rubric
 # from user.models import Organisation
 
 class Event(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    # rubrics = models.ManyToManyField(to=Evaluation, related_name='events', blank=True)
+    # rubrics = models.ManyToManyField(to=Rubric, related_name='events', blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
     # projects = models.ManyToManyField(to=ContestantProject, related_name='event_projects', blank=True, many=True)
