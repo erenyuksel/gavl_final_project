@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Our apps
-    'user', 'event', 'evaluation', 'contestant_project',
+    'registration',
+    'user',
+    'event',
+    'evaluation',
+    'contestant_project',
 
     # 3rd party apps
     'drf_yasg',
@@ -173,3 +177,10 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
