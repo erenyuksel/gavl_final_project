@@ -41,8 +41,12 @@ const newEventSlice = createSlice({
         state.eventProjectStructure[index + 1] = temp
       }
     },
+    // adding the evaluation criteria scales to the evaluation criteria obj and then storing it in the arr
     updateEventEvaluationCriteria: (state, action) => {
-      state.eventEvaluationCriteria = [...state.eventEvaluationCriteria, action.payload]
+      const newObj = action.payload
+      newObj['scales'] = state.eventEvaluationCriteriaScales
+      console.log(newObj)
+      state.eventEvaluationCriteria = [...state.eventEvaluationCriteria, newObj]
     },
     removeEventEvaluationCriteria: (state, action) => {
       const newArr = state.eventEvaluationCriteria.filter(obj => {
@@ -52,6 +56,7 @@ const newEventSlice = createSlice({
     },
     updateEventEvaluationCriteriaScales: (state, action) => {
       state.eventEvaluationCriteriaScales = [...state.eventEvaluationCriteriaScales, action.payload]
+      console.log('Redux scales:',state.eventEvaluationCriteriaScales)
     },
     clearEventEvaluationCriteriaScales: (state) => {
       state.eventEvaluationCriteriaScales = []

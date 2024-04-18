@@ -17,7 +17,7 @@ const EventRubric = () => {
     uuid: uuidv4(),
     name: '',
     description: '',
-    scales: []
+    scales: [],
   })
 
   // useState for storing the form input of a ev. criteria scale
@@ -46,28 +46,28 @@ const EventRubric = () => {
   };
 
   const handlAddCriteria = (e) => {
+    e.preventDefault()
     // checking if main fields were filled
-    if (!formData) {
+    if (!formData.name || !formData.description) {
       console.error('Please input Evaluation Criteria information')
     } else {
-      // storing the scales from redux in the evaluation criteria obj
-      setFormData({
-        ...formData,
-        scales: evaluationCriteriaScales
-      })
-      // storing the whole evaluation criteria obj in redux
-      dispatch(updateEventEvaluationCriteria(formData))
-      // clearing the redux state for the evaluation criteria scales
-      dispatch(clearEventEvaluationCriteriaScales())
-      // clearing the evaluation criteria form
-      setFormData({
-        uuid: uuidv4(),
-        name: '',
-        description: '',
-        scales: []
-      })
+      try {
+        // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
+        dispatch(updateEventEvaluationCriteria(formData))
+      } catch (error) {
+        console.error(error)
+      } finally {
+        // clearing the redux state for the evaluation criteria scales
+        dispatch(clearEventEvaluationCriteriaScales())
+        // clearing the evaluation criteria form
+        setFormData({
+          uuid: uuidv4(),
+          name: '',
+          description: '',
+          scales: [],
+        })
+      }
     }
-
   }
 
   // handling storing an scale in the redux eventSlice
