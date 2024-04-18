@@ -5,6 +5,8 @@ const newEventSlice = createSlice({
   initialState: {
     eventInformation: {},
     eventProjectStructure: [],
+    eventEvaluationCriteria: [],
+    eventEvaluationCriteriaScales: [],
   },
   reducers: {
     setEventInformation: (state, action) => {
@@ -12,7 +14,6 @@ const newEventSlice = createSlice({
     },
     updateEventProjectStructure: (state, action) => {
       state.eventProjectStructure = [...state.eventProjectStructure, action.payload]
-      console.log('updatedslice', state.eventProjectStructure)
     },
     removeProjectStructureItem: (state, action) => {
       const newArr = state.eventProjectStructure.filter(obj => {
@@ -39,9 +40,25 @@ const newEventSlice = createSlice({
         state.eventProjectStructure[index] = state.eventProjectStructure[index + 1]
         state.eventProjectStructure[index + 1] = temp
       }
-    }
+    },
+    updateEventEvaluationCriteria: (state, action) => {
+      state.eventEvaluationCriteria = [...state.eventEvaluationCriteria, action.payload]
+    },
+    removeEventEvaluationCriteria: (state, action) => {
+      const newArr = state.eventEvaluationCriteria.filter(obj => {
+        return obj.uuid !== action.payload
+      })
+      state.eventEvaluationCriteria = newArr
+    },
+    updateEventEvaluationCriteriaScales: (state, action) => {
+      state.eventEvaluationCriteriaScales = [...state.eventEvaluationCriteriaScales, action.payload]
+    },
+    clearEventEvaluationCriteriaScales: (state) => {
+      state.eventEvaluationCriteriaScales = []
+    },
+
   },
 })
 
-export const { setEventInformation, updateEventProjectStructure, removeProjectStructureItem, moveProjectStructureItemUp, moveProjectStructureItemDown } = newEventSlice.actions
+export const { setEventInformation, updateEventProjectStructure, removeProjectStructureItem, moveProjectStructureItemUp, moveProjectStructureItemDown, updateEventEvaluationCriteriaScales, clearEventEvaluationCriteriaScales, updateEventEvaluationCriteria, removeEventEvaluationCriteria  } = newEventSlice.actions
 export default newEventSlice.reducer
