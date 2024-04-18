@@ -1,7 +1,6 @@
 
 const EvaluationCriteriaScale = ({obj}) => {
 
-
   return(
     <>
     <p>{obj.value}</p>

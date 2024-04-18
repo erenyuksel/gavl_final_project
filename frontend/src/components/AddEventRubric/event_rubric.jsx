@@ -126,10 +126,8 @@ const EventRubric = () => {
       {evaluationCriteria.map(obj => {
         return <EvaluationCriteriaCard obj={obj} key={obj.uuid} />
       })}
-    
     </div>
   )
-
 }
 
 export default EventRubric

@@ -1,9 +1,9 @@
 import EvaluationCriteriaScale from "./evaluation_criteria_scale"
+import PropTypes from 'prop-types';
 
 
 const EvaluationCriteriaCard = ({obj}) => {
 
-  console.log(obj)
   return(
     <>
     <p>{obj.name}</p>
@@ -13,6 +13,10 @@ const EvaluationCriteriaCard = ({obj}) => {
     })}
     </>
   )
+}
+
+EvaluationCriteriaCard.propTypes = {
+  obj: PropTypes.object.isRequired,
 }
 
 export default EvaluationCriteriaCard
