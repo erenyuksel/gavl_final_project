@@ -12,7 +12,7 @@ class Event(models.Model):
                               blank=True, null=True)
     sponsors = models.ManyToManyField(to='user.Organisation', related_name='sponsored_event', blank=True)
     description = models.TextField()
-    project_file_structure = models.JSONField()
+    project_file_structure = models.JSONField(null=True, blank=True)
     judges = models.ManyToManyField(to='user.User', related_name='event_judges', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
