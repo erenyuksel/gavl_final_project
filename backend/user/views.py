@@ -30,7 +30,7 @@ class ListUsersView(ListCreateAPIView):
                 # event = serializer.data['event.name']
                 message = f'You was registered as a Judge for the xxx event. To validate your account please visit {link}'
                 subject = 'become a Judge'
-                to_email = serializer.data['email']
+                to_email = [serializer.data['email']]
                 send_mail(subject, message, DEFAULT_FROM_EMAIL, to_email, fail_silently=False)
                 return Response(status=status.HTTP_201_CREATED)
             else:
