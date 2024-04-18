@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import DeleteEventView, EventCreateView, UserEventListView
+from .views import EventRetrieveUpdateDestroyView, EventListCreateView
 
 event_urlpatterns = [
-    path('events/<int:user_id>/', UserEventListView.as_view(), name='event-list'),  # add GET list.
-    path('events/new/<int:pk>/', EventCreateView.as_view(), name='event-create'),  # creates an event
-    path('events/<int:pk>/', DeleteEventView.as_view(), name='delete-comment'),  # GET list, PATCH, DELETE
+    path('events/', EventListCreateView.as_view(), name='event-list'),
+    path('events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='delete-comment'),
 ]
