@@ -38,3 +38,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Check if this is a new instance
+            if self.role == 'Judge':
+                self.is_active = False  # Set judge default is_active to False
+        super().save(*args, **kwargs)
