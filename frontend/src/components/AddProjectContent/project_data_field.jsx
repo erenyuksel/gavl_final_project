@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import { moveProjectStructureItemDown, moveProjectStructureItemUp, removeProjectStructureItem } from "../../store/slices/newEventSlice"
-
+import PropTypes from 'prop-types';
 
 const DataField = ({ obj }) => {
 
@@ -36,6 +36,10 @@ const DataField = ({ obj }) => {
           </div>
       </div>
   )
+}
+
+DataField.propTypes = {
+  obj: PropTypes.object.isRequired,
 }
 
 export default DataField
