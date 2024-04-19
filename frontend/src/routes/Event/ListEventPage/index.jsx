@@ -9,12 +9,11 @@ const ListEventPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        /* const user_id = localStorage.getItem('user_id') // get user ID from LocalStorage
-        const response = await JudgeAxios.get(`/events/${user_id}/`)
-        console.log('Fetched events data:', response.data)
-        setEvents(response.data) */
+        const response = await JudgeAxios.get(`/events/`)
+        /* console.log('Fetched events data:', response.data) */
+        setEvents(response.data)
       } catch (error) {
-        console.error('To fetch the events by user id was not possible', error)
+        console.error('To fetch the events was not possible', error)
       }
     }
 
