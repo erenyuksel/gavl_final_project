@@ -7,6 +7,7 @@ import ViewEvent from './Event/ViewEvent'
 import EditEvent from './Event/EditEvent'
 import Layout from './Layout'
 import NotFound from './NotFound'
+import Profile from './Profile'
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
           <Route path="/new-event" element={<AddNewEvent />} />
           <Route path="/event/:id" element={<ViewEvent />} />
           <Route path="/event/id/edit" element={<EditEvent />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -5,4 +5,4 @@ from .models import ContestantProject
 @admin.register(ContestantProject)
 class ContestantProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'content',)
-    # exclude = ('events', 'users', 'evaluations')
+    exclude = ('events', 'evaluations')
