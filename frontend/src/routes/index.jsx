@@ -8,6 +8,7 @@ import EditEvent from './Event/EditEvent'
 import Layout from './Layout'
 import NotFound from './NotFound'
 import Profile from './Profile'
+import Verification from './Auth/Verification'
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/verification" element={<Verification />} />
         <Route element={<Layout />}>
           <Route path="/" element={<ListEventPage />} />
           <Route path="/new-event" element={<AddNewEvent />} />
