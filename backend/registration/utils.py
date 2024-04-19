@@ -27,6 +27,7 @@ def is_token_valid(token):
         # Assuming default settings for the token backend, you may need to adjust based on your settings
         token_backend = TokenBackend(algorithm="HS256", signing_key=settings.SECRET_KEY)
         valid_data = token_backend.decode(token, verify=True)
+        print(valid_data)
         return True
 
     except InvalidToken as e:

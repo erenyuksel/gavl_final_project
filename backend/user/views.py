@@ -1,10 +1,9 @@
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
-from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.generics import (RetrieveUpdateDestroyAPIView,
-                                     get_object_or_404, RetrieveAPIView, ListCreateAPIView, UpdateAPIView)
+                                     get_object_or_404, RetrieveAPIView, ListCreateAPIView)
 from rest_framework.response import Response
 
 from project.permissions import IsSelfOrReadOnly
