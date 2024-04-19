@@ -28,8 +28,6 @@ const ListEventPage = () => {
             key={event.id}
             title={event.name}
             description={event.description}
-            /* Es fehlen event.start_date / event.end_date */
-            /* logoUrl={event.logoUrl} ?*/
           />
         ))}
         <Link to={`/new-event`} className="btn w-60 mt-12">
