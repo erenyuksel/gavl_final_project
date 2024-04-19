@@ -5,7 +5,6 @@ from django.urls import path
 
 user_urlpatterns = [
     path("users/", ListUsersView.as_view()),
-    path("users/add/", ListUsersView.as_view()),
     path("users/me/", ReadUpdateDeleteMyUserView.as_view()),
     path("users/invite/", ReadUpdateInvitationUserView.as_view(), name='user-invite'),
     path("users/deactivate/", InactivateUserTokenView.as_view()),
