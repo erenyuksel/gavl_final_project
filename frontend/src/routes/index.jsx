@@ -19,7 +19,7 @@ const Router = () => {
           <Route path="/" element={<ListEventPage />} />
           <Route path="/new-event" element={<AddNewEvent />} />
           <Route path="/event/:id" element={<ViewEvent />} />
-          <Route path="/event/id/edit" element={<EditEvent />} />
+          <Route path="/event/edit/:id/" element={<EditEvent />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
