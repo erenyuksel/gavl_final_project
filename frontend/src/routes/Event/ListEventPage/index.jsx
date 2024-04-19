@@ -28,6 +28,7 @@ const ListEventPage = () => {
             key={event.id}
             title={event.name}
             description={event.description}
+            event_id={event.id}
           />
         ))}
         <Link to={`/new-event`} className="btn w-60 mt-12">
