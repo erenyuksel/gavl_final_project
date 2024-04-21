@@ -1,5 +1,7 @@
 from django.contrib import admin
-from registration.models import Token
+from registration.models import Token, RegistrationProfile
+
+admin.site.register(RegistrationProfile)
 
 
 @admin.register(Token)
