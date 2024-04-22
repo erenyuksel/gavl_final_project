@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Papa from 'papaparse'
+import JudgeAxios from '../../axios/JudgeAxios'
 
-function ImportCSV() {
+function ImportCSV({ event_id }) {
   const [data, setData] = useState([])
   const [progress, setProgress] = useState(0)
 
@@ -33,6 +34,48 @@ function ImportCSV() {
     })
   }
 
+  useEffect(() => {
+    console.log(data)
+  }, [data])
+
+  const handleProjectCreation = async (e) => {
+    e.preventDefault()
+    const projectsToCreate = data.filter((project) => project.name)
+
+    // Create projects
+    try {
+      const projectIds = await Promise.all(
+        projectsToCreate.map(async (project) => {
+          const response = await JudgeAxios.post('/projects/', {
+            name: project.name,
+            content: JSON.stringify(project),
+            description: project.description,
+            project_logo: `/media-files/projects/I4N/${project.name}.png`,
+          })
+          return response.data.id
+        }),
+      )
+
+      // Update event with project IDs
+      if (projectIds.length > 0) {
+        console.log('project_ids:', projectIds)
+        console.log('event id :', event_id)
+        try {
+          const event_response = await JudgeAxios.get(`/events/${event_id}`)
+          const temp_event_projects =
+            event_response.data.projects.concat(projectIds)
+          await JudgeAxios.patch(`/events/${event_id}`, {
+            projects: temp_event_projects,
+          })
+        } catch (error) {
+          console.error('Error updating event:', error)
+        }
+      }
+    } catch (error) {
+      console.error('Error creating projects:', error)
+    }
+  }
+
   return (
     <div className="App">
       <input
@@ -46,19 +89,13 @@ function ImportCSV() {
           {progress}%
         </div>
       </div>
-      {data.length ? (
-        <table className="table">
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
-                <td>{row.password}</td>
-                <td>{row.name}</td>
-                <td>{row.location}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : null}
+      {data.length > 1 && (
+        <>
+          <button className="btn" onClick={handleProjectCreation}>
+            Upload File
+          </button>
+        </>
+      )}
     </div>
   )
 }
