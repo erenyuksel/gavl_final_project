@@ -35,7 +35,7 @@ const EditEvent = () => {
       <div>
         <EventInformationSection event={eventData} />
         <EventFileStructure event={eventData} />
-        <ImportCSV />
+        <ImportCSV event_id={id} />
         <button className="btn w-60 mt-12" onClick={handleUpdate}>
           Update Event
         </button>

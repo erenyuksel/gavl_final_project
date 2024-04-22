@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-//import { setEmail } from '../../../store/slices/userSlice'
+import { setEmail } from '../../../store/slices/userSlice'
 import SignUpMessage from '../SignUpMessage'
-//import JudgeAxios from '../../../axios/JudgeAxios'
+import JudgeAxios from '../../../axios/JudgeAxios'
 
 const SignUp = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -14,17 +14,13 @@ const SignUp = () => {
 
     const email = emailRef.current.value
 
-    // Simulate successful registration without calling the backend
-    console.log('Simulated Registration with email:', email) // For testing purposes
-    setIsSubmitted(true) // Manually set submission status for UI testing
-
-    /* try {
-      await JudgeAxios.post('/registration/', { email })
+    try {
+      await JudgeAxios.post('/auth/registration/', { email })
       dispatch(setEmail(email))
       setIsSubmitted(true)
     } catch (error) {
       console.error('Registration error:', error)
-    }*/
+    }
   }
 
   return (
