@@ -11,6 +11,7 @@ from registration.utils import get_and_store_tokens_for_user, is_token_valid
 from user.models import Organisation
 from user.serializers import UserSerializer, OrganisationSerializer
 from registration.models import Token
+from rest_framework.permissions import AllowAny
 
 User = get_user_model()
 
@@ -68,6 +69,8 @@ class ReadUpdateDeleteMyUserView(RetrieveUpdateDestroyAPIView):
 
 
 class ReadUpdateInvitationUserView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [AllowAny, ]
+
     def get(self, request, *args, **kwargs):
         token = request.GET.get('token')  # Access the token from the query parameters
         if not token:
@@ -78,6 +81,7 @@ class ReadUpdateInvitationUserView(RetrieveUpdateDestroyAPIView):
 
             token = Token.objects.get(access=token)
             user = token.user
+            user.is_active = True
             print(user)
 
             return Response({
@@ -115,10 +119,16 @@ class InactivateUserTokenView(RetrieveAPIView):
             token = Token.objects.get(access=token)
             user = token.user
             if user.is_active:
-                token.status = 'inactive'
-                token.save()
-                print(user)
-                return Response('Token is deactivated successfully', status=status.HTTP_200_OK)
+                if not user.password:
+                    print("Password field does not exist.")
+                    return Response('Profile is still not activated', status=status.HTTP_200_OK)
+
+                else:
+                    print("Password field exists.")
+                    token.status = 'inactive'
+                    token.save()
+                    print(user)
+                    return Response('Token is deactivated successfully', status=status.HTTP_200_OK)
 
             else:
                 return Response('User account is still not activated', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
