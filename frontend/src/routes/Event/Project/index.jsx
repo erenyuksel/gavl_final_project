@@ -1,9 +1,15 @@
+import { useState } from "react"
+import ProjectInformationSection from "../../../components/ProjectInformation"
+
+
 const Project = () => {
-  return (
+  const [projectData, setProjectData] = useState({})
+
+return (
     <>
-      <p>This is the project page</p>
+    <ProjectInformationSection project={projectData} />
     </>
-  )
+)
 }
 
 export default Project
