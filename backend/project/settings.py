@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'event',
     'evaluation',
     'contestant_project',
-    "importer",
 
     # 3rd party apps
     'drf_yasg',
