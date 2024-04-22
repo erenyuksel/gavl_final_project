@@ -13,5 +13,5 @@ user_urlpatterns = [
 
 organisation_urlpatterns = [
     path("organisations/", ListOrganisationsView.as_view()),
-    path("organisations/add/", ListOrganisationsView.as_view()),  # path("organisations/<int:user_id>/",ReadUpdateDeleteMyOrganisationView.as_view()),
+    # path("organisations/<int:user_id>/",ReadUpdateDeleteMyOrganisationView.as_view()),
 ]
