@@ -28,7 +28,7 @@ class ListUsersView(ListCreateAPIView):
             # link = 'http://127.0.0.1:8000/backend/users/invite/?token={}'.format(tokens['access'])
             # link1 = 'https://judge.propulsion-learn.ch/backend/users/invite/?token={}'.format(tokens['access'])
 
-            link = 'http://127.0.0.1:8000/invite/{}'.format(tokens['access'])
+            link = 'http://localhost:5173/invite/{}'.format(tokens['access'])
             link1 = 'https://judge.propulsion-learn.ch/invite/{}'.format(tokens['access'])
 
             print(link)
@@ -36,11 +36,20 @@ class ListUsersView(ListCreateAPIView):
             if serializer.is_valid():
                 # new_user = User.objects.get(email=receiver_email)
                 # event = serializer.data['event.name']
-                message = (f'You was registered as a Judge for the xxx event. '
-                           f'To validate your account please visit local link <br> {link} and global link <br> {link1}')
+                message = (f'You was registered as a Judge for the {user.event_judges} event. '
+                           f'To validate your account please visit local link {link} and global link {link1}')
+                html_message = f'''\
+                <html>
+                  <body>
+                    <p>Here is the local <a href="{link}">invitation link</a> we wanted.</p>
+                    <br>
+                    <p>Here is the global <a href="{link1}">invitation link</a> we wanted.</p>
+                  </body>
+                </html>
+                '''
                 subject = 'become a Judge'
                 to_email = [serializer.data['email']]
-                send_mail(subject, message, DEFAULT_FROM_EMAIL, to_email, fail_silently=False)
+                send_mail(subject, message, DEFAULT_FROM_EMAIL, to_email, html_message=html_message, fail_silently=False)
                 return Response(status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
