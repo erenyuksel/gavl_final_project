@@ -6,6 +6,8 @@ from rest_framework import serializers
 from project.settings import DEFAULT_FROM_EMAIL
 from registration.models import RegistrationProfile, get_activation_code
 
+# from user.models import Organisation
+
 User = get_user_model()
 
 
@@ -65,6 +67,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class RegisterValidationSerializer(serializers.ModelSerializer):
+    # organisation = serializers.CharField()
     password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     code = serializers.CharField(style={'input_type': int})
     first_name = serializers.CharField()
@@ -82,6 +85,8 @@ class RegisterValidationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'username', 'code', 'first_name', 'last_name', 'password', 'password_repeat')
+        # fields = ('email', 'username', 'code', 'first_name', 'last_name', 'password', 'password_repeat', 'organisation')
+
         extra_kwargs = {'password': {'write_only': True}}
 
     def save(self, request):
@@ -101,6 +106,10 @@ class RegisterValidationSerializer(serializers.ModelSerializer):
                 user.set_password(password)
                 user.is_active = True
                 user.registration_profile.code_used = True
+
+                # organisation_name = self.validated_data['organisation']
+                # organisation,     Organisation.objects.get())
+
                 user.save()
                 user.registration_profile.save()
                 return user
@@ -153,31 +162,23 @@ class PasswordResetValidationSerializer(serializers.Serializer):
         return updated_user
 
 
-class RegisterPasswordSerializer(serializers.ModelSerializer):
+class RegisterPasswordSerializer(serializers.Serializer):
     password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    email = serializers.EmailField(
-        required=True,
-        validators=[email_does_exist]
-    )
     password = serializers.CharField()
+    email = serializers.EmailField(validators=[email_does_exist])
+    read_only_fields = ['email']
 
     class Meta:
         model = User
         fields = ('email', 'password', 'password_repeat')
         extra_kwargs = {'password': {'write_only': True}}
 
-    def save(self, request):
+    def save(self, request, *args, **kwargs):
         user = User.objects.get(email=self.validated_data['email'])
-        if user.is_active:
-            raise serializers.ValidationError('This user is already available')
-        else:
-            password = self.validated_data['password']
-            password_repeat = self.validated_data['password_repeat']
-            if password != password_repeat:
-                raise serializers.ValidationError({'password': 'Passwords are not matching'})
-            user.set_password(password)
-            user.is_active = True
-            user.registration_profile.code_used = True
-            user.save()
-            user.registration_profile.save()
-            return user
+        password = self.validated_data['password']
+        password_repeat = self.validated_data['password_repeat']
+        if password != password_repeat:
+            raise serializers.ValidationError({'password': 'Passwords are not matching'})
+        user.set_password(password)
+        user.save()
+        return user
