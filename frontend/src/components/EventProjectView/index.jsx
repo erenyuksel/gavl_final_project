@@ -1,11 +1,24 @@
-const EventProjectView = ( {eventData}) => {
+import { useEffect } from "react"
+import EventProjectCard from "../EventProjectCard"
 
-  
-  console.log(eventData)
+const EventProjectView = ( {event}) => {
+
+  useEffect(() => {
+    console.log('eventdata in eventprojectview', event)
+  }, [event])
 
 
-
-  return <h1>Event Project View</h1>
+  return (
+    <>
+    {event.projects && (
+      <>
+      {event.projects.map(project => {
+        return <EventProjectCard project={project} key={project.id}/>
+      })}
+      </>
+    )}
+    </>
+  )
 }
 
 export default EventProjectView
