@@ -2,7 +2,8 @@
 
 
 const EventInformationSection = ({event}) => {
-  console.log(event)
+  
+  
   return (
   <>
     <h1>Event Information</h1>
