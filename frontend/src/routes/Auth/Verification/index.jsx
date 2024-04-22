@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-//import JudgeAxios from '../../../axios/JudgeAxios'
+import JudgeAxios from '../../../axios/JudgeAxios'
 import { useSelector } from 'react-redux'
 
 const Verification = () => {
@@ -11,6 +11,7 @@ const Verification = () => {
   const [lastName, setLastName] = useState('')
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
+  const [username, setUsername] = useState('')
 
   const navigate = useNavigate()
 
@@ -21,33 +22,21 @@ const Verification = () => {
       return
     }
 
-    // Simulieren einer erfolgreichen Validierung, only for testing
-    console.log('Simulated validation with:', {
-      email,
-      validationCode,
-      firstName,
-      lastName,
-      password,
-      passwordRepeat,
-    })
-    // Navigate to login page after form submission, simulate successful registration
-    navigate('/login')
-  }
-
-  /* try {
-      await JudgeAxios.patch('/registration/validation/', {
+    try {
+      await JudgeAxios.patch('/auth/registration/validation/', {
         email,
         code: validationCode,
         first_name: firstName,
         last_name: lastName,
         password,
-        repeat_password: passwordRepeat,
+        password_repeat: passwordRepeat,
+        username,
       })
       navigate('/login')
     } catch (error) {
       console.error('Validation error:', error.response?.data || error.message)
-    } */
-  /* } */
+    }
+  }
 
   return (
     <div className="flex justify-center items-start min-h-screen pt-8">
@@ -100,6 +89,17 @@ const Verification = () => {
               className="input input-bordered w-full"
               required
             />
+            <label className="input-group">
+              <span className="w-32">Username</span>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                className="input input-bordered w-full"
+                required
+              />
+            </label>
           </label>
           <label className="input-group">
             <span className="w-32">Password</span>

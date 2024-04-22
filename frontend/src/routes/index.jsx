@@ -10,6 +10,7 @@ import NotFound from './NotFound'
 import Profile from './Profile'
 import Verification from './Auth/Verification'
 import InviteJury from './Auth/InviteJury'
+import ProtectedRoutes from './ProtectedRoutes'
 
 const Router = () => {
   return (
@@ -19,14 +20,16 @@ const Router = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/verification" element={<Verification />} />
         <Route path="/invite/:token" element={<InviteJury />} />
-        <Route element={<Layout />}>
-          <Route path="/" element={<ListEventPage />} />
-          <Route path="/new-event" element={<AddNewEvent />} />
-          <Route path="/event/:id" element={<ViewEvent />} />
-          <Route path="/event/edit/:id/" element={<EditEvent />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route element={<Layout />}>
+            <Route path="/" element={<ListEventPage />} />
+            <Route path="/new-event" element={<AddNewEvent />} />
+            <Route path="/event/:id" element={<ViewEvent />} />
+            <Route path="/event/edit/:id/" element={<EditEvent />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
