@@ -23,13 +23,20 @@ class ListUsersView(ListCreateAPIView):
         user = serializer.save()
         if user.role == 'Judge':
             tokens = get_and_store_tokens_for_user(user)
-            link = 'http://127.0.0.1:8000/backend/users/invite/?token={}'.format(tokens['access'])
+            # TODO our endpoints here:
+            # link = 'http://127.0.0.1:8000/backend/users/invite/?token={}'.format(tokens['access'])
+            # link1 = 'https://judge.propulsion-learn.ch/backend/users/invite/?token={}'.format(tokens['access'])
+
+            link = 'http://127.0.0.1:8000/invite/{}'.format(tokens['access'])
+            link1 = 'https://judge.propulsion-learn.ch/invite/{}'.format(tokens['access'])
+
             print(link)
             # send email
             if serializer.is_valid():
                 # new_user = User.objects.get(email=receiver_email)
                 # event = serializer.data['event.name']
-                message = f'You was registered as a Judge for the xxx event. To validate your account please visit {link}'
+                message = (f'You was registered as a Judge for the xxx event. '
+                           f'To validate your account please visit local link <br> {link} and global link <br> {link1}')
                 subject = 'become a Judge'
                 to_email = [serializer.data['email']]
                 send_mail(subject, message, DEFAULT_FROM_EMAIL, to_email, fail_silently=False)
@@ -74,6 +81,7 @@ class ReadUpdateInvitationUserView(RetrieveUpdateDestroyAPIView):
             print(user)
 
             return Response({
+                'id': user.id,
                 'username': user.username,
                 'email': user.email
             }, status=status.HTTP_200_OK)

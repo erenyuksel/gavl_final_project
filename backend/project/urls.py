@@ -4,6 +4,8 @@ from rest_framework_simplejwt import views as jwt_views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+
+from registration.urls import registration_urlpatterns
 from user.urls import user_urlpatterns, organisation_urlpatterns
 from event.urls import event_urlpatterns
 from evaluation.urls import evaluation_urlpatterns, rubric_urlpatterns
@@ -26,6 +28,7 @@ urlpatterns = [
     path('backend/admin/', admin.site.urls),
     path('backend/api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
+    path('backend/', include(registration_urlpatterns)),
     path('backend/', include(user_urlpatterns)),
     path('backend/', include(organisation_urlpatterns)),
 
