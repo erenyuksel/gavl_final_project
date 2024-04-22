@@ -50,7 +50,6 @@ function ImportCSV({ event_id }) {
             name: project.name,
             content: JSON.stringify(project),
             description: project.description,
-            project_logo: `/media-files/projects/I4N/${project.name}.png`,
           })
           return response.data.id
         }),
