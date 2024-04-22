@@ -1,9 +1,9 @@
 import { useState } from "react"
 import EventProjectCard from "../EventProjectCard"
 
-// const [projectData, setProjectData] = useState({})
 
 const ProjectInformationSection = ({ project }) => {
+const [projectData, setProjectData] = useState({})
 
   return (
     <>
