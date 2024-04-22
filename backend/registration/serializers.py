@@ -6,7 +6,7 @@ from rest_framework import serializers
 from project.settings import DEFAULT_FROM_EMAIL
 from registration.models import RegistrationProfile, get_activation_code
 
-# from user.models import Organisation
+from user.models import Organisation
 
 User = get_user_model()
 
@@ -82,10 +82,12 @@ class RegisterValidationSerializer(serializers.ModelSerializer):
         validators=[username_does_not_exist]
     )
 
+    organisation_name = serializers.CharField()
+
     class Meta:
         model = User
-        fields = ('email', 'username', 'code', 'first_name', 'last_name', 'password', 'password_repeat')
-        # fields = ('email', 'username', 'code', 'first_name', 'last_name', 'password', 'password_repeat', 'organisation')
+        fields = (
+            'email', 'username', 'code', 'first_name', 'last_name', 'password', 'password_repeat', 'organisation_name')
 
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -94,7 +96,8 @@ class RegisterValidationSerializer(serializers.ModelSerializer):
         if user.is_active:
             raise serializers.ValidationError('This user is already available')
         else:
-            if RegistrationProfile.objects.filter(user=user).values_list('code', flat=True)[0] == self.validated_data['code']:
+            if RegistrationProfile.objects.filter(user=user).values_list('code', flat=True)[0] == self.validated_data[
+                'code']:
 
                 user.first_name = self.validated_data['first_name']
                 user.last_name = self.validated_data['last_name']
@@ -107,9 +110,9 @@ class RegisterValidationSerializer(serializers.ModelSerializer):
                 user.is_active = True
                 user.registration_profile.code_used = True
 
-                # organisation_name = self.validated_data['organisation']
-                # organisation,     Organisation.objects.get())
-
+                organisation_name = self.validated_data['organisation_name']
+                organisation, created = Organisation.objects.get_or_create(name=organisation_name)
+                user.organisation = organisation
                 user.save()
                 user.registration_profile.save()
                 return user

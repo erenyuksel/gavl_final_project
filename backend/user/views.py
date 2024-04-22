@@ -82,6 +82,7 @@ class ReadUpdateInvitationUserView(RetrieveUpdateDestroyAPIView):
             token = Token.objects.get(access=token)
             user = token.user
             user.is_active = True
+            user.save()
             print(user)
 
             return Response({

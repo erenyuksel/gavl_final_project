@@ -43,6 +43,10 @@ class RegisterValidationView(GenericAPIView):
         data = request.data
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
+
+        if 'organisation_name' in serializer.fields:
+            serializer.fields.pop('organisation_name')
+
         serializer.save(serializer.validated_data)
         return Response(status=status.HTTP_200_OK)
 
