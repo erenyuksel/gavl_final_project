@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import JudgeAxios from '../../../axios/JudgeAxios'
 import EventInformationSection from '../../../components/EventInformation'
 import EventFileStructure from '../../../components/EventFileStructure'
+import ImportCSV from '../../../components/ImportCsv'
 
 const EditEvent = () => {
   const [eventData, setEventData] = useState({})
@@ -32,16 +33,16 @@ const EditEvent = () => {
   return (
     <>
       <div>
-        <EventInformationSection event={eventData}  />
+        <EventInformationSection event={eventData} />
         <EventFileStructure event={eventData} />
+        <ImportCSV />
         <button className="btn w-60 mt-12" onClick={handleUpdate}>
           Update Event
         </button>
-        <input
-          type="file"
-          className="file-input file-input-bordered w-full max-w-xs"
-        />
-        <button className="btn" onClick={handleDelete}>Delete</button>
+
+        <button className="btn" onClick={handleDelete}>
+          Delete
+        </button>
       </div>
     </>
   )
