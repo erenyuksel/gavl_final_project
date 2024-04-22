@@ -4,8 +4,7 @@ from django.db import models
 class ContestantProject(models.Model):
     name = models.CharField(max_length=255)
     content = models.JSONField()
-    users = models.ManyToManyField(to='user.User', related_name='user_projects', blank=True)
-    evaluations = models.ManyToManyField(to='evaluation.Evaluation', related_name='evaluation_projects', blank=True)
+    contestants = models.ManyToManyField(to='user.User', related_name='user_projects', blank=True)
 
     def __str__(self):
         return self.name
