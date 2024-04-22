@@ -1,41 +1,61 @@
-import { useState } from "react"
-import EventProjectCard from "../EventProjectCard"
-
+import { useState, useEffect } from 'react'
+import EventProjectCard from '../EventProjectCard'
+import JudgeAxios from '../../axios/JudgeAxios'
 
 const ProjectInformationSection = ({ project }) => {
-const [projectData, setProjectData] = useState({})
+  const [projectData, setProjectData] = useState({})
+
+  useEffect(() => {
+    setProjectData(project)
+  }, [project])
+
+  const handleUpdate = async () => {
+    try {
+      await JudgeAxios.patch(`/projects/${projectData.id}/`, projectData)
+      // Handle successful update, e.g., show a success message
+    } catch (error) {
+      console.error(error)
+      // Handle error, e.g., show an error message
+    }
+  }
 
   return (
     <>
-    <EventProjectCard project={projectData}/>
-      <h1>Project Information</h1>
-      <div>Project Avatar</div>
+      <EventProjectCard project={projectData} />
+      <img
+            src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+            alt="Movie"
+          />
       <label className="form-control w-full max-w-xs">
         <div className="label">
-          <span className="label-text">Project name:</span>
+          <span className="label-text">Contestant Information</span>
         </div>
         <input
           type="text"
           name="name"
-          value={project.name}
+          value={projectData.name}
           placeholder="Project name"
           className="input input-ghost w-full max-w-xs"
+          readOnly
         />
       </label>
-      {/* JSON field */}
       <label className="form-control w-full max-w-xs">
         <div className="label">
-          <span className="label-text">Project Content:</span>
+          <span className="label-text">Project Description:</span>
         </div>
-        <input
-          type="text"
+        <textarea
           name="description"
-          value={project.description}
-          placeholder="Project content"
+          value={projectData.description}
+          placeholder="Project description"
           className="input input-ghost w-full max-w-xs"
-        />
-        {/* Add description and logo section */}
+          onChange={(e) =>
+            setProjectData({ ...projectData, description: e.target.value })
+          }
+        ></textarea>
       </label>
+      <button className="btn w-60 mt-12" onClick={handleUpdate}>
+        Update Project
+      </button>
     </>
   )
 }

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import JudgeAxios from "../../../axios/JudgeAxios"
 import EventProjectCard from "../../../components/EventProjectCard"
+import AddNewProject from "../AddNewProject"
 
 const ListProjectPage = (project_id) => {
     const [project, setProject] = useState([])
@@ -33,9 +34,8 @@ const ListProjectPage = (project_id) => {
         <Link to={`/project/${project_id}`} className="btn w-60 mt-12">
           View Contestant
         </Link>
-        <Link to={`/new-projects`} className="btn w-60 mt-12">
-          Add new contestants
-        </Link>
+        <AddNewProject />
+ 
       </div>
     </div>
   )

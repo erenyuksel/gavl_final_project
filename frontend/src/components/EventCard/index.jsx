@@ -10,7 +10,7 @@ const EventCard = ({ title, description, event_id, p_id}) => (
           View Event
         </Link>
         <Link to={`/project/list`} className='btn btn-secondary'>
-          View Participants
+          View Contestants
         </Link>
       </div>
     </div>
