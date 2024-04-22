@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-//import JudgeAxios from '../../../axios/JudgeAxios'
+import JudgeAxios from '../../../axios/JudgeAxios'
 import { useSelector } from 'react-redux'
 
 const Verification = () => {
@@ -11,6 +11,8 @@ const Verification = () => {
   const [lastName, setLastName] = useState('')
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
+  const [username, setUsername] = useState('')
+  const [organisationName, setOrganisationName] = useState('')
 
   const navigate = useNavigate()
 
@@ -21,33 +23,22 @@ const Verification = () => {
       return
     }
 
-    // Simulieren einer erfolgreichen Validierung, only for testing
-    console.log('Simulated validation with:', {
-      email,
-      validationCode,
-      firstName,
-      lastName,
-      password,
-      passwordRepeat,
-    })
-    // Navigate to login page after form submission, simulate successful registration
-    navigate('/login')
-  }
-
-  /* try {
-      await JudgeAxios.patch('/registration/validation/', {
+    try {
+      await JudgeAxios.patch('/auth/registration/validation/', {
         email,
         code: validationCode,
         first_name: firstName,
         last_name: lastName,
         password,
-        repeat_password: passwordRepeat,
+        password_repeat: passwordRepeat,
+        username,
+        organisation_name: organisationName,
       })
       navigate('/login')
     } catch (error) {
       console.error('Validation error:', error.response?.data || error.message)
-    } */
-  /* } */
+    }
+  }
 
   return (
     <div className="flex justify-center items-start min-h-screen pt-8">
@@ -63,7 +54,7 @@ const Verification = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="E-Mail address"
+              placeholder="E-Mail address*"
               className="input input-bordered w-full"
               required
             />
@@ -74,7 +65,7 @@ const Verification = () => {
               type="text"
               value={validationCode}
               onChange={(e) => setValidationCode(e.target.value)}
-              placeholder="Validation code"
+              placeholder="Validation code*"
               className="input input-bordered w-full"
               required
             />
@@ -85,7 +76,7 @@ const Verification = () => {
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First name"
+              placeholder="First name*"
               className="input input-bordered w-full"
               required
             />
@@ -96,7 +87,18 @@ const Verification = () => {
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              placeholder="Last name"
+              placeholder="Last name*"
+              className="input input-bordered w-full"
+              required
+            />
+          </label>
+          <label className="input-group">
+            <span className="w-32">Username</span>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username*"
               className="input input-bordered w-full"
               required
             />
@@ -107,7 +109,7 @@ const Verification = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder="Password*"
               className="input input-bordered w-full"
               required
             />
@@ -118,7 +120,18 @@ const Verification = () => {
               type="password"
               value={passwordRepeat}
               onChange={(e) => setPasswordRepeat(e.target.value)}
-              placeholder="Repeat password"
+              placeholder="Repeat password*"
+              className="input input-bordered w-full"
+              required
+            />
+          </label>
+          <label className="input-group">
+            <span className="w-32">Organisation</span>
+            <input
+              type="text"
+              value={organisationName}
+              onChange={(e) => setOrganisationName(e.target.value)}
+              placeholder="Name of Organisation*"
               className="input input-bordered w-full"
               required
             />

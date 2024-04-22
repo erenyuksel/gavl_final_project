@@ -2,10 +2,13 @@ import { useState } from 'react'
 import JudgeAxios from '../../../axios/JudgeAxios'
 import { Link, useNavigate } from 'react-router-dom'
 import ErrorMessage from '../../../components/Alerts/ErrorMessage'
+import { useSelector } from 'react-redux'
 
 const Login = () => {
+  const emailReduxStore = useSelector((state) => state.user.email) //call eMail from the store
+
   const [formData, setFormData] = useState({
-    email: '',
+    email: emailReduxStore || '',
     password: '',
   })
   const [error, setError] = useState()
