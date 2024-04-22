@@ -1,9 +1,13 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+
+from importer.urls import upload_csv_urlpatterns
 from user.urls import user_urlpatterns, organisation_urlpatterns
 from event.urls import event_urlpatterns
 from evaluation.urls import evaluation_urlpatterns, rubric_urlpatterns
@@ -31,6 +35,7 @@ urlpatterns = [
 
     path('backend/', include(evaluation_urlpatterns)),
     path('backend/', include(rubric_urlpatterns)),
+    path('backend/', include(upload_csv_urlpatterns)),
 
     path('backend/', include(event_urlpatterns)),
     path('backend/', include(contestant_projects_urlpatterns)),
@@ -39,3 +44,5 @@ urlpatterns = [
     path('backend/auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('backend/auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
