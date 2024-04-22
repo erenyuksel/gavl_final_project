@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import JudgeAxios from "../../../axios/JudgeAxios"
 import EventInformationSection from "../../../components/EventInformation"
-import EventFileStructure from "../../../components/EventFileStructure"
+import EventProjectView from "../../../components/EventProjectView"
 
 const ViewEvent = () => {
   const [eventData, setEventData] = useState({})
@@ -23,7 +23,7 @@ const ViewEvent = () => {
   return (
     <>
       <EventInformationSection event={eventData} />
-      <EventFileStructure event={eventData} />
+      <EventProjectView event={eventData} />
     </>
   )
 
