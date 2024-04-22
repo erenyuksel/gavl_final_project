@@ -12,6 +12,7 @@ const Verification = () => {
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
   const [username, setUsername] = useState('')
+  const [organisationName, setOrganisationName] = useState('')
 
   const navigate = useNavigate()
 
@@ -31,6 +32,7 @@ const Verification = () => {
         password,
         password_repeat: passwordRepeat,
         username,
+        organisation_name: organisationName,
       })
       navigate('/login')
     } catch (error) {
@@ -52,7 +54,7 @@ const Verification = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="E-Mail address"
+              placeholder="E-Mail address*"
               className="input input-bordered w-full"
               required
             />
@@ -63,7 +65,7 @@ const Verification = () => {
               type="text"
               value={validationCode}
               onChange={(e) => setValidationCode(e.target.value)}
-              placeholder="Validation code"
+              placeholder="Validation code*"
               className="input input-bordered w-full"
               required
             />
@@ -74,7 +76,7 @@ const Verification = () => {
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First name"
+              placeholder="First name*"
               className="input input-bordered w-full"
               required
             />
@@ -85,21 +87,21 @@ const Verification = () => {
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              placeholder="Last name"
+              placeholder="Last name*"
               className="input input-bordered w-full"
               required
             />
-            <label className="input-group">
-              <span className="w-32">Username</span>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-                className="input input-bordered w-full"
-                required
-              />
-            </label>
+          </label>
+          <label className="input-group">
+            <span className="w-32">Username</span>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username*"
+              className="input input-bordered w-full"
+              required
+            />
           </label>
           <label className="input-group">
             <span className="w-32">Password</span>
@@ -107,7 +109,7 @@ const Verification = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder="Password*"
               className="input input-bordered w-full"
               required
             />
@@ -118,7 +120,18 @@ const Verification = () => {
               type="password"
               value={passwordRepeat}
               onChange={(e) => setPasswordRepeat(e.target.value)}
-              placeholder="Repeat password"
+              placeholder="Repeat password*"
+              className="input input-bordered w-full"
+              required
+            />
+          </label>
+          <label className="input-group">
+            <span className="w-32">Organisation</span>
+            <input
+              type="text"
+              value={organisationName}
+              onChange={(e) => setOrganisationName(e.target.value)}
+              placeholder="Name of Organisation*"
               className="input input-bordered w-full"
               required
             />
