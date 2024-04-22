@@ -16,22 +16,10 @@ const InviteJury = () => {
   })
 
   useEffect(() => {
-    //store data in localstore
-    /*   localStorage.setItem('token', token)
-    console.log(token) */
-
-    // Dummy data for testing purposes
-    const dummyData = {
-      email: 'example@example.com',
-      username: 'DemoUser',
-    }
-    setUserInviteData(dummyData)
-
     //fetches Data from invitedUser Endpoint
-    /* const getUserInviteData = async () => {
+    const getUserInviteData = async () => {
       try {
         const response = await JudgeAxios.get(`users/invite/?token=${token}`)
-        console.log(response.data)
         setUserInviteData({
           ...userInviteData,
           email: response.data.email,
@@ -41,7 +29,7 @@ const InviteJury = () => {
         console.error(error)
       }
     }
-    getUserInviteData()*/
+    getUserInviteData()
   }, [token])
 
   const handleInputChange = (e) => {
@@ -57,17 +45,17 @@ const InviteJury = () => {
       alert('Passwords do not match!')
       return
     }
-    /* try {
-      const response = await JudgeAxios.patch('users/invite/', {
+    try {
+      const response = await JudgeAxios.patch('auth/registration/password/', {
         email: userInviteData.email,
         password: userInviteData.password,
-        repeat_password: userInviteData.passwordRepeat,
+        password_repeat: userInviteData.passwordRepeat,
       })
-      console.log('Patch user invite:', response.data)
+      console.log('Patch user invite:', response)
       navigate('/login')
     } catch (error) {
       console.error(error)
-    } */
+    }
   }
 
   return (
