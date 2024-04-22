@@ -1,12 +1,6 @@
-import { useEffect } from "react"
 import EventProjectCard from "../EventProjectCard"
 
 const EventProjectView = ( {event}) => {
-
-  useEffect(() => {
-    console.log('eventdata in eventprojectview', event)
-  }, [event])
-
 
   return (
     <>
