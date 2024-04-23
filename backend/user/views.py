@@ -45,7 +45,7 @@ class ListUsersView(ListCreateAPIView):
                 </html>
                 '''
                 if event_name is None:
-                    subject = f'become our Judge!'
+                    subject = 'become our Judge!'
                 else:
                     subject = f'become a Judge of {event_name}!'
 
