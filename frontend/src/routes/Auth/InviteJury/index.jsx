@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import JudgeAxios from '../../../axios/JudgeAxios'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setEmail } from '../../../store/slices/userSlice'
 
 const InviteJury = () => {
   //extract token from URL
   const { token } = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   //Auth the User with the token to get users/me Data
   const [userInviteData, setUserInviteData] = useState({
@@ -16,20 +19,25 @@ const InviteJury = () => {
   })
 
   useEffect(() => {
-    //fetches Data from invitedUser Endpoint
-    const getUserInviteData = async () => {
-      try {
-        const response = await JudgeAxios.get(`users/invite/?token=${token}`)
-        setUserInviteData({
-          ...userInviteData,
-          email: response.data.email,
-          username: response.data.username,
-        })
-      } catch (error) {
-        console.error(error)
+    if (token) {
+      //fetches Data from invitedUser Endpoint
+      const getUserInviteData = async () => {
+        try {
+          const response = await JudgeAxios.get(`users/invite/?token=${token}`)
+          if (response) {
+            setUserInviteData({
+              ...userInviteData,
+              email: response.data.email,
+              username: response.data.username,
+            })
+            localStorage.setItem('token', token)
+          }
+        } catch (error) {
+          console.error(error)
+        }
       }
+      getUserInviteData()
     }
-    getUserInviteData()
   }, [token])
 
   const handleInputChange = (e) => {
@@ -51,6 +59,7 @@ const InviteJury = () => {
         password: userInviteData.password,
         password_repeat: userInviteData.passwordRepeat,
       })
+      dispatch(setEmail(userInviteData.email))
       console.log('Patch user invite:', response)
       navigate('/login')
     } catch (error) {

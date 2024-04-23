@@ -9,7 +9,7 @@ const Profile = () => {
     email: '',
     first_name: '',
     last_name: '',
-    organisation: '',
+    organisation_name: '',
     role: '',
     avatar: '',
   })
@@ -181,7 +181,7 @@ const Profile = () => {
           <input
             type="text"
             name="organisation"
-            value={userMeData.organisation || ''}
+            value={userMeData.organisation_name || ''}
             readOnly
             onChange={handleChange}
             className="mt-2 block w-full rounded-md bg-base-100 border border-base-300 py-2 pl-3 placeholder:text-gray-400 focus:outline-none"
