@@ -12,16 +12,24 @@ class UserAdmin(UserAdmin):
             'fields': ('email', 'username', 'password1', 'password2')}
          ),
     )
+    list_display = ('email', 'first_name', 'last_name', 'organisation', 'created_date')
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'avatar', 'organisation')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'avatar')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions', 'role')}),
-        ('Important dates', {'fields': ('last_login', 'created_date')})
+        ('Important dates', {'fields': ('last_login', 'created_date')}),
+        ('Additional info', {'fields': ('organisation', )}),
     )
-    list_display = ('email', 'first_name', 'last_name', 'organisation', 'created_date')
     ordering = ('email',)
+
+
+class UserInline(admin.TabularInline):
+    model = User
+    fields = ('username', 'email', 'role')  # Add more fields as necessary
+    extra = 0  # No extra empty forms
 
 
 @admin.register(Organisation)
 class OrganisationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'logo',)
+    list_display = ('name', 'logo')
+    inlines = [UserInline]
