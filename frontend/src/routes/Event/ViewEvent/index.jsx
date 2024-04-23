@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import JudgeAxios from "../../../axios/JudgeAxios"
 import EventInformationSection from "../../../components/EventInformation"
 import EventProjectView from "../../../components/EventProjectView"
@@ -24,9 +24,6 @@ const ViewEvent = () => {
     <>
       <EventInformationSection event={eventData} />
       <EventProjectView event={eventData} />
-      <Link to="/event/edit/:id/" className="btn">
-        Edit Event
-      </Link>
     </>
   )
 
