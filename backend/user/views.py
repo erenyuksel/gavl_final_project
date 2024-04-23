@@ -23,6 +23,7 @@ class ListUsersView(ListCreateAPIView):
     def perform_create(self, serializer):
         user = serializer.save()
         if user.role == 'Judge':
+            event_name = self.request.query_params.get("event_name")
             tokens = get_and_store_tokens_for_user(user)
             # TODO our endpoints here:
             # link = 'http://127.0.0.1:8000/backend/users/invite/?token={}'.format(tokens['access'])
@@ -34,10 +35,6 @@ class ListUsersView(ListCreateAPIView):
             print(link)
             # send email
             if serializer.is_valid():
-                # new_user = User.objects.get(email=receiver_email)
-                # event = serializer.data['event.name']
-                message = (f'You was registered as a Judge for the {user.event_judges} event. '
-                           f'To validate your account please visit local link {link} and global link {link1}')
                 html_message = f'''\
                 <html>
                   <body>
@@ -47,9 +44,13 @@ class ListUsersView(ListCreateAPIView):
                   </body>
                 </html>
                 '''
-                subject = 'become a Judge'
+                if event_name is None:
+                    subject = f'become our Judge!'
+                else:
+                    subject = f'become a Judge of {event_name}!'
+
                 to_email = [serializer.data['email']]
-                send_mail(subject, message, DEFAULT_FROM_EMAIL, to_email, html_message=html_message, fail_silently=False)
+                send_mail(subject, '', DEFAULT_FROM_EMAIL, to_email, html_message=html_message, fail_silently=False)
                 return Response(status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -59,7 +60,8 @@ class ReadUpdateDeleteMyUserView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsSelfOrReadOnly]
-    lookup_field = "me"
+
+    # lookup_field = "me"
 
     def get_object(self):
         user = self.request.user
@@ -103,7 +105,6 @@ class ReadUpdateInvitationUserView(RetrieveUpdateDestroyAPIView):
         else:
             print("The token is invalid")
             return Response('The token is invalid', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        # return HttpResponse(f"Token received: {token}")
 
 
 class RetrieveUserView(RetrieveAPIView):
