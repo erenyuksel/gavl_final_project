@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import JudgeAxios from "../../../axios/JudgeAxios"
+import ProjectHeader from "../../../components/ProjectHeader"
 
 const Project = () => {
   const { id } = useParams()
@@ -17,11 +18,13 @@ const Project = () => {
 
   return (
     <>
-    {projectData && (
-      <>
-       <p>{projectData.name}</p>
-      </>
-    )} 
+      {projectData && (
+        <ProjectHeader
+          name={projectData.name}
+          description={projectData.description}
+          logo={projectData.project_logo}
+        />
+      )}
     </>
   )
 }
