@@ -50,7 +50,6 @@ function ImportCSV({ event_id }) {
             name: project.name,
             content: JSON.stringify(project),
             description: project.description,
-            project_logo: `/media-files/projects/I4N/${project.name}.png`,
           })
           return response.data.id
         }),
@@ -58,14 +57,15 @@ function ImportCSV({ event_id }) {
 
       // Update event with project IDs
       if (projectIds.length > 0) {
-        console.log('project_ids:', projectIds)
-        console.log('event id :', event_id)
         try {
           const event_response = await JudgeAxios.get(`/events/${event_id}`)
-          const temp_event_projects =
-            event_response.data.projects.concat(projectIds)
-          await JudgeAxios.patch(`/events/${event_id}`, {
-            projects: temp_event_projects,
+          const current_ids = []
+          for (let pj of event_response.data.projects) {
+            current_ids.push(pj.id)
+          }
+          const combined_ids = [...current_ids, ...projectIds]
+          await JudgeAxios.patch(`/events/${event_id}/`, {
+            projects: combined_ids,
           })
         } catch (error) {
           console.error('Error updating event:', error)
