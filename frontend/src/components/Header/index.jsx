@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+
   return (
     <>
       <div className="navbar bg-neutral text-neutral-content">
@@ -79,7 +87,13 @@ function Header() {
                 </Link>
               </li>
               <li>
-                <a>Logout</a>
+                <Link
+                  to="/login"
+                  onClick={handleLogout}
+                  className="justify-between"
+                >
+                  <a>Logout</a>
+                </Link>
               </li>
             </ul>
           </div>
