@@ -25,6 +25,9 @@ const Project = () => {
         <>
           <ProjectHeader project={projectData} />
           <ProjectEvaluation project={projectData} />
+          <ProjectPersonOfContact project={projectData} />
+          <ProjectBioMetric project={projectData} />
+          <ProjectFinancial project={projectData} />
         </>
       )}
     </>
