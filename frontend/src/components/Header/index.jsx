@@ -86,14 +86,8 @@ function Header() {
                   Profile
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/login"
-                  onClick={handleLogout}
-                  className="justify-between"
-                >
-                  <a>Logout</a>
-                </Link>
+              <li onClick={handleLogout}>
+                <a>Logout</a>
               </li>
             </ul>
           </div>
