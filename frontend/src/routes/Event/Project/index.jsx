@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import JudgeAxios from "../../../axios/JudgeAxios"
 import ProjectEvaluation from "../../../components/ProjectCreateEvaluation"
 import ProjectPersonOfContact from "../../../components/ProjectPersonOfContact"
+import ProjectBioMetric from "../../../components/ProjectBioMetric"
 
 const Project = () => {
   const { id } = useParams()
@@ -24,6 +25,7 @@ const Project = () => {
        <p>{projectData.name}</p>
               <ProjectEvaluation project={projectData} />
               <ProjectPersonOfContact project={projectData} />
+              <ProjectBioMetric project={projectData} />
       </>
     )} 
     </>

@@ -13,18 +13,16 @@ const ProjectPersonOfContact = ({ project }) => {
             ) : (
               <div className="bg-neutral text-neutral-content rounded-full w-24 flex items-center justify-center">
                 <span className="text-2xl font-bold">
-                  {parsedContent.name.charAt(0).toUpperCase()}
+                  {parsedContent['Contact Person'].charAt(0).toUpperCase()}
                 </span>
               </div>
             )}
           </div>
-          <h2 className="card-title">{parsedContent.name}</h2>
-          {parsedContent['Contact Person']}
+          <h2 className="card-title">{parsedContent['Contact Person']}</h2>
           <p>{parsedContent['Position of Contact Person']}</p>
-          <p>{parsedContent['HQ of organization (City, Country)']}</p>
+          <p>{parsedContent['HQ of organization (City; Country)']}</p>
           <p>{parsedContent['Founding year of organization']}</p>
-          {/* For some reason the two bottom Data is not working. */}
-          <p>{parsedContent['Place of registration (City, Country)']}</p>
+          <p>{parsedContent['Place of registration (City; Country)']}</p>
           <p>{parsedContent['Legal form of organization']}</p>
         </div>
       </div>
