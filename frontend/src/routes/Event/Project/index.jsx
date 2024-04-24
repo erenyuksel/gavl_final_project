@@ -4,6 +4,8 @@ import JudgeAxios from '../../../axios/JudgeAxios'
 import ProjectEvaluation from '../../../components/ProjectCreateEvaluation'
 import ProjectValueProposition from '../../../components/ProjectValueProposition'
 import ProjectHeader from '../../../components/ProjectHeader'
+import ProjectPersonOfContact from '../../../components/ProjectPersonOfContact'
+import ProjectBioMetric from '../../../components/ProjectBioMetric'
 
 const Project = () => {
   const { id } = useParams()
@@ -24,6 +26,8 @@ const Project = () => {
           <ProjectHeader project={projectData} />
           <ProjectEvaluation project={projectData} />
           <ProjectValueProposition project={projectData} />
+          <ProjectPersonOfContact project={projectData} />
+          <ProjectBioMetric project={projectData} />
         </>
       )}
     </>
