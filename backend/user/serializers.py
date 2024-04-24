@@ -12,6 +12,13 @@ class OrganisationSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'logo']
 
 
+class JudgeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'first_name', 'last_name', 'role']
+
+
 class UserSerializer(serializers.ModelSerializer):
     organisation = OrganisationSerializer(required=False, allow_null=True)
 

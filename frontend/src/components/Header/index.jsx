@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+
   return (
     <>
       <div className="navbar bg-neutral text-neutral-content">
@@ -78,7 +86,7 @@ function Header() {
                   Profile
                 </Link>
               </li>
-              <li>
+              <li onClick={handleLogout}>
                 <a>Logout</a>
               </li>
             </ul>
