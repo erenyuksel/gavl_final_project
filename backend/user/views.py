@@ -56,6 +56,12 @@ class ListUsersView(ListCreateAPIView):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+class ReadOrganisationView(RetrieveAPIView):
+    serializer_class = OrganisationSerializer
+    queryset = Organisation.objects.all()
+    lookup_url_kwarg = 'org_id'
+
+
 class ReadUpdateDeleteMyUserView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()

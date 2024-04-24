@@ -13,7 +13,7 @@ class OrganisationSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # organisation = OrganisationSerializer()
+    organisation = OrganisationSerializer(required=False, allow_null=True)
 
     class Meta:
         model = User
@@ -37,9 +37,10 @@ class UserSerializer(serializers.ModelSerializer):
 
         # Update organisation if necessary
         if organisation_data:
-            organisation = instance.organisation
-            for attr, value in organisation_data.items():
-                setattr(organisation, attr, value)
-            organisation.save()
+            if instance.organisation:
+                organisation = instance.organisation
+                for attr, value in organisation_data.items():
+                    setattr(organisation, attr, value)
+                organisation.save()
 
         return instance
