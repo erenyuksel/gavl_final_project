@@ -1,5 +1,5 @@
 from user.views import (ListUsersView, ReadUpdateDeleteMyUserView, RetrieveUserView, ListOrganisationsView,
-                        ReadUpdateInvitationUserView, InactivateUserTokenView)
+                        ReadUpdateInvitationUserView, InactivateUserTokenView, ReadOrganisationView)
 
 from django.urls import path
 
@@ -13,5 +13,5 @@ user_urlpatterns = [
 
 organisation_urlpatterns = [
     path("organisations/", ListOrganisationsView.as_view()),
-    # path("organisations/<int:user_id>/",ReadUpdateDeleteMyOrganisationView.as_view()),
+    path("organisations/<int:org_id>/", ReadOrganisationView.as_view()),
 ]
