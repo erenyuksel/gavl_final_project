@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import JudgeAxios from '../../../axios/JudgeAxios'
 import EventInformationSection from '../../../components/EventInformation'
@@ -8,6 +8,19 @@ import ImportCSV from '../../../components/ImportCsv'
 const EditEvent = () => {
   const [eventData, setEventData] = useState({})
   const { id } = useParams()
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await JudgeAxios.get(`/events/${id}`)
+        setEventData(response.data)
+      } catch (error) {
+        console.error('To fetch the events was not possible', error)
+      }
+    }
+
+    fetchEvents()
+  }, [])
 
   const handleUpdate = async () => {
     try {

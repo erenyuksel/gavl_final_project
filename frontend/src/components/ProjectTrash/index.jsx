@@ -1,4 +1,4 @@
-const ProjectHeader = ({ name, description, logo }) => {
+const ProjectCard = ({ name, description, logo }) => {
   return (
     <div
       className="hero min-h-screen"
@@ -50,4 +50,4 @@ const ProjectHeader = ({ name, description, logo }) => {
   )
 }
 
-export default ProjectHeader
+export default ProjectCard

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import JudgeAxios from "../../../axios/JudgeAxios"
 import ProjectEvaluation from "../../../components/ProjectCreateEvaluation"
-import ProjectHeader from "../../../components/ProjectHeader"
+import ProjectPersonOfContact from "../../../components/ProjectPersonOfContact"
 
 const Project = () => {
   const { id } = useParams()
@@ -19,19 +19,13 @@ const Project = () => {
 
   return (
     <>
-      {projectData && (
-        <>
-          <p>{projectData.name}</p>
-          <ProjectEvaluation project={projectData} />
-        </>
-      )}
-      {projectData && (
-        <ProjectHeader
-          name={projectData.name}
-          description={projectData.description}
-          logo={projectData.project_logo}
-        />
-      )}
+    {projectData && (
+      <>
+       <p>{projectData.name}</p>
+              <ProjectEvaluation project={projectData} />
+              <ProjectPersonOfContact project={projectData} />
+      </>
+    )} 
     </>
   )
 }
