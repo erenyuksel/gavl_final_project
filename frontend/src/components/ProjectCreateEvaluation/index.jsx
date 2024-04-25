@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import JudgeAxios from "../../axios/JudgeAxios"
 
 
-const ProjectEvaluation = ({ project }) => {
+const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
   const [eventData, setEventData] = useState()
   const [rubricsData, setRubricsData] = useState()
   const [evaluationData, setEvaluationData] = useState({})
@@ -10,7 +10,9 @@ const ProjectEvaluation = ({ project }) => {
   const [userData, setUserData] = useState()
   const [projectEvaluations, setProjectEvaluations] = useState()
   const [checkedForEvaluations, setCheckedForEvaluations] = useState(false)
+  
 
+  
   
   // when site is loaded, get user and evaluation information and store it in usestates
   useEffect(() => {
@@ -25,7 +27,7 @@ const ProjectEvaluation = ({ project }) => {
     getBasicInfos()
     getcurrentProjectEvaluations()
   }, [])
-
+  
   // getting the event for the project
   useEffect(() => {
     if (project) {
@@ -38,7 +40,7 @@ const ProjectEvaluation = ({ project }) => {
       getProjectsEvent()
     }
   }, [project])
-
+  
   // getting the rubrics object for this event and storing it in a useState
   useEffect(() => {
     if (eventData) {
@@ -56,8 +58,8 @@ const ProjectEvaluation = ({ project }) => {
       getEventRubrics()
     }
   }, [eventData])
-
-
+  
+  
   // updating the projects evaluations and store it in useState
   const getcurrentProjectEvaluations = async () => {
     try {
@@ -67,7 +69,7 @@ const ProjectEvaluation = ({ project }) => {
       console.error('Error getting the project evaluations')
     }
   }
-
+  
   const loadUsersEvaluation = () => {
     setCheckedForEvaluations(true)
     if (projectEvaluations) {
@@ -90,7 +92,7 @@ const ProjectEvaluation = ({ project }) => {
       }
     }
   }
-
+  
   
   useEffect(() => {
     // filter the project evaluations by the users id
@@ -98,7 +100,7 @@ const ProjectEvaluation = ({ project }) => {
       const usersEvaluation = projectEvaluations.filter(evaluation => {
         return evaluation.judge.id === userData.id
       })
-  
+      
       if (usersEvaluation.length > 0) {
         const updateEvaluation = async () => {
           try {
@@ -127,7 +129,7 @@ const ProjectEvaluation = ({ project }) => {
       }
     }
   }, [evaluationData, project])
-
+  
 
   const handleScaleChoice = (criteriaName, scaleValue) => {
     setEvaluationData(prevData => ({
@@ -135,8 +137,8 @@ const ProjectEvaluation = ({ project }) => {
       [criteriaName]: scaleValue
     }));
   }
-
-
+  
+  
   useEffect(() => {
     if (projectEvaluations) {
       loadUsersEvaluation()
@@ -144,41 +146,63 @@ const ProjectEvaluation = ({ project }) => {
   }, [projectEvaluations])
   
   
+
   return (
     <>
-      {(rubricsData && checkedForEvaluations) && (
+      {/* <div className="p-4 cursor-pointer" onClick={toggleEvaluation}>
+        <h2 className="text-lg font-bold mb-2">Evaluation</h2>
+        {showEvaluation && (
+          <div>
+            <{/* Evaluation content goes here */}
+            {/* <p>This is the evaluation content.</p>> */}
+          {/* </div> */}
+        {/* // )} */}
+      {/* </div> */}
+
+      {rubricsData && checkedForEvaluations && (
         <>
-          {rubricsData.map(evaluationCriteria => {
+          {rubricsData.map((evaluationCriteria) => {
             return (
               <>
-                <div key={evaluationCriteria.name} className="flex flex-col p-4 w-100 drop-shadow-md rounded border mb-5">
+                <div
+                  key={evaluationCriteria.name}
+                  className="flex flex-col p-4 w-100 drop-shadow-md rounded border mb-5"
+                >
                   <div className="flex flex-col justify-center">
                     <span className="">{evaluationCriteria.name}</span>
                     <span>{evaluationCriteria.description}</span>
                   </div>
                   <div>
-                    {evaluationCriteria.scales.map(scale => {
+                    {evaluationCriteria.scales.map((scale) => {
                       return (
                         <>
-                        <div key={scale.uuid} className={`cursor-pointer flex flex-row m-2 bg-gray-100 shadow-sm rounded hover:bg-gray-300 transition duration-200 ease-in-out ${evaluationData[evaluationCriteria.name] == scale.value ? "bg-green-200" : ""}`} onClick={() => handleScaleChoice(evaluationCriteria.name, scale.value)}>
-                            <span className="pr-4 bg-red-200 rounded pl-2 rounded-r-none flex items-center p-3">{scale.value}</span>
-                            <span className="pl-4 flex items-center">{scale.description}</span>
-                        </div>
+                          <div
+                            key={scale.uuid}
+                            className={`cursor-pointer flex flex-row m-2 bg-gray-100 shadow-sm rounded hover:bg-gray-300 transition duration-200 ease-in-out ${evaluationData[evaluationCriteria.name] == scale.value ? 'bg-green-200' : ''}`}
+                            onClick={() =>
+                              handleScaleChoice(
+                                evaluationCriteria.name,
+                                scale.value,
+                              )
+                            }
+                          >
+                            <span className="pr-4 bg-red-200 rounded pl-2 rounded-r-none flex items-center p-3">
+                              {scale.value}
+                            </span>
+                            <span className="pl-4 flex items-center">
+                              {scale.description}
+                            </span>
+                          </div>
                         </>
                       )
                     })}
                   </div>
-
-
                 </div>
               </>
-
             )
           })}
-
         </>
       )}
-
     </>
   )
 

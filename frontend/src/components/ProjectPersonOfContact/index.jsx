@@ -3,7 +3,7 @@ const ProjectPersonOfContact = ({ project }) => {
 
   return (
     <>
-      <div className="card flex-row bg-base-100">
+      <div className="card flex-row w-96 bg-base-100">
         <div className="card-body items-center text-center justify-center">
           <div className="avatar placeholder">
             {parsedContent.logo ? (
@@ -11,7 +11,7 @@ const ProjectPersonOfContact = ({ project }) => {
                 <img src={parsedContent.logo} alt={parsedContent.name} />
               </div>
             ) : (
-              <div className="bg-neutral text-neutral-content rounded-full w-24 flex items-center justify-center">
+              <div className="bg-blue-400 text-black rounded-full w-24 flex items-center justify-center">
                 <span className="text-2xl font-bold">
                   {parsedContent['Contact Person'].charAt(0).toUpperCase()}
                 </span>
