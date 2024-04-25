@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn-outline {
+  @apply px-4 py-2 border border-custom-primary hover:text-white hover:bg-secondary hover:border-0 transition-colors;
+}
+
+input {
+  @apply input input-bordered w-full max-w-xs border-custom-primary bg-input-background;
+}
+
+textarea {
+  @apply textarea textarea-bordered h-24 border-custom-primary;
+}
+
+
+h1 {
+  @apply text-3xl font-bold text-gray-800 mt-2 mb-4;
+}
+
+h2 {
+  @apply text-2xl font-semibold text-gray-700 mt-2 mb-3;
+}
+
+h3 {
+  @apply text-lg font-medium mt-1 mb-2;
+}
