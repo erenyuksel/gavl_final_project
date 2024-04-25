@@ -8,6 +8,8 @@ const ProjectBioMetric = ({ project }) => {
           <h2 className="card-title justify-center">
             Key non-financial nature/biodiversity metric
           </h2>
+          <div className="text-center">
+
           <p>
             {parsedContent['Key non-financial nature/biodiversity metric (1)']}
           </p>
@@ -17,6 +19,7 @@ const ProjectBioMetric = ({ project }) => {
           <p>
             {parsedContent['Key non-financial nature/biodiversity metric (3)']}
           </p>
+          </div>
           <div className="card-actions justify-end"></div>
         </div>
       </div>

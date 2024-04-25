@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react"
-import JudgeAxios from "../../axios/JudgeAxios"
+import { useEffect, useState } from 'react'
+import JudgeAxios from '../../axios/JudgeAxios'
 
-
-const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
+const ProjectEvaluation = ({ project }) => {
   const [eventData, setEventData] = useState()
   const [rubricsData, setRubricsData] = useState()
   const [evaluationData, setEvaluationData] = useState({})
@@ -10,10 +9,7 @@ const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
   const [userData, setUserData] = useState()
   const [projectEvaluations, setProjectEvaluations] = useState()
   const [checkedForEvaluations, setCheckedForEvaluations] = useState(false)
-  
 
-  
-  
   // when site is loaded, get user and evaluation information and store it in usestates
   useEffect(() => {
     const getBasicInfos = async () => {
@@ -21,13 +17,13 @@ const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
         const user_response = await JudgeAxios.get('users/me')
         setUserData(user_response.data)
       } catch (error) {
-        console.error('Error getting user information'. error)
+        console.error('Error getting user information'.error)
       }
     }
     getBasicInfos()
     getcurrentProjectEvaluations()
   }, [])
-  
+
   // getting the event for the project
   useEffect(() => {
     if (project) {
@@ -40,7 +36,7 @@ const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
       getProjectsEvent()
     }
   }, [project])
-  
+
   // getting the rubrics object for this event and storing it in a useState
   useEffect(() => {
     if (eventData) {
@@ -58,55 +54,65 @@ const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
       getEventRubrics()
     }
   }, [eventData])
-  
-  
+
   // updating the projects evaluations and store it in useState
   const getcurrentProjectEvaluations = async () => {
     try {
-      const proj_ev_response = await JudgeAxios.get(`projects/${project.id}/evaluations`)
+      const proj_ev_response = await JudgeAxios.get(
+        `projects/${project.id}/evaluations`,
+      )
       setProjectEvaluations(proj_ev_response.data)
     } catch (error) {
       console.error('Error getting the project evaluations')
     }
   }
-  
+
   const loadUsersEvaluation = () => {
     setCheckedForEvaluations(true)
     if (projectEvaluations) {
-      const usersEvaluation = projectEvaluations.filter(evaluation => {
+      const usersEvaluation = projectEvaluations.filter((evaluation) => {
         return evaluation.judge.id === userData.id
       })
       try {
         if (usersEvaluation[0].json_data_rating !== undefined) {
           try {
             if (Object.keys(evaluationData).length === 0) {
-              const existingEvaluationData = JSON.parse(usersEvaluation[0].json_data_rating)
+              const existingEvaluationData = JSON.parse(
+                usersEvaluation[0].json_data_rating,
+              )
               setEvaluationData(existingEvaluationData)
             }
           } catch (error) {
-            console.warn('Failed to parse existing evaluation, user seems to have no evaluation', error)
+            console.warn(
+              'Failed to parse existing evaluation, user seems to have no evaluation',
+              error,
+            )
           }
         }
-      } catch (error){
-        console.warn('User seems to have an existing Evaluation but no evalution data inside it.')
+      } catch (error) {
+        console.warn(
+          'User seems to have an existing Evaluation but no evalution data inside it.',
+        )
       }
     }
   }
-  
-  
+
   useEffect(() => {
     // filter the project evaluations by the users id
     if (projectEvaluations) {
-      const usersEvaluation = projectEvaluations.filter(evaluation => {
+      const usersEvaluation = projectEvaluations.filter((evaluation) => {
         return evaluation.judge.id === userData.id
       })
-      
+
       if (usersEvaluation.length > 0) {
         const updateEvaluation = async () => {
           try {
-            const up_ev_response = await JudgeAxios.patch(`/evaluations/${usersEvaluation[0].id}`, {
-              json_data_rating: JSON.stringify(evaluationData),
-            })
+            const up_ev_response = await JudgeAxios.patch(
+              `/evaluations/${usersEvaluation[0].id}`,
+              {
+                json_data_rating: JSON.stringify(evaluationData),
+              },
+            )
           } catch (error) {
             console.error('Failed updating existing evaluation', error)
           }
@@ -129,36 +135,22 @@ const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
       }
     }
   }, [evaluationData, project])
-  
 
   const handleScaleChoice = (criteriaName, scaleValue) => {
-    setEvaluationData(prevData => ({
+    setEvaluationData((prevData) => ({
       ...prevData,
-      [criteriaName]: scaleValue
-    }));
+      [criteriaName]: scaleValue,
+    }))
   }
-  
-  
+
   useEffect(() => {
     if (projectEvaluations) {
       loadUsersEvaluation()
     }
   }, [projectEvaluations])
-  
-  
 
   return (
     <>
-      {/* <div className="p-4 cursor-pointer" onClick={toggleEvaluation}>
-        <h2 className="text-lg font-bold mb-2">Evaluation</h2>
-        {showEvaluation && (
-          <div>
-            <{/* Evaluation content goes here */}
-            {/* <p>This is the evaluation content.</p>> */}
-          {/* </div> */}
-        {/* // )} */}
-      {/* </div> */}
-
       {rubricsData && checkedForEvaluations && (
         <>
           {rubricsData.map((evaluationCriteria) => {
@@ -205,8 +197,6 @@ const ProjectEvaluation = ({ project, toggleEvaluation, showEvaluation }) => {
       )}
     </>
   )
-
-
 }
 
 export default ProjectEvaluation
