@@ -33,13 +33,15 @@ const EventStatisticPage = () => {
           const amountOfCriterias = evaluationCriterias.length
           const evaluationCriteriaNames = Object.values(evaluationCriterias).map(item => item.name)
           setEvaluationCriteriaNames(evaluationCriteriaNames)
+          let tempArr = []
           
           // iterating over all projects of event
           for (let project of eventData.projects) {
             // creating a new obj to store all the needed information for the table
             const projectObj = {}
-            // storing the project name as name
+            // storing the project name as name and the logo as logo
             projectObj.name = project.name
+            projectObj.logo = project.project_logo
 
             // calling the evaluations endpoint to get all the evaluations for this Project
             const evaluations_response = await JudgeAxios.get(`/projects/${project.id}/evaluations`)
@@ -79,20 +81,50 @@ const EventStatisticPage = () => {
               projectObj[`${evaluationName}_score`] = projectObj[`${evaluationName}_score`] / projectObj.amount_of_judges
             }
 
-            // storing the projectObj in the useState to populate the table
-            console.log(projectObj)
-            // setProjectTableData(prevdata => {
-            //   [...prevdata, projectObj]
-            // })
+            tempArr = [...tempArr, projectObj]
           }
+
+          // storing the projectObj in the useState to populate the table
+          setProjectTableData(tempArr)
+
         } catch (err) {
           console.error('Failed creating evaluation table', err)
         }
       }
-      createEventEvaluationTable
+      createEventEvaluationTable()
     }
   }, [eventData])
 
+  // adding sorting functionality
+  const [sortBy, setSortBy] = useState(null);
+  const [sortOrder, setSortOrder] = useState('asc');
+
+  const handleSort = (key) => {
+    if (sortBy === key) {
+      // Toggle sort order if the same column is clicked again
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Sort by the selected column
+      setSortBy(key);
+      setSortOrder('asc');
+    }
+  };
+
+  const sortedData = projectTableData.sort((a, b) => {
+    if (sortBy === 'name') {
+      const aValue = a.name.toLowerCase();
+      const bValue = b.name.toLowerCase();
+      const sortOrderMultiplier = sortOrder === 'asc' ? 1 : -1;
+      if (aValue < bValue) return -1 * sortOrderMultiplier;
+      if (aValue > bValue) return 1 * sortOrderMultiplier;
+      return 0;
+    } else {
+      const aValue = isNaN(a[sortBy]) ? 0 : a[sortBy];
+      const bValue = isNaN(b[sortBy]) ? 0 : b[sortBy];
+      const sortOrderMultiplier = sortOrder === 'asc' ? 1 : -1;
+      return (aValue - bValue) * sortOrderMultiplier;
+    }
+  });
 
 
   return (
@@ -101,55 +133,50 @@ const EventStatisticPage = () => {
       <>
         <div className="overflow-x-auto">
         <table className="table">
-        {/* head */}
         <thead>
           <tr>
-            <th>Project Name</th>
-            <th>Evaluation Criterias</th>
-            <th>Overall Score</th>
+            <th onClick={() => handleSort('name')} >Project Name</th>
+            <th>Complete Evaluations</th>
+            {evaluationCriteriaNames.map(criteria => {
+              return <th key={criteria} onClick={() => handleSort(`${criteria}_score`)}>{criteria}</th>
+            })}
+            <th onClick={() => handleSort('total_score')}>Overall Score</th>
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {}
-          <tr>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-12 h-12">
-                    <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
-                  </div>
-                </div>
-                <div>
-                  <div className="font-bold">Hart Hagerty</div>
-                  <div className="text-sm opacity-50">United States</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              Zemlak, Daniel and Leannon
-              <br/>
-              <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
-            </td>
-            <td>Purple</td>
-            <th>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </th>
-          </tr>
-          {/* row 2 */}
-          
-        </tbody>
-        {/* foot */}
+        {projectTableData && (
+          <>
+          {sortedData.map(project => {
+            return (
+              <>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img src={project.logo} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{project.name}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{project.amount_of_judges} / {eventData.judges.length}</td>
+                    {evaluationCriteriaNames.map(criteria => {
+                      return <td key={criteria}>{project[`${criteria}_score`] || 0}</td>
+                    })}
+                    <td>{project.total_score || 0}</td>
+                  </tr>
+                </tbody>
+              </>
+            )
+          })}
+          </>
+          )}
         </table>
         </div>
-
-
-
-
-
-
-
-
       </>
     )}
     </>
