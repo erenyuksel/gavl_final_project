@@ -7,6 +7,8 @@ import ProjectHeader from '../../../components/ProjectHeader'
 import ProjectPersonOfContact from '../../../components/ProjectPersonOfContact'
 import ProjectBioMetric from '../../../components/ProjectBioMetric'
 import ProjectFinancial from '../../../components/ProjectFinancial'
+import ProjectAffectedCard from '../../../components/ProjectAffectedCard'
+import ProjectSupportPriority from '../../../components/ProjectSupportPriority'
 import ProjectThemeIndustry from '../../../components/ProjectThemeIndustry'
 
 const Project = () => {
@@ -52,6 +54,8 @@ const Project = () => {
               </div>
             </div>
           </div>
+          <ProjectAffectedCard project={projectData} />
+          <ProjectSupportPriority project={projectData} />
         </>
       )}
     </>
