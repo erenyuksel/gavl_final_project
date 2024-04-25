@@ -160,12 +160,12 @@ const Profile = () => {
     return (
         <form onSubmit={handleSubmit} className="p-4">
             {/* Avatar Change */}
-            <div>
+            <div data-theme="cupcake">
                 <label
                     htmlFor="avatar"
                     className="block text-sm font-medium text-gray-900"
                 >
-                    Avatar
+                    <h3>Avatar</h3>
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
                     <img
@@ -201,10 +201,10 @@ const Profile = () => {
                     )}
                 </div>
             </div>
-            <div className="space-y-12">
+            <div className="space-y-12" data-theme="cupcake">
                 <div>
                     <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Username
+                        <h3>Username</h3>
                     </label>
                     <input
                         type="text"
@@ -212,12 +212,11 @@ const Profile = () => {
                         value={userMeData.username || ''}
                         readOnly={!isEditing}
                         onChange={handleChange}
-                        className="mt-2 block w-full rounded-md bg-base-100 border border-base-300 py-2 pl-3 placeholder:text-gray-400 focus:outline-none"
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Email
+                        <h3>Email</h3>
                     </label>
                     <input
                         type="text"
@@ -225,12 +224,11 @@ const Profile = () => {
                         value={userMeData.email || ''}
                         readOnly={!isEditing}
                         onChange={handleChange}
-                        className="mt-2 block w-full rounded-md bg-base-100 border border-base-300 py-2 pl-3 placeholder:text-gray-400 focus:outline-none"
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-medium leading-6 text-gray-900">
-                        First Name
+                        <h3>First Name</h3>
                     </label>
                     <input
                         type="text"
@@ -238,12 +236,11 @@ const Profile = () => {
                         value={userMeData.first_name || ''}
                         readOnly={!isEditing}
                         onChange={handleChange}
-                        className="mt-2 block w-full rounded-md bg-base-100 border border-base-300 py-2 pl-3 placeholder:text-gray-400 focus:outline-none"
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Last Name
+                        <h3> Last Name</h3>
                     </label>
                     <input
                         type="text"
@@ -251,14 +248,13 @@ const Profile = () => {
                         value={userMeData.last_name || ''}
                         readOnly={!isEditing}
                         onChange={handleChange}
-                        className="mt-2 block w-full rounded-md bg-base-100 border border-base-300 py-2 pl-3 placeholder:text-gray-400 focus:outline-none"
-                    />
+                        />
                 </div>
                 {orgData && orgData.id &&
                     // {userMeData.organisation && userMeData.organisation.id &&
                     (<div>
                         <label className="block text-sm font-medium leading-6 text-gray-900">
-                            Organisation name
+                            <h3>Organisation name</h3>
                         </label>
                         <input
                             type="text"
@@ -266,14 +262,13 @@ const Profile = () => {
                             value={userMeData.organisation.name || ''}
                             readOnly={!isEditing}
                             onChange={handleLogoChange}
-                            className="mt-2 block w-full rounded-md bg-base-100 border border-base-300 py-2 pl-3 placeholder:text-gray-400 focus:outline-none"
-                        />
+                            />
                         <div className="mt-2 flex items-center gap-x-3">
                             <label
                                 htmlFor="avatar"
-                                className="block text-sm font-medium text-gray-900"
+                                className="block text-sm font-medium text-gray-900 mt-4"
                             >
-                                Logo
+                                <h3> Logo</h3>
                             </label>
                             <div className="mt-2 flex items-center gap-x-3">
                                 <img
@@ -285,7 +280,7 @@ const Profile = () => {
                                                 : URL.createObjectURL(userMeData.organisation.logo)
                                             : defaultAvatar
                                     }
-                                    className="h-16 w-18 rounded-full mb-6"
+                                    className="h-16 w-18 rounded-full"
                                 />
 
                                 <input
@@ -313,15 +308,14 @@ const Profile = () => {
                     </div>)}
                 <div>
                     <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Role
+                        <h3>Role</h3>
                     </label>
                     <input
                         type="text"
                         name="role"
                         value={userMeData.role || ''}
                         readOnly
-                        className="mt-2 block w-full rounded-md bg-base-100 border border-base-300 py-2 pl-3 placeholder:text-gray-400 focus:outline-none"
-                    />
+                        />
                 </div>
                 <div className="flex justify-end gap-x-6 mt-6">
                     {isEditing ? (
