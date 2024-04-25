@@ -26,12 +26,24 @@ const Project = () => {
       {projectData && (
         <>
           <ProjectHeader project={projectData} />
-          <ProjectEvaluation project={projectData} />
-          <ProjectValueProposition project={projectData} />
-          <ProjectPersonOfContact project={projectData} />
-          <ProjectBioMetric project={projectData} />
-          <ProjectThemeIndustry project={projectData} />
-          <ProjectFinancial project={projectData} />
+          <div className="flex">
+            <div className="flex-1">
+              <div className="flex justify-evenly">
+                <ProjectPersonOfContact project={projectData} />
+                <ProjectValueProposition project={projectData} />
+              </div>
+              <div className="flex justify-evenly">
+                <ProjectBioMetric project={projectData} />
+                <ProjectFinancial project={projectData} />
+              </div>
+              <div className="flex justify-evenly">
+                <ProjectThemeIndustry project={projectData} />
+              </div>
+            </div>
+            <div className="flex-1 border">
+              <ProjectEvaluation project={projectData} />
+            </div>
+          </div>
         </>
       )}
     </>
