@@ -7,6 +7,8 @@ import ProjectHeader from '../../../components/ProjectHeader'
 import ProjectPersonOfContact from '../../../components/ProjectPersonOfContact'
 import ProjectBioMetric from '../../../components/ProjectBioMetric'
 import ProjectFinancial from '../../../components/ProjectFinancial'
+import ProjectAffectedCard from '../../../components/ProjectAffectedCard'
+import ProjectSupportPriority from '../../../components/ProjectSupportPriority'
 
 const Project = () => {
   const { id } = useParams()
@@ -30,6 +32,8 @@ const Project = () => {
           <ProjectPersonOfContact project={projectData} />
           <ProjectBioMetric project={projectData} />
           <ProjectFinancial project={projectData} />
+          <ProjectAffectedCard project={projectData} />
+          <ProjectSupportPriority project={projectData} />
         </>
       )}
     </>
