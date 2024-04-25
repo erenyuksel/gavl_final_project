@@ -40,8 +40,16 @@ const Project = () => {
                 <ProjectThemeIndustry project={projectData} />
               </div>
             </div>
-            <div className="flex-1 border">
-              <ProjectEvaluation project={projectData} />
+            <div className="collapse collapse-arrow border border-base-300 bg-base-200 flex-1">
+              <input type="checkbox" />
+              <div className="collapse-title text-xl font-medium">
+                Evaluation
+              </div>
+              <div className="collapse-content">
+                <div className="flex-1 border">
+                  <ProjectEvaluation project={projectData} />
+                </div>
+              </div>
             </div>
           </div>
         </>
