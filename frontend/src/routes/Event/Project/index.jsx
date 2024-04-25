@@ -21,7 +21,7 @@ const Project = () => {
     {projectData && (
       <>
        <p>{projectData.name}</p>
-       <ProjectEvaluation project={projectData} />
+       <ProjectEvaluation project={projectData} key={projectData.id}/>
       </>
     )} 
     </>
