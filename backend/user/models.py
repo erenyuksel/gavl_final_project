@@ -7,7 +7,7 @@ def organisation_directory_path(instance, filename):
 
 
 class Organisation(models.Model):
-    name = models.CharField(verbose_name="organisation_name", max_length=200, unique=True)
+    name = models.CharField(verbose_name="organisation_name", max_length=200)
     logo = models.ImageField(verbose_name="logo", upload_to=organisation_directory_path, blank=True, null=True)
 
 
