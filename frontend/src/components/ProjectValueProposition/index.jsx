@@ -2,12 +2,13 @@ const ProjectValueProposition = ({ project }) => {
   const parsedContent = JSON.parse(project.content)
 
   return (
-    <div className="card card-compact bg-base-100 shadow-xl p-6">
+    <div className="card flex-row bg-base-100">
       <div className="card-body flex flex-col items-center">
         {/* Description */}
-        <h2 className="card-title text-center mb-6 text-lg font-bold">
-          {parsedContent.description}
-        </h2>
+        <div className="card text-center mb-6 font-semibold border text-lg flex-col">
+          <h2>Value Proposition</h2>
+          <p>"{parsedContent.description}"</p>
+        </div>
 
         {/* Content: Problem on the left, Solution on the right */}
         <div className="flex flex-col md:flex-row md:justify-between">
