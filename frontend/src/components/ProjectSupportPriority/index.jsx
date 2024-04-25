@@ -2,7 +2,7 @@ const ProjectSupportPriority = ({ project }) => {
   const parsedContent = JSON.parse(project.content)
 
   return (
-    <div className="card w-full max-w-xl bg-base-100 shadow-xl">
+    <div className="card flex-row bg-base-100">
       <div className="card-body">
         <h2 className="card-title text-lg font-bold mb-4">Support Priority</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">

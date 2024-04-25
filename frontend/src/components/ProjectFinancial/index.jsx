@@ -4,11 +4,9 @@ const ProjectFinancial = ({ project }) => {
 
   return (
     <>
-      <div className="card w-96 bg-base-100 shadow-xl">
+      <div className="card flex-row bg-base-100">
         <div className="card-body">
-          <h2 className="card-title justify-center">
-            Organization Financials
-          </h2>
+          <h2 className="card-title justify-center">Organization Financials</h2>
           <p className="text-center">Team size: {parsedContent['Team size']}</p>
           <p className="text-center">
             {

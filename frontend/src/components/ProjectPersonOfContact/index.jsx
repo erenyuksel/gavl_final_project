@@ -3,7 +3,7 @@ const ProjectPersonOfContact = ({ project }) => {
 
   return (
     <>
-      <div className="card flex-row w-96 bg-base-100 shadow-xl">
+      <div className="card flex-row bg-base-100">
         <div className="card-body items-center text-center justify-center">
           <div className="avatar placeholder">
             {parsedContent.logo ? (

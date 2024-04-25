@@ -30,32 +30,34 @@ const Project = () => {
           <ProjectHeader project={projectData} />
           <div className="flex">
             <div className="flex-1">
-              <div className="flex justify-evenly">
+              <div className='flex justify-evenly'>
                 <ProjectPersonOfContact project={projectData} />
+              </div>
+              <div className="flex justify-evenly">
                 <ProjectValueProposition project={projectData} />
               </div>
               <div className="flex justify-evenly">
                 <ProjectBioMetric project={projectData} />
+              </div>
+              <div className="flex justify-evenly">
                 <ProjectFinancial project={projectData} />
               </div>
               <div className="flex justify-evenly">
                 <ProjectThemeIndustry project={projectData} />
               </div>
-            </div>
-            <div className="collapse collapse-arrow border border-base-300 bg-base-200 flex-1">
-              <input type="checkbox" />
-              <div className="collapse-title text-xl font-medium">
-                Evaluation
+                <div className="flex justify-evenly">
+              <div className="flex justify-evenly">
+                <ProjectAffectedCard project={projectData} />
               </div>
-              <div className="collapse-content">
-                <div className="flex-1 border">
+                  <ProjectSupportPriority project={projectData} />
+                </div>
+              <div className="flex justify-evenly">
+              </div>
+            </div>
+            <div className="flex-1 border">
                   <ProjectEvaluation project={projectData} />
                 </div>
-              </div>
-            </div>
           </div>
-          <ProjectAffectedCard project={projectData} />
-          <ProjectSupportPriority project={projectData} />
         </>
       )}
     </>

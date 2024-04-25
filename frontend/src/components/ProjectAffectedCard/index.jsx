@@ -2,8 +2,8 @@ const ProjectAffectedCard = ({ project }) => {
   const parsedContent = JSON.parse(project.content)
 
   return (
-    <div className="card w-full max-w-xl bg-base-100 shadow-xl">
-      <div className="card-body grid grid-cols-2 gap-x-8">
+    <div className="card flex-row bg-base-100">
+      <div className="card-body gap-x-8">
         {/* Affected Realms */}
         <div className="col-span-1">
           <h2 className="card-title text-lg font-bold mb-4">Affected Realms</h2>

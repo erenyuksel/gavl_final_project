@@ -3,9 +3,9 @@ const ProjectBioMetric = ({ project }) => {
 
   return (
     <>
-      <div className="card w-96 bg-base-100 shadow-xl">
+      <div className="card flex-row bg-base-100">
         <div className="card-body">
-          <h2 className="card-title">
+          <h2 className="card-title justify-center">
             Key non-financial nature/biodiversity metric
           </h2>
           <p>
