@@ -5,6 +5,9 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 
+from project import settings
+from django.conf.urls.static import static
+
 from registration.urls import registration_urlpatterns
 from user.urls import user_urlpatterns, organisation_urlpatterns
 from event.urls import event_urlpatterns
@@ -42,3 +45,6 @@ urlpatterns = [
     path('backend/auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('backend/auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
