@@ -6,6 +6,8 @@ import ProjectValueProposition from '../../../components/ProjectValueProposition
 import ProjectHeader from '../../../components/ProjectHeader'
 import ProjectPersonOfContact from '../../../components/ProjectPersonOfContact'
 import ProjectBioMetric from '../../../components/ProjectBioMetric'
+import ProjectFinancial from '../../../components/ProjectFinancial'
+import ProjectAffectedCard from '../../../components/ProjectAffectedCard'
 
 const Project = () => {
   const { id } = useParams()
@@ -28,6 +30,8 @@ const Project = () => {
           <ProjectValueProposition project={projectData} />
           <ProjectPersonOfContact project={projectData} />
           <ProjectBioMetric project={projectData} />
+          <ProjectFinancial project={projectData} />
+          <ProjectAffectedCard project={projectData} />
         </>
       )}
     </>
