@@ -7,13 +7,12 @@
 }
 
 input {
-  @apply input input-bordered w-full max-w-xs border-custom-primary bg-input-background;
+  @apply input input-bordered w-full border-custom-primary bg-input-background;
 }
 
 textarea {
   @apply textarea textarea-bordered h-24 border-custom-primary;
 }
-
 
 h1 {
   @apply text-3xl font-bold text-gray-800 mt-2 mb-4;
