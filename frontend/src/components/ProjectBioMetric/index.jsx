@@ -6,7 +6,7 @@ const ProjectBioMetric = ({ project }) => {
       <div className="card flex-row bg-base-100">
         <div className="card-body">
           <h2 className="card-title justify-center">
-            Key non-financial nature/biodiversity metric
+            Key Non-Financial Nature/Biodiversity Metric
           </h2>
           <div className="text-center">
 

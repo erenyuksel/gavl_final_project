@@ -44,7 +44,7 @@ const Project = () => {
               <div className="flex justify-end mb-4">
                 <button
                   onClick={toggleEvaluation}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded flex items-center gap-1"
+                  className="btn btn-primary font-bold py-1 px-3 rounded flex items-center gap-1"
                 >
                   {isOpen ? (
                     <>
@@ -84,9 +84,9 @@ const Project = () => {
               <div className="flex justify-evenly"></div>
             </div>
             {!isOpen && (
-              <div className="flex-1 border collapsed-component">
+              <div className="flex-1 collapsed-component">
                 <div className="p-4 cursor-pointer" onClick={toggleEvaluation}>
-                  <h2 className="text-lg font-bold mb-2">Evaluation</h2>
+                  <h2 className="text-lg font-bold mb-2">Evaluation Criteria</h2>
                 </div>
 
                 <div>
