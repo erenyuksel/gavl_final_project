@@ -170,7 +170,7 @@ const ProjectEvaluation = ({ project }) => {
                         <>
                           <div
                             key={scale.uuid}
-                            className={`cursor-pointer flex flex-row m-2 bg-gray-100 shadow-sm rounded hover:bg-gray-300 transition duration-200 ease-in-out ${evaluationData[evaluationCriteria.name] == scale.value ? 'bg-green-200' : ''}`}
+                            className={`cursor-pointer flex flex-row m-2 bg-gray-100 shadow-sm rounded-full hover:bg-gray-300 transition duration-200 ease-in-out ${evaluationData[evaluationCriteria.name] == scale.value ? 'bg-green-200' : ''}`}
                             onClick={() =>
                               handleScaleChoice(
                                 evaluationCriteria.name,
@@ -178,7 +178,7 @@ const ProjectEvaluation = ({ project }) => {
                               )
                             }
                           >
-                            <span className="pr-4 bg-red-200 rounded pl-2 rounded-r-none flex items-center p-3">
+                            <span className="pr-4 bg-primary text-white rounded pl-3 rounded-r-none flex p-3">
                               {scale.value}
                             </span>
                             <span className="pl-4 flex items-center">

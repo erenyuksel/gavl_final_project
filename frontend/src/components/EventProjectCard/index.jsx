@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import defaultProjectLogo from '../../assets/default_project_logo.jpeg'
+
 
 const EventProjectCard = ({ project }) => {
   const navigate = useNavigate()
@@ -7,25 +9,22 @@ const EventProjectCard = ({ project }) => {
     e.preventDefault()
     navigate(`/project/${project.id}`)
   }
+
+  const default_logo_path = './.'
   return (
     <>
-      <div className="card card-side bg-base-100 shadow-xl">
+      <div className="flex flex-col pt-3 items-center card card-side bg-base-100 shadow-xl cursor-pointer hover:bg-gray-100 ease-in-outj" onClick={handleProjectView}>
         <figure>
           <img
-            src={project.project_logo}
+            // src={project.project_logo || "../../assets/default_project_logo.jpeg"}
+            src={defaultProjectLogo}
             alt="Project logo"
+            className='rounded-full h-20 w-20 mt-5'
           />
         </figure>
-        <div className="card-body">
-          <h2 className="card-title">{project.name}</h2>
-          <p>Click the button see project page.</p>
+        <h2 className="card-title text-center mt-8">{project.name}</h2>
+        <div className="card-body text-center">
           <p>{project.description}</p>
-
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary" onClick={handleProjectView}>
-              See Project
-            </button>
-          </div>
         </div>
       </div>
     </>
