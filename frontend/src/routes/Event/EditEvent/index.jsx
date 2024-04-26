@@ -1,29 +1,14 @@
 import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import JudgeAxios from '../../../axios/JudgeAxios'
-import EventInformationSection from '../../../components/EventInformation'
-import EventFileStructure from '../../../components/EventFileStructure'
 import ImportCSV from '../../../components/ImportCsv'
 
 const EditEvent = () => {
-  const [eventData, setEventData] = useState({})
   const { id } = useParams()
-
-  const handleUpdate = async () => {
-    try {
-      await JudgeAxios.patch(`events/${id}/`, eventData)
-      // Handle successful update, e.g., show a success message
-    } catch (error) {
-      console.error(error)
-      // Handle error, e.g., show an error message
-    }
-  }
-
-  // If we choose to add DeleteEvent we can add it here
 
   const handleDelete = async () => {
     try {
-      await JudgeAxios.delete(`events/${id}/`, eventData)
+      await JudgeAxios.delete(`events/${id}/`)
       Navigate('/events')
     } catch (error) {
       console.error(error)
@@ -33,15 +18,9 @@ const EditEvent = () => {
   return (
     <>
       <div>
-        <EventInformationSection event={eventData} />
-        <EventFileStructure event={eventData} />
         <ImportCSV event_id={id} />
-        <button className="btn w-60 mt-12" onClick={handleUpdate}>
-          Update Event
-        </button>
-
-        <button className="btn" onClick={handleDelete}>
-          Delete
+        <button className="btn mt-8" onClick={handleDelete}>
+          Delete Event
         </button>
       </div>
     </>

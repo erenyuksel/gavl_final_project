@@ -12,6 +12,7 @@ import Profile from './Profile'
 import Verification from './Auth/Verification'
 import InviteJury from './Auth/InviteJury'
 import ProtectedRoutes from './ProtectedRoutes'
+import EventStatisticPage from './Event/EventStatisticsPage'
 
 const Router = () => {
   return (
@@ -26,6 +27,7 @@ const Router = () => {
             <Route path="/" element={<ListEventPage />} />
             <Route path="/new-event" element={<AddNewEvent />} />
             <Route path="/event/:id" element={<ViewEvent />} />
+            <Route path="/event/statistics/:id" element={<EventStatisticPage />} />
             <Route path="/event/edit/:id/" element={<EditEvent />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/project/:id" element={<Project />} />
