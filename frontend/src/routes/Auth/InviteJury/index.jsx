@@ -3,6 +3,7 @@ import JudgeAxios from '../../../axios/JudgeAxios'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setEmail } from '../../../store/slices/userSlice'
+import Logo from '../../../assets/logo.png'
 
 const InviteJury = () => {
   //extract token from URL
@@ -68,57 +69,98 @@ const InviteJury = () => {
   }
 
   return (
-    <div className="flex justify-center items-start min-h-screen pt-8">
-      <form
-        onSubmit={handleSubmit}
-        className="form-control w-full max-w-lg p-4"
-      >
-        <h1 className="text-2xl font-bold text-center mb-4">
-          Hello {userInviteData.username}
-        </h1>
-        <div className="form-control w-full">
-          <label className="input-group">
-            <span className="w-32">E-Mail</span>
-            <input
-              type="email"
-              name="email"
-              value={userInviteData.email}
-              onChange={handleInputChange}
-              placeholder="E-Mail address"
-              className="input input-bordered w-full"
-              required
-            />
-          </label>
-          <label className="input-group">
-            <span className="w-32">Password</span>
-            <input
-              type="password"
-              name="password"
-              value={userInviteData.password}
-              onChange={handleInputChange}
-              placeholder="Password"
-              className="input input-bordered w-full"
-              required
-            />
-          </label>
-          <label className="input-group">
-            <span className="w-32">Repeat</span>
-            <input
-              type="password"
-              name="passwordRepeat"
-              value={userInviteData.passwordRepeat}
-              onChange={handleInputChange}
-              placeholder="Repeat password"
-              className="input input-bordered w-full"
-              required
-            />
-          </label>
+    <>
+      <div className="flex min-h-screen">
+        {/* Left Side */}
+        <div className="w-1/2 bg-gradient-to-b from-white to-logo flex flex-col justify-center items-center p-8 rounded-r-3xl shadow-2xl">
+          <img src={Logo} alt="Gavl Logo" className="mb-6 max-w-sm" />
+          <div className="text-xl text-center text-gray-700 mb-8 w-full">
+            <h1>Revolution in Rating</h1>
+          </div>
+          <div className="text-md text-center text-gray-600 w-full px-8">
+            <div className="py-1 w-full">
+              gavl is the premier platform for conducting fair and
+            </div>
+            <div className="py-1 w-4/5 mx-auto">
+              efficient evaluations. Our application connects
+            </div>
+            <div className="py-1 w-3/5 mx-auto">
+              panelists from diverse locations to
+            </div>
+            <div className="py-1 w-3/5 mx-auto">
+              meticulously assess contestants
+            </div>
+            <div className="py-1 w-2/5 mx-auto"> based on predefined</div>
+            <div className="py-1 w-1/5 mx-auto">criteria.</div>
+          </div>
         </div>
-        <button type="submit" className="btn btn-primary mt-4 w-full">
-          Finish registration
-        </button>
-      </form>
-    </div>
+        {/* Right Side */}
+        <div className="w-1/2 flex justify-center items-center">
+          <div className="flex min-h-full w-full flex-col justify-center items-center px-6 py-12 lg:px-8">
+            <form
+              onSubmit={handleSubmit}
+              className="form-control w-full max-w-md p-4 flex mx-auto"
+            >
+              {/* For background autofill */}
+              <style jsx>{`
+                input:-webkit-autofill {
+                  -webkit-box-shadow: 0 0 0 30px white inset !important;
+                  -webkit-text-fill-color: inherit !important;
+                  background-color: transparent !important;
+                }
+              `}</style>
+              <h1 className="text-center">Hello {userInviteData.username}</h1>
+              <p className="text-justify w-3/4 mx-auto">
+                You have been chosen to act as a panelist to rate various ideas.
+                Please complete the registration process!
+              </p>
+              <br />
+              <div className="form-control w-full mx-auto">
+                <label className="input-group mb-4">
+                  <input
+                    type="email"
+                    name="email"
+                    value={userInviteData.email}
+                    onChange={handleInputChange}
+                    placeholder="E-Mail address"
+                    className="w-4/5 flex mx-auto"
+                    required
+                  />
+                </label>
+                <label className="input-group mb-4 w-full">
+                  <input
+                    type="password"
+                    name="password"
+                    value={userInviteData.password}
+                    onChange={handleInputChange}
+                    placeholder="Password"
+                    className="w-4/5 flex mx-auto"
+                    required
+                  />
+                </label>
+                <label className="input-group mb-4 w-full">
+                  <input
+                    type="password"
+                    name="passwordRepeat"
+                    value={userInviteData.passwordRepeat}
+                    onChange={handleInputChange}
+                    placeholder="Repeat password"
+                    className="w-4/5 flex mx-auto"
+                    required
+                  />
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary mt-4 w-4/5 flex mx-auto"
+              >
+                Finish registration
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
