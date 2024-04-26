@@ -33,6 +33,7 @@ const Verification = () => {
         password_repeat: passwordRepeat,
         username,
         organisation_name: organisationName,
+        role: 'Organisation Admin',
       })
       navigate('/login')
     } catch (error) {

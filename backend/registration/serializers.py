@@ -67,7 +67,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class RegisterValidationSerializer(serializers.ModelSerializer):
-    # organisation = serializers.CharField()
     password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     code = serializers.CharField(style={'input_type': int})
     first_name = serializers.CharField()
@@ -81,13 +80,14 @@ class RegisterValidationSerializer(serializers.ModelSerializer):
         required=True,
         validators=[username_does_not_exist]
     )
+    role = serializers.CharField()
 
     organisation_name = serializers.CharField()
 
     class Meta:
         model = User
         fields = (
-            'email', 'username', 'code', 'first_name', 'last_name', 'password', 'password_repeat', 'organisation_name')
+            'email', 'username', 'code', 'first_name', 'last_name', 'password', 'password_repeat', 'role', 'organisation_name')
 
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -106,6 +106,7 @@ class RegisterValidationSerializer(serializers.ModelSerializer):
                 if password != password_repeat:
                     raise serializers.ValidationError({'password': 'Passwords are not matching'})
                 user.set_password(password)
+                user.role = self.validated_data['role']
                 user.is_active = True
                 user.registration_profile.code_used = True
 
