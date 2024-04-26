@@ -36,7 +36,7 @@ const ProjectPersonOfContact = ({ project }) => {
             {parsedContent['Place of registration (City; Country)']}
           </p>
           <p>
-            <strong>Legal Form of Organization: </strong>
+            <strong>Legal Form of Organisation: </strong>
             {parsedContent['Legal form of organization']}
           </p>
         </div>
