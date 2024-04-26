@@ -35,37 +35,40 @@ const Profile = () => {
         logo: ''
     })
 
-    const fetchUserMeData = async () => {
+    const fetchPreMeData = async () => {
         try {
             const response = await JudgeAxios.get(`/users/me/`)
-            // console.log('Fetched User Me Data:', response.data)
+            if (response.data && response.data.organisation && response.data.organisation.id) {
+                const responseOrg = await JudgeAxios.get(`/organisations/${response.data.organisation.id}/`)
+                setOrgData(responseOrg.data)
 
-            setPreMeData(response.data)
+                setPreMeData(response.data)
+                preMeData.organisation.logo = responseOrg.data.logo;
+            } else
+                setPreMeData(response.data)
+
         } catch (error) {
             console.error('Error by showing my User Data', error)
         }
     }
 
-    const fetchOrgData = async () => {
-        try {
-            const response = await JudgeAxios.get(`/organisations/${preMeData.organisation.id}/`)
-            setOrgData(response.data)
+    const putUserData = async () => {
+        if (orgData.logo)
+            preMeData.organisation.logo = orgData.logo;
 
-            preMeData.organisation.logo = response.data.logo;
-            setUserMeData(preMeData)
-        } catch (error) {
-            console.error('Error by showing my User Data', error)
-        }
+        setUserMeData(preMeData)
     }
+
     useEffect(() => {
-        fetchUserMeData()
+        fetchPreMeData()
     }, [])
 
     useEffect(() => {
-        if (preMeData.organisation.id) {
-            fetchOrgData()
+        if (preMeData.email) {
+            putUserData()
         }
-    }, [preMeData.organisation.id])
+    }, [preMeData.email])
+
 
     //Handle all changes
     const handleChange = (e) => {
@@ -248,7 +251,7 @@ const Profile = () => {
                         value={userMeData.last_name || ''}
                         readOnly={!isEditing}
                         onChange={handleChange}
-                        />
+                    />
                 </div>
                 {orgData && orgData.id &&
                     // {userMeData.organisation && userMeData.organisation.id &&
@@ -262,7 +265,7 @@ const Profile = () => {
                             value={userMeData.organisation.name || ''}
                             readOnly={!isEditing}
                             onChange={handleLogoChange}
-                            />
+                        />
                         <div className="mt-2 flex items-center gap-x-3">
                             <label
                                 htmlFor="avatar"
@@ -315,7 +318,7 @@ const Profile = () => {
                         name="role"
                         value={userMeData.role || ''}
                         readOnly
-                        />
+                    />
                 </div>
                 <div className="flex justify-end gap-x-6 mt-6">
                     {isEditing ? (
