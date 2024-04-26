@@ -4,13 +4,15 @@ const ProjectSupportPriority = ({ project }) => {
   return (
     <div className="card flex-row bg-base-100">
       <div className="card-body">
-        <h2 className="card-title text-lg font-bold mb-4">Support Priority</h2>
+        <h2 className="card-title text-lg justify-center font-bold mb-4">
+          Support Priority
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
           {/* First Priority */}
-          <div>
+          <div className="text-center">
             <div className="space-y-4">
               <h3 className="text-sm font-semibold">First Priority</h3>
-              <p>
+              <p className=" text-black">
                 {
                   parsedContent[
                     'Where do you need support in your organization? (First Priority)'
@@ -21,10 +23,10 @@ const ProjectSupportPriority = ({ project }) => {
           </div>
 
           {/* Second Priority */}
-          <div>
+          <div className="text-center">
             <div className="space-y-4">
               <h3 className="text-sm font-semibold">Second Priority</h3>
-              <p>
+              <p className="text-black">
                 {
                   parsedContent[
                     'Where do you need support in your organization? (Second Priority)'
