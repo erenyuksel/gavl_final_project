@@ -7,8 +7,12 @@ const ProjectFinancial = ({ project }) => {
       <div className="card flex-row bg-base-100">
         <div className="card-body">
           <h2 className="card-title justify-center">Organization Financials</h2>
-          <p className="text-center">Team size: {parsedContent['Team size']}</p>
           <p className="text-center">
+            <strong>Team size: </strong>
+            {parsedContent['Team size']}
+          </p>
+          <p className="text-center">
+            <strong>Stage of Maturity: </strong>
             {
               parsedContent[
                 'What is the stage or maturity of your idea/project?'
@@ -16,6 +20,7 @@ const ProjectFinancial = ({ project }) => {
             }
           </p>
           <p className="text-center">
+            <strong>Profit/Non-Profit: </strong>
             {
               parsedContent[
                 'Is your organisation for profit or not for profit?'
@@ -23,6 +28,7 @@ const ProjectFinancial = ({ project }) => {
             }
           </p>
           <p className="text-center">
+            <strong>Funding Stage: </strong>
             {
               parsedContent[
                 'On what funding stage is your organization within the startup-journey?'
@@ -30,7 +36,10 @@ const ProjectFinancial = ({ project }) => {
             }
           </p>
           <p className="text-center">
-            Total amount of grant funding:{' '}
+            <strong>
+              Total Amount of Grant Funding Received Over The Past Twelve
+              Months:{' '}
+            </strong>
             {
               parsedContent[
                 'Please share the total amount of grant funding that you have received over the past twelve months.'
@@ -38,7 +47,7 @@ const ProjectFinancial = ({ project }) => {
             }
           </p>
           <p className="text-center">
-            Total Amount of grant raised:{' '}
+            <strong>Total Amount of Non-Grant Received Funding: </strong>
             {
               parsedContent[
                 'If you have raised any funds that are not grants please share the total amount raised to date.'
