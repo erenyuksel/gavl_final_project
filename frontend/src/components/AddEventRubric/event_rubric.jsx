@@ -1,15 +1,21 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import EvaluationCriteriaCard from "./evaluation_criteria_card";
-import { useDispatch, useSelector } from 'react-redux';
-import EvaluationCriteriaScale from "./evaluation_criteria_scale";
-import { clearEventEvaluationCriteriaScales, updateEventEvaluationCriteria, updateEventEvaluationCriteriaScales } from "../../store/slices/newEventSlice";
-
-
+import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import EvaluationCriteriaCard from './evaluation_criteria_card'
+import { useDispatch, useSelector } from 'react-redux'
+import EvaluationCriteriaScale from './evaluation_criteria_scale'
+import {
+  clearEventEvaluationCriteriaScales,
+  updateEventEvaluationCriteria,
+  updateEventEvaluationCriteriaScales,
+} from '../../store/slices/newEventSlice'
 
 const EventRubric = () => {
-  const evaluationCriteria = useSelector(state => state.event.eventEvaluationCriteria)
-  const evaluationCriteriaScales = useSelector(state => state.event.eventEvaluationCriteriaScales)
+  const evaluationCriteria = useSelector(
+    (state) => state.event.eventEvaluationCriteria,
+  )
+  const evaluationCriteriaScales = useSelector(
+    (state) => state.event.eventEvaluationCriteriaScales,
+  )
   const dispatch = useDispatch()
 
   // use state for storing the evaluation criteria object. incl. the scales
@@ -29,21 +35,20 @@ const EventRubric = () => {
 
   // handling form values of the evaluation criteria scales in a usestate
   const handleScaleInput = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setScaleData({
       ...scaleData,
-      [name]: value
-    });
-
+      [name]: value,
+    })
   }
   // handling form values of the main fields of the evaluation criteria
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [name]: value
-    });
-  };
+      [name]: value,
+    })
+  }
 
   const handlAddCriteria = (e) => {
     e.preventDefault()
@@ -82,49 +87,68 @@ const EventRubric = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <p>Defining Evaluation Criteria</p>
-      <p>Define here the criterias your jury shoudld use to evaluate all contestants.</p>
-      <input
-      className="input input-bordered" 
-      type="text" 
-      placeholder="Name"
-      value={formData.name}
-      name="name"
-      onChange={handleInputChange}
-      ></input>
-      <textarea
-      className="input input-bordered" 
-      type="text" 
-      placeholder="Description"
-      value={formData.description}
-      name="description"
-      onChange={handleInputChange}
-      ></textarea>
-      <p>Scale</p>
-      <input
-      className="input input-bordered" 
-      type="number" 
-      placeholder="Value"
-      value={scaleData.value}
-      name="value"
-      onChange={handleScaleInput}
-      ></input>
-      <textarea
-      className="input input-bordered" 
-      type="text" 
-      placeholder="Description"
-      value={scaleData.description}
-      name="description"
-      onChange={handleScaleInput}
-      ></textarea>
-      <button className="btn" onClick={handleAddScale}>Add scale</button>
-      {evaluationCriteriaScales.map(obj => {
-        return <EvaluationCriteriaScale obj={obj} key={obj.uuid} />
-      })}
-      <button className="btn" onClick={handlAddCriteria}>Add Criteria</button>
-      {evaluationCriteria.map(obj => {
+    <div className="flex flex-col items-center gap-2 m-5">
+      <h2>Defining Evaluation Criteria</h2>
+      <p>Define the criteria that you will use to evaluate all contestants.</p>
+      <div className="m-5">
+        <h4>
+          <i>Criteria</i>
+        </h4>
+      </div>
+      <div className="w-full sm:w-[40rem]">
+        <input
+          className="input input-bordered"
+          type="text"
+          placeholder="Name"
+          value={formData.name}
+          name="name"
+          onChange={handleInputChange}
+        ></input>
+      </div>
+      <div className="w-full sm:w-[40rem] m-3">
+        <textarea
+          className="input input-bordered w-full sm:w-[40rem]"
+          type="text"
+          placeholder="Description"
+          value={formData.description}
+          name="description"
+          onChange={handleInputChange}
+        ></textarea>
+      </div>
+      <button className="btn bg-primary" onClick={handlAddCriteria}>
+        Add Criteria
+      </button>
+      {evaluationCriteria.map((obj) => {
         return <EvaluationCriteriaCard obj={obj} key={obj.uuid} />
+      })}
+      <div className="m-3">
+        <h4>
+          <i>Scale</i>
+        </h4>
+      </div>
+      <div className="w-full sm:w-[40rem] m-3 flex-row">
+        <input
+          className="input input-bordered"
+          type="number"
+          placeholder="Value"
+          value={scaleData.value}
+          name="value"
+          onChange={handleScaleInput}
+        ></input>
+        <textarea
+          className="input input-bordered w-full sm:w-[40rem]"
+          type="text"
+          placeholder="Description"
+          value={scaleData.description}
+          name="description"
+          onChange={handleScaleInput}
+        ></textarea>
+      </div>
+      <button className="btn bg-primary" onClick={handleAddScale}>
+        Add scale
+      </button>
+      {evaluationCriteriaScales.map((obj) => {
+        return <EvaluationCriteriaScale obj={obj} key={obj.uuid} />
       })}
     </div>
   )
