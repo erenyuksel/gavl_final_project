@@ -17,7 +17,7 @@ const ProjectEvaluation = ({ project }) => {
         const user_response = await JudgeAxios.get('users/me')
         setUserData(user_response.data)
       } catch (error) {
-        console.error('Error getting user information'.error)
+        console.error('Error getting user information', error)
       }
     }
     getBasicInfos()
