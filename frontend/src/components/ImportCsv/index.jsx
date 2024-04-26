@@ -77,25 +77,27 @@ function ImportCSV({ event_id }) {
   }
 
   return (
-    <div className="App">
+    <div className='card bg-base-100 shadow-xl p-5'>
+      <div>
+      <h2>Project Data Importer</h2>
+      <p>Upload your CSV file here. </p>
+      <br/>
+      </div>
+      <div>
       <input
         type="file"
-        className="file-input file-input-bordered w-full max-w-xs"
+        className="file-input w-full max-w-xs"
         accept=".csv"
         onChange={handleFileUpload}
       />
-      <div className="progress-container">
-        <div className="progress-bar" style={{ width: `${progress}%` }}>
-          {progress}%
-        </div>
-      </div>
       {data.length > 1 && (
         <>
-          <button className="btn" onClick={handleProjectCreation}>
+          <button className="btn ml-6" onClick={handleProjectCreation}>
             Upload File
           </button>
         </>
       )}
+      </div>
     </div>
   )
 }
