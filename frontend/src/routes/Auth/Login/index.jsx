@@ -56,7 +56,7 @@ const Login = () => {
         <div className="w-1/2 bg-gradient-to-b from-white to-logo flex flex-col justify-center items-center p-8 rounded-r-3xl shadow-2xl">
           <img src={Logo} alt="Gavl Logo" className="mb-6 max-w-sm" />
           <div className="text-xl text-center text-gray-700 mb-8 w-full">
-            <h1>"Revolution in Rating"</h1>
+            <h1>Revolution in Rating</h1>
           </div>
           <div className="text-md text-center text-gray-600 w-full px-8">
             <div className="py-1 w-full">
@@ -79,8 +79,16 @@ const Login = () => {
         <div className="w-1/2 flex justify-center items-center">
           <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-ms flex flex-col">
-              <h1 className="text-center mb-10">Welcome back!</h1>
-              <label className="input input-bordered flex items-center gap-2 mb-4 border-custom-primary  bg-input-background">
+              {/* For background autofill */}
+              <style jsx>{`
+                input:-webkit-autofill {
+                  -webkit-box-shadow: 0 0 0 30px white inset !important;
+                  -webkit-text-fill-color: inherit !important;
+                  background-color: transparent !important;
+                }
+              `}</style>
+              <h1 className="text-center mb-10">Welcome</h1>
+              <label className="input input-bordered flex items-center gap-2 mb-4 border-custom-primary  bg-input-background py-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -99,7 +107,7 @@ const Login = () => {
                   onChange={handleInputChange}
                 />
               </label>
-              <label className="input input-bordered flex items-center gap-2 mb-4 border-custom-primary  bg-input-background">
+              <label className="input input-bordered flex items-center gap-2 mb-4 border-custom-primary  bg-input-background py-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
