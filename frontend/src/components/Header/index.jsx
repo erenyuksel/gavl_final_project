@@ -20,7 +20,7 @@ function Header() {
     return (
         <>
             <div className="shadow-xl m-6 rounded-full border-custom-primary">
-                <div className="navbar bg-base-200  rounded-full border-custom-primary">
+                <div className="navbar bg-base-100  rounded-full border-custom-primary">
                     <div className="navbar-start">
                         <Link to="/" className="btn btn-ghost btn-circle">
                             <img src={Logo} alt="Gavl Logo" className="w-full h-full object-cover rounded-full"/>
