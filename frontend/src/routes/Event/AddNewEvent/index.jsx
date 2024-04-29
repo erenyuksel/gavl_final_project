@@ -47,17 +47,45 @@ const AddNewEvent = () => {
           project_file_structure: JSON.stringify(eventProjectStructure),
         })
         if (response) {
-          //send judges data to the endpoint to send emails to judges
-          judges.forEach(async (judge) => {
-            await JudgeAxios.post(`/users/?event_name=${eventInfo.eventName}`, {
-              id: judge.id,
-              first_name: judge.firstName,
-              last_name: judge.lastName,
-              email: judge.email,
-              username: judge.username,
-              role: 'Judge',
-            })
-          })
+          //create empty array for judgesID
+          let judgeIds = []
+
+          await Promise.all(
+            judges.map(async (judge) => {
+              try {
+                //send judges data to the endpoint to send emails to judges
+                const response = await JudgeAxios.post(
+                  `/users/?event_name=${eventInfo.eventName}`,
+                  {
+                    id: judge.id,
+                    first_name: judge.firstName,
+                    last_name: judge.lastName,
+                    email: judge.email,
+                    username: judge.username,
+                    role: 'Judge',
+                  },
+                )
+                //ad JudgesID to the EventId
+                judgeIds.push(response.data.id)
+              } catch (error) {
+                console.error('Error adding judge:', error)
+              }
+            }),
+          )
+
+          // After adding all judges, update the event with the list of judge IDs
+          try {
+            const patchResponse = await JudgeAxios.patch(
+              `/events/${response.data.id}/`,
+              {
+                judges: judgeIds,
+              },
+            )
+            console.log('Event updatet with judges:', patchResponse)
+            console.log('Event ID', response.data.id)
+          } catch (error) {
+            console.error('Error updating event with judges:', error)
+          }
           // if successfull we clear the whole redux states so that the new event form is usable again
           dispatch(setEventInformation({}))
           dispatch(clearEventEvaluationCriteria())
@@ -71,28 +99,28 @@ const AddNewEvent = () => {
       console.error('Please provide all the necessary information')
     }
   }
+
   return (
     <>
-    <div className='text-center'>
-      <h1>Create new event</h1>
-    </div>
+      <div className="text-center">
+        <h1>Create new event</h1>
+      </div>
       <AddEventInformation />
-      <div className='text-center'>
-      <AddProjectContent />
+      <div className="text-center">
+        <AddProjectContent />
       </div>
-      <div className='text-center'>
-      <EventRubric />
+      <div className="text-center">
+        <EventRubric />
       </div>
-      {/* Eren will work on styling these components */}
-      {/* <div className='text-center border'>
-      <AddInviteJudges />
-      </div> */}
-      {/* <div className='text-center'>
 
-      <button className="btn" onClick={handleCreateEvent}>
-        Create Event
-      </button>
-      </div> */}
+      <div className="text-center border">
+        <AddInviteJudges />
+      </div>
+      <div className="text-center">
+        <button className="btn" onClick={handleCreateEvent}>
+          Create Event
+        </button>
+      </div>
     </>
   )
 }
