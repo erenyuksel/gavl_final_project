@@ -19,13 +19,12 @@ class EventListCreateView(ListCreateAPIView):
             # Organisation Admins see events owned by their organisation
             return Event.objects.filter(owner=self.request.user.organisation.id)
 
-        elif self.request.user.role == 'Admin': # Admins see all events
+        elif self.request.user.role == 'Admin':  # Admins see all events
             return Event.objects.all()
 
         elif self.request.user.role == 'Judge':
             # Judges see events where they are listed as judges
             return Event.objects.filter(judges=self.request.user)
-
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user.organisation)
