@@ -1,8 +1,35 @@
-const EventInformationSection = ({ event }) => {
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
+
+const EventInformationSection = ({ event }) => {
+  const userProfile = useSelector(state => state.user.user)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const navigate = useNavigate()
+
+  // set admin priviliges to view edit event and statistics page
+  useEffect(() => {
+    if (userProfile) {
+      if (userProfile.role === 'Organisation Admin') {
+        setIsAdmin(true)
+      }
+    }
+  }, [userProfile])
+
+  // handler to navigate user to the Edit Event page
+  const handleEditEventNav = () => {
+    navigate(`/event/edit/${event.id}`)
+  }
+
+  // handler to navigate user to the event statistics page
+  const handleEventStatsNav = () => {
+    navigate(`/event/statistics/${event.id}`)
+  }
+
+  // checks the event start and end dates and provides event status
   const getStatus = (startDate, endDate) => {
     const currentDate = new Date();
-  
     if (currentDate < startDate) {
       return <p className="badge badge-lg bg-orange-300">upcoming</p>
     } else if (currentDate >= startDate && currentDate <= endDate) {
@@ -14,16 +41,22 @@ const EventInformationSection = ({ event }) => {
 
   return (
     <>
-    <div className="flex flex-col w-100 items-center">
-      <h1>{event.name}</h1>
-      <div>
-        <h2>{event.description}</h2>
+      <div className="flex flex-col w-100 items-center">
+        <h1>{event.name}</h1>
+        <div>
+          <h2>{event.description}</h2>
+        </div>
+        <div className="flex flex-row align-middle">
+          <h4>Event status:</h4>
+          {getStatus(event.start_date, event.end_date)}
+        </div>
+        {isAdmin && (
+          <div className='flex flex-row gap-3 m-4'>
+            <button className='btn btn-primary' onClick={handleEditEventNav}>Edit Event</button>
+            <button className='btn btn-primary' onClick={handleEventStatsNav}>Event Statistics</button>
+          </div>
+        )}
       </div>
-      <div className="flex flex-row align-middle">
-        <h4>Event status:</h4>
-        {getStatus(event.start_date, event.end_date)}
-      </div>
-    </div>
     </>
   )
 }

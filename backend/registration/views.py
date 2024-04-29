@@ -4,6 +4,8 @@ from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+
+from project.permissions import IsJudgeUser
 from project.settings import DEFAULT_FROM_EMAIL
 from registration.models import RegistrationProfile
 from registration.serializers import RegisterSerializer, RegisterValidationSerializer, \
@@ -53,8 +55,8 @@ class RegisterValidationView(GenericAPIView):
 
 class RegisterPasswordView(GenericAPIView):
     serializer_class = RegisterPasswordSerializer
-    # TODO change permissions to Judges
-    # permission_classes = [AllowAny, ]
+    # TODO change permissions to Judges  >> to test better!
+    permission_classes = [IsJudgeUser, ]
 
     def patch(self, request, *args, **kwargs):
         data = request.data
