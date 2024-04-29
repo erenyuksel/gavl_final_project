@@ -73,14 +73,26 @@ const AddNewEvent = () => {
   }
   return (
     <>
+    <div className='text-center'>
       <h1>Create new event</h1>
+    </div>
       <AddEventInformation />
+      <div className='text-center'>
       <AddProjectContent />
+      </div>
+      <div className='text-center'>
       <EventRubric />
+      </div>
+      {/* Eren will work on styling these components */}
+      {/* <div className='text-center border'>
       <AddInviteJudges />
+      </div> */}
+      {/* <div className='text-center'>
+
       <button className="btn" onClick={handleCreateEvent}>
         Create Event
       </button>
+      </div> */}
     </>
   )
 }

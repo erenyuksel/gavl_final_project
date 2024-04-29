@@ -10,7 +10,7 @@ const AddProjectContent = () => {
   const [formData, setFormData] = useState({
     uuid: uuidv4(),
     name: '',
-    type: 'default',
+    type: '',
     content: ''
   })
 
@@ -37,9 +37,11 @@ const AddProjectContent = () => {
 
   return(
     <>
-      <h2>Defining project information</h2>
-      <p>Define here the information which the Contestants need to provide to participate in your event.
+    <div className='flex-row justify-between m-5'>
+      <h2>Defining Project Information</h2>
+      <p>Define here the information which the contestants need to provide to participate in your event.
       </p>
+    </div>
       <div className="join">
         <div className="flex">
           <div>
@@ -59,7 +61,7 @@ const AddProjectContent = () => {
           </select>
           <div className="indicator">
             <button 
-            className="btn join-item"
+            className="btn bg-primary hover:bg-gray-300 join-item"
             onClick={handlAddField}>Add Field</button>
           </div>
         </div>
