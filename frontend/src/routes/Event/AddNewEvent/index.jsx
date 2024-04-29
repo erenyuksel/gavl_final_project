@@ -83,6 +83,7 @@ const AddNewEvent = () => {
       <div className='text-center'>
       <EventRubric />
       </div>
+      {/* Eren will work on styling these components */}
       {/* <div className='text-center border'>
       <AddInviteJudges />
       </div> */}
