@@ -2,9 +2,31 @@ import { Link } from 'react-router-dom'
 import EventCard from '../../../components/EventCard'
 import { useEffect, useState } from 'react'
 import JudgeAxios from '../../../axios/JudgeAxios'
+import {useDispatch, useSelector} from "react-redux";
+import {setUser} from "../../../store/slices/userSlice.js";
 
 const ListEventPage = () => {
-  const [events, setEvents] = useState([])
+    const [events, setEvents] = useState([])
+    const token = localStorage.getItem('token')
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.user.user)
+
+    const getCurrentUser = async () => {
+        try {
+            const response = await JudgeAxios.get(`/users/me/`)
+            dispatch(setUser(response.data))
+        } catch (error) {
+            console.error('Error by showing my User Data', error)
+        }
+    }
+
+    useEffect(() => {
+        if ((token !== null) && (user === null)) {
+            getCurrentUser()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token]);
+
 
   useEffect(() => {
     const fetchEvents = async () => {

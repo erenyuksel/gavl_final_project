@@ -1,8 +1,11 @@
 import {useEffect, useState, useRef} from 'react'
 import JudgeAxios from '../../axios/JudgeAxios'
 import defaultAvatar from '../../assets/default Avatar.png'
+import {updateUserField} from "../../store/slices/userSlice.js";
+import {useDispatch} from "react-redux";
 
 const Profile = () => {
+    const dispatch = useDispatch()
     //Changed and set fetched User Data
     const [preMeData, setPreMeData] = useState({
         username: '',
@@ -155,6 +158,12 @@ const Profile = () => {
         try {
             const response = await JudgeAxios.patch(`/users/me/`, formData)
             setIsEditing(false)
+
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+                if (key !== 'organisation')
+                    dispatch(updateUserField({ field: key, value: value }));
+            }
         } catch (error) {
             console.error('Error, users Data could not saved', error)
         }
@@ -170,7 +179,7 @@ const Profile = () => {
                 >
                     <h3>Avatar</h3>
                 </label>
-                <div className="mt-2 flex items-center gap-x-3">
+                <div className="mt-2 flex items-center gap-x-3 mb-6">
                     <img
                         alt="Avatar User"
                         src={
@@ -180,7 +189,7 @@ const Profile = () => {
                                     : URL.createObjectURL(userMeData.avatar)
                                 : defaultAvatar
                         }
-                        className="h-16 w-18 rounded-full mb-6"
+                        className="h-16 w-18 rounded-full"
                     />
                     <input
                         type="file"
