@@ -1,100 +1,64 @@
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import Logo from '../../assets/roundLogo.png'
+import {useDispatch, useSelector} from "react-redux";
+import {clearUser} from "../../store/slices/userSlice.js";
+import defaultAvatar from '../../assets/default Avatar.png'
 
 function Header() {
-  const navigate = useNavigate()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const currentUser = useSelector((state) => state.user.user)
+    console.log("HEADER currentUser", currentUser)
 
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    navigate('/login')
-  }
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        dispatch(clearUser());
+        navigate('/login')
+    }
 
-  return (
-    <>
-      <div className="navbar bg-neutral text-neutral-content">
-        <div className="navbar-start">
-          {/* Dropdown menu left side */}
-          <div className="dropdown">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
-              {/*SVG Menu Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h7"
-                />
-              </svg>
+    return (
+        <>
+            <div className="shadow-xl m-6 rounded-full border-custom-primary">
+                <div className="navbar bg-base-200  rounded-full border-custom-primary">
+                    <div className="navbar-start">
+                        <Link to="/" className="btn btn-ghost btn-circle">
+                            <img src={Logo} alt="Gavl Logo" className="w-full h-full object-cover rounded-full"/>
+                        </Link>
+                    </div>
+                    <div className="navbar-end">
+                        {currentUser && <p className="text-xl p-3">{currentUser.username}</p>}
+                        <Link to="/profile" className="btn btn-ghost btn-circle">
+                            <div className="w-12">
+                                {currentUser &&
+                                    <img
+                                        alt="Avatar User"
+                                        src={
+                                            currentUser.avatar
+                                                ? typeof currentUser.avatar === 'string'
+                                                    ? currentUser.avatar
+                                                    : URL.createObjectURL(currentUser.avatar)
+                                                : defaultAvatar
+                                        }
+                                        className="w-full h-full object-cover rounded-full"
+                                    />
+                                }
+                            </div>
+                        </Link>
+                        <button className="btn btn-ghost btn-circle" onClick={handleLogout}>
+                            <div className="indicator">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"/>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </div>
             </div>
-            {/* Dropdown List */}
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-              style={{ backgroundColor: '#f9fafb', color: '#111827' }}
-            >
-              <li>
-                <Link to="/" className="justify-between">
-                  My Events
-                </Link>
-              </li>
-              <li>
-                <a>XXX</a>
-              </li>
-              <li>
-                <a>XXXX</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        {/* middle-Part*/}
-        <div className="navbar-center">
-          <a className="btn btn-ghost text-xl">Project Name</a>
-        </div>
-
-        {/* Right side of the header */}
-        <div className="navbar-end">
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Avatar User"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
-              </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-150 rounded-box w-52"
-              style={{ backgroundColor: '#f9fafb', color: '#111827' }}
-            >
-              <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                </Link>
-              </li>
-              <li onClick={handleLogout}>
-                <a>Logout</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default Header
