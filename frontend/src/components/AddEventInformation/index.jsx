@@ -42,7 +42,7 @@ const AddEventInformation = () => {
           name="eventName"
           value={formData.eventName}
           onChange={handleChange}
-          className="input input-bordered"
+          className="input input-bordered shadow"
         />
       </div>
       {/* Date input for Start & End Date */}
@@ -56,7 +56,7 @@ const AddEventInformation = () => {
             name="startDate"
             value={formData.start_date}
             onChange={handleChange}
-            className="input input-bordered"
+            className="input input-bordered shadow"
           />
         </div>
         <div className="form-control">
@@ -68,7 +68,7 @@ const AddEventInformation = () => {
             name="endDate"
             value={formData.endDate}
             onChange={handleChange}
-            className="input input-bordered"
+            className="input input-bordered shadow"
           />
         </div>
       </div>
@@ -82,7 +82,7 @@ const AddEventInformation = () => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="textarea textarea-bordered h-24"
+          className="textarea textarea-bordered shadow h-24"
         ></textarea>
       </div>
     </div>

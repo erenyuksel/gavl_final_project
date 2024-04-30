@@ -87,70 +87,91 @@ const EventRubric = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-2 m-5">
-      <h2>Defining Evaluation Criteria</h2>
-      <p>Define the criteria that you will use to evaluate all contestants.</p>
-      <div className="m-5">
-        <h4>
-          <i>Criteria</i>
-        </h4>
+    <>
+      <div className="flex shadow w-full flex-col items-center m-14   pt-5">
+        <h2>Defining Evaluation Criteria</h2>
+        <p>
+          Define the criteria that you will use to evaluate all contestants.
+        </p>
+        <div className="m-5 mt-10">
+          <h3>
+            <span className="underline underline-offset-auto font-bold  ">
+              Criteria
+            </span>
+          </h3>
+        </div>
+        <div className="w-full sm:w-[40rem]">
+          <input
+            className="input shadow input-bordered"
+            type="text"
+            placeholder="Name"
+            value={formData.name}
+            name="name"
+            onChange={handleInputChange}
+          ></input>
+        </div>
+        <div className="w-full sm:w-[40rem] m-3">
+          <textarea
+            className="input input-bordered shadow w-full sm:w-[40rem]"
+            type="text"
+            placeholder="Description"
+            value={formData.description}
+            name="description"
+            onChange={handleInputChange}
+          ></textarea>
+        </div>
+
+        <div className=" mt-10">
+          <h3>
+            <span className="underline underline-offset-auto font-bold">
+              Scale
+            </span>
+          </h3>
+          {evaluationCriteriaScales.map((obj) => (
+            <EvaluationCriteriaScale obj={obj} key={obj.uuid} />
+          ))}
+        </div>
+
+        <div className="flex flex-wrap items-center w-full sm:w-[40rem] m-3">
+          <div className="flex w-1/2 flex-grow items-center">
+            <input
+              className="input shadow input-bordered"
+              type="number"
+              placeholder="Value"
+              value={scaleData.value}
+              name="value"
+              onChange={handleScaleInput}
+            />
+            <textarea
+              className="input input-bordered shadow flex w-full min-w-0 m-3"
+              type="text"
+              placeholder="Description"
+              value={scaleData.description}
+              name="description"
+              onChange={handleScaleInput}
+            />
+          </div>
+          <button
+            className="btn bg-primary m-3 shadow-xl"
+            onClick={handleAddScale}
+          >
+            Add scale
+          </button>
+        </div>
+        <button
+          className="btn m-10  bg-gray-400 shadow-xl"
+          onClick={handlAddCriteria}
+        >
+          Add Criteria
+        </button>
       </div>
-      <div className="w-full sm:w-[40rem]">
-        <input
-          className="input input-bordered"
-          type="text"
-          placeholder="Name"
-          value={formData.name}
-          name="name"
-          onChange={handleInputChange}
-        ></input>
+
+      <div>
+        {evaluationCriteria.map((obj) => {
+          return <EvaluationCriteriaCard obj={obj} key={obj.uuid} />
+        })}
       </div>
-      <div className="w-full sm:w-[40rem] m-3">
-        <textarea
-          className="input input-bordered w-full sm:w-[40rem]"
-          type="text"
-          placeholder="Description"
-          value={formData.description}
-          name="description"
-          onChange={handleInputChange}
-        ></textarea>
-      </div>
-      <button className="btn bg-primary" onClick={handlAddCriteria}>
-        Add Criteria
-      </button>
-      {evaluationCriteria.map((obj) => {
-        return <EvaluationCriteriaCard obj={obj} key={obj.uuid} />
-      })}
-      <div className="m-3">
-        <h4>
-          <i>Scale</i>
-        </h4>
-      </div>
-      <div className="w-full sm:w-[40rem] m-3 flex-row">
-        <input
-          className="input input-bordered"
-          type="number"
-          placeholder="Value"
-          value={scaleData.value}
-          name="value"
-          onChange={handleScaleInput}
-        ></input>
-        <textarea
-          className="input input-bordered w-full sm:w-[40rem]"
-          type="text"
-          placeholder="Description"
-          value={scaleData.description}
-          name="description"
-          onChange={handleScaleInput}
-        ></textarea>
-      </div>
-      <button className="btn bg-primary" onClick={handleAddScale}>
-        Add scale
-      </button>
-      {evaluationCriteriaScales.map((obj) => {
-        return <EvaluationCriteriaScale obj={obj} key={obj.uuid} />
-      })}
-    </div>
+    </>
   )
 }
 

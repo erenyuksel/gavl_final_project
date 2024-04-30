@@ -21,10 +21,16 @@ const ViewEvent = () => {
   }, [])
 
   return (
-    <>
-      <EventInformationSection event={eventData} />
-      <EventProjectView event={eventData} />
-    </>
+    <div className="w-100 flex flex-col items-center">
+      <div className="w-3/4">
+        <div className="card bg-base-100 shadow-xl p-7">
+          <EventInformationSection event={eventData}/>
+        </div>
+        <div>
+          <EventProjectView event={eventData} />
+        </div>
+      </div>
+    </div>
   )
 
     
