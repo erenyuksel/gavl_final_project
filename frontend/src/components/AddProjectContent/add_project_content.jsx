@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateEventProjectStructure } from '../../store/slices/newEventSlice';
-import DataField from './project_data_field';
-import { v4 as uuidv4 } from 'uuid';
-
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateEventProjectStructure } from '../../store/slices/newEventSlice'
+import DataField from './project_data_field'
+import { v4 as uuidv4 } from 'uuid'
 
 const AddProjectContent = () => {
   const dispatch = useDispatch()
@@ -11,18 +10,20 @@ const AddProjectContent = () => {
     uuid: uuidv4(),
     name: '',
     type: '',
-    content: ''
+    content: '',
   })
 
-  const currentStructure = useSelector(state => state.event.eventProjectStructure)
+  const currentStructure = useSelector(
+    (state) => state.event.eventProjectStructure,
+  )
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [name]: value
-    });
-  };
+      [name]: value,
+    })
+  }
 
   const handlAddField = (e) => {
     e.preventDefault()
@@ -31,38 +32,51 @@ const AddProjectContent = () => {
       uuid: uuidv4(),
       name: '',
       type: formData.type,
-      content: ''
+      content: '',
     })
   }
 
-  return(
-    <>
-    <div className='flex-row justify-between m-5'>
-      <h2>Defining Project Information</h2>
-      <p>Define here the information which the contestants need to provide to participate in your event.
-      </p>
-    </div>
-      <div className="join">
+  return (
+    <div className="p-10">
+      <div className="flex-row justify-between m-5">
+        <h2>Defining Project Information</h2>
+        <p>
+          Define here the information which the contestants need to provide to
+          participate in your event.
+        </p>
+      </div>
+      <div className="flex justify-center join">
         <div className="flex">
-          <div>
-            <input 
-            className="input input-bordered join-item" 
-            placeholder="Name" 
-            value={formData.name}
-            type="text"
-            name="name"
-            onChange={handleInputChange}/>
+          <div className="w-full">
+            <input
+              className="input shadow input-bordered join-item"
+              placeholder="Name"
+              value={formData.name}
+              type="text"
+              name="name"
+              onChange={handleInputChange}
+            />
           </div>
-          <select className="select select-bordered join-item" name="type" value={formData.type} onChange={handleInputChange}>
-            <option value='default' disabled>File Type</option>
-            <option value='text'>Text</option>
-            <option value='image'>Image</option>
-            <option value='file'>File</option>
+          <select
+            className="select shadow select-bordered join-item"
+            name="type"
+            value={formData.type}
+            onChange={handleInputChange}
+          >
+            <option value="default" disabled>
+              File Type
+            </option>
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+            <option value="file">File</option>
           </select>
           <div className="indicator">
-            <button 
-            className="btn bg-primary hover:bg-gray-300 join-item"
-            onClick={handlAddField}>Add Field</button>
+            <button
+              className="btn bg-primary hover:bg-gray-300 shadow-lg join-item"
+              onClick={handlAddField}
+            >
+              Add Field
+            </button>
           </div>
         </div>
       </div>
@@ -73,13 +87,12 @@ const AddProjectContent = () => {
       )}
       {currentStructure && (
         <>
-          {currentStructure.map(datafield => {
-            return <DataField obj={datafield} key={datafield.uuid}/>
-          }
-          )}
+          {currentStructure.map((datafield) => {
+            return <DataField obj={datafield} key={datafield.uuid} />
+          })}
         </>
       )}
-    </>
+    </div>
   )
 }
 

@@ -48,53 +48,111 @@ const AddInviteJudges = () => {
   }
 
   return (
-    <div className="p-4">
-      <div className="flex items-center mb-4">
+    <div className="m-10 ">
+      <div className="flex  justify-center mb-5">
         <button
-          className="btn btn-primary mr-2"
+          className="btn btn-primary shadow-xl mr-2"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? 'Hide Judges' : 'Show Judges'}
         </button>
         {isOpen && (
-          <button className="btn btn-success" onClick={handleAddJudge}>
+          <button
+            className="btn btn-success shadow-xl"
+            onClick={handleAddJudge}
+          >
             Add Judge
           </button>
         )}
       </div>
       {isOpen && (
-        <div className="p-4 mt-4 border rounded shadow">
+        <div className="flex flex-wrap p-3 mt-4 justify-center  ">
           {judges.map((judge) => (
             <div key={judge.id}>
-              <div className="flex flex-wrap items-center -mx-3 mb-2">
-                {['firstName', 'lastName', 'username', 'email'].map(
-                  (field, idx) => (
-                    <div key={idx} className={`w-1/4 px-3 mb-6 md:mb-0`}>
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">
-                            {field.charAt(0).toUpperCase() + field.slice(1)}:
-                          </span>
-                        </label>
-                        <input
-                          type={field === 'email' ? 'email' : 'text'}
-                          name={field}
-                          placeholder={`${field.charAt(0).toUpperCase() + field.slice(1)}`}
-                          className="input input-bordered"
-                          value={judge[field]}
-                          onChange={(e) =>
-                            handleInputChange(judge.id, field, e.target.value)
-                          }
-                        />
-                      </div>
+              <div className="flex flex-grow  justify-center flex-wrap items-center -mx-5 mb-7">
+                {/* Centered row for First Name and Last Name */}
+                <div className="w-3/5 flex justify-center mb-6 md:mb-0">
+                  <div className="w-full  px-3">
+                    <div className="form-control">
+                      <label className="label"></label>
+                      <input
+                        type="text"
+                        name="firstName"
+                        placeholder="First Name"
+                        className="input input-bordered shadow"
+                        value={judge.firstName}
+                        onChange={(e) =>
+                          handleInputChange(
+                            judge.id,
+                            'firstName',
+                            e.target.value,
+                          )
+                        }
+                      />
                     </div>
-                  ),
-                )}
+                  </div>
+                  <div className="w-full px-3">
+                    <div className="form-control">
+                      <label className="label"></label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        placeholder="Last Name"
+                        className="input input-bordered shadow"
+                        value={judge.lastName}
+                        onChange={(e) =>
+                          handleInputChange(
+                            judge.id,
+                            'lastName',
+                            e.target.value,
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* Centered row for Email and Username */}
+                <div className="w-3/5 flex justify-center">
+                  <div className="w-full px-3 mb-6 md:mb-0 ">
+                    <div className="form-control">
+                      <label className="label"></label>
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        className="input input-bordered shadow"
+                        value={judge.email}
+                        onChange={(e) =>
+                          handleInputChange(judge.id, 'email', e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full px-3 mb-6 md:mb-0">
+                    <div className="form-control">
+                      <label className="label"></label>
+                      <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        className="input input-bordered shadow"
+                        value={judge.username}
+                        onChange={(e) =>
+                          handleInputChange(
+                            judge.id,
+                            'username',
+                            e.target.value,
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex -mx-3">
-                <div className="w-full px-3 mb-6 md:mb-0">
+              <div className="flex -mx-3 ">
+                <div className="w-full px-3 mt-5 mb-6 md:mb-5 ">
                   <button
-                    className="btn btn-error"
+                    className="btn btn-error shadow-xl"
                     onClick={() => handleRemoveJudge(judge.id)}
                   >
                     Remove Judge
