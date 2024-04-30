@@ -9,8 +9,8 @@ const AddEventInformation = () => {
   //sets inital value of the event und refers to the Redux store
   const [formData, setFormData] = useState({
     eventName: eventInformation.eventName || '',
-    startDate: eventInformation.startDate || '',
-    endDate: eventInformation.endDate || '',
+    start_date: eventInformation.start_date || '',
+    end_date: eventInformation.end_date || '',
     description: eventInformation.description || '',
   })
   //if user changes something on the form it will store it in the redux
@@ -54,7 +54,7 @@ const AddEventInformation = () => {
           <input
             type="date"
             name="startDate"
-            value={formData.startDate}
+            value={formData.start_date}
             onChange={handleChange}
             className="input input-bordered"
           />

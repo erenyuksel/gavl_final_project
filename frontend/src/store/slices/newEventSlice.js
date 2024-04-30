@@ -13,6 +13,12 @@ const newEventSlice = createSlice({
     setEventInformation: (state, action) => {
       state.eventInformation = action.payload
     },
+
+    updateEventInformationField: (state, action) => {
+      const { field, value } = action.payload;
+      state.eventInformation[field] = value
+   },
+
     // adds a new obj to the event project structure arr, is used to define the structur of the information the contestants hold
     updateEventProjectStructure: (state, action) => {
       state.eventProjectStructure = [...state.eventProjectStructure, action.payload]
@@ -77,5 +83,5 @@ const newEventSlice = createSlice({
   },
 })
 
-export const { clearEventEvaluationCriteria, clearEventProjectStructure, setEventInformation, updateEventProjectStructure, removeProjectStructureItem, moveProjectStructureItemUp, moveProjectStructureItemDown, updateEventEvaluationCriteriaScales, clearEventEvaluationCriteriaScales, updateEventEvaluationCriteria, removeEventEvaluationCriteria  } = newEventSlice.actions
+export const { clearEventEvaluationCriteria, clearEventProjectStructure, setEventInformation, updateEventProjectStructure, removeProjectStructureItem, moveProjectStructureItemUp, moveProjectStructureItemDown, updateEventEvaluationCriteriaScales, clearEventEvaluationCriteriaScales, updateEventEvaluationCriteria, updateEventInformationField, removeEventEvaluationCriteria  } = newEventSlice.actions
 export default newEventSlice.reducer
