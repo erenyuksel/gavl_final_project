@@ -95,9 +95,9 @@ const EventRubric = () => {
         </p>
         <div className="m-5 mt-10">
           <h3>
-            <i className="font-semibold text-gray-700 ">
-              <span className="underline underline-offset-auto">Criteria</span>
-            </i>
+            <span className="underline underline-offset-auto font-bold  ">
+              Criteria
+            </span>
           </h3>
         </div>
         <div className="w-full sm:w-[40rem]">
@@ -121,11 +121,11 @@ const EventRubric = () => {
           ></textarea>
         </div>
 
-        <div className="m-5 mt-10">
+        <div className=" mt-10">
           <h3>
-            <i className="font-semibold text-gray-700 ">
-              <span className="underline underline-offset-auto">Scale</span>
-            </i>
+            <span className="underline underline-offset-auto font-bold">
+              Scale
+            </span>
           </h3>
           {evaluationCriteriaScales.map((obj) => (
             <EvaluationCriteriaScale obj={obj} key={obj.uuid} />
