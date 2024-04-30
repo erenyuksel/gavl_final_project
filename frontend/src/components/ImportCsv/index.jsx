@@ -77,7 +77,7 @@ function ImportCSV({ event_id }) {
   }
 
   return (
-    <div className='card bg-base-100 shadow-xl p-5'>
+    <div className='card bg-base-100 p-5'>
       <div>
       <h2>Project Data Importer</h2>
       <p>Upload your CSV file here. </p>
