@@ -184,11 +184,11 @@ const EventStatisticPage = () => {
   return (
     <>
     {projectJudgeData.length > 0 && (
-      <>
-      <button className="btn btn-primary" onClick={handleClearProjectJudgeData}>Hide Projects panelist info</button>
-      <div className="overflow-x-auto">
+      <div className="w-100 flex flex-col items-center">
+      
+      <div className="overflow-x-auto w-3/4 card bg-base-100 shadow-xl p-3">
         <h2>Panelist information for contestant {projectJudgeData[0].projectName}</h2>
-        <p>Panelists in this table have completed their evaluation for this contestant</p>
+        <p className="mb-5">Panelists in this table have completed their evaluation for this contestant</p>
         <table className="table">
         <thead>
           <tr>
@@ -215,12 +215,15 @@ const EventStatisticPage = () => {
             )
           })}
         </table>
+        <div className="flex m-4 justify-center">
+        <button className="btn btn-primary" onClick={handleClearProjectJudgeData}>Hide Projects panelist info</button>
         </div>
-      </>
+        </div>
+      </div>
     )}
     {(evaluationCriteriaNames && projectJudgeData.length === 0) && (
-      <>
-        <div className="overflow-x-auto">
+      <div className="w-100 flex justify-center">
+        <div className="overflow-x-auto w-3/4 card bg-base-100 shadow-xl p-3">
         <table className="table">
         <thead>
           <tr>
@@ -266,7 +269,7 @@ const EventStatisticPage = () => {
           )}
         </table>
         </div>
-      </>
+      </div>
     )}
     </>
   )
