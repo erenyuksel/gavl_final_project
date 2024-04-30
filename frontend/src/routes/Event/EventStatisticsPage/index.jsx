@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom"
 import JudgeAxios from "../../../axios/JudgeAxios"
 
 
-
 const EventStatisticPage = () => {
   const {id} = useParams()
   const [eventData, setEventData] = useState()
   const [projectTableData, setProjectTableData] = useState([])
   const [evaluationCriteriaNames, setEvaluationCriteriaNames] = useState()
+  const [projectJudgeData, setProjectJudgeData] = useState([])
 
+  // initially gets the event data to create statisticstable
   useEffect(() => {
     const getEventData = async () => {
       try {
@@ -42,6 +43,7 @@ const EventStatisticPage = () => {
             // storing the project name as name and the logo as logo
             projectObj.name = project.name
             projectObj.logo = project.project_logo
+            projectObj.id = project.id
 
             // calling the evaluations endpoint to get all the evaluations for this Project
             const evaluations_response = await JudgeAxios.get(`/projects/${project.id}/evaluations`)
@@ -49,6 +51,7 @@ const EventStatisticPage = () => {
             // initiating the amoutn of judges field, which is increased for each complete evaluation
             projectObj.amount_of_judges = 0
             projectObj.total_score = 0
+            projectObj.completed_judges = []
 
             // initiating the evaluation criteria fields in the projectObj
             for (let evaluationName of evaluationCriteriaNames) {
@@ -62,6 +65,8 @@ const EventStatisticPage = () => {
               if (Object.keys(parsedEvaluationScores).length === amountOfCriterias) {
                 // if evaluation is complete increase amount of judges score by one
                 projectObj.amount_of_judges = projectObj.amount_of_judges + 1
+                // store the id of the judge which has completed the evaluation of this project in the obj
+                projectObj.completed_judges.push(evaluation.judge.id)
                 // add all the scores together, devide them by the amount of criterias and add the total to the
                 // total score field on the projectObj
                 const evaluationsAverageScore = Object.values(parsedEvaluationScores).reduce((acc, curr) => Number(acc) + Number(curr), 0) / amountOfCriterias
@@ -127,9 +132,93 @@ const EventStatisticPage = () => {
   });
 
 
+  const handleJudgesView = async (project) => {
+    if (project) {
+      try {
+        const eventRubrics_response = await JudgeAxios.get(`/rubrics/${eventData.rubrics}`)
+        const evaluationCriterias = JSON.parse(eventRubrics_response.data.criteria_json)
+        const evaluationCriteriaNames = Object.values(evaluationCriterias).map(item => item.name)
+
+      } catch (err) {
+        console.error('Failed creating the evaluation criteria list for the judge view', err)
+      }
+
+      let tempArr = []
+      for (let judge of project.completed_judges) {
+        const tempObj = {}
+        // storing the ordered evaluationCriterias so we can show it in the correct order in table
+        tempObj.evaluationCriteriaOrder = evaluationCriteriaNames
+        // storing the project Name on the objecst so we can show it in table header
+        tempObj.projectName = project.name
+        try {
+          // iterating through all the judges, getting their userdata
+          const judge_response = await JudgeAxios.get(`users/${judge}`)
+          // store first and lastname in tempObj
+          tempObj.fullname = `${judge_response.data.first_name} ${judge_response.data.last_name}`
+          // getting the judges evaluation for this project
+          const evaluation_response = await JudgeAxios.get(`/projects/${project.id}/evaluations`)
+          const judges_evaluation = evaluation_response.data.filter(evaluation => {
+            return evaluation.judge.id === judge
+          })
+          // store all the scores on the tempobj
+          const evaluationData = JSON.parse(judges_evaluation[0].json_data_rating)
+          tempObj.evaluation_scores = evaluationData
+          // calculating the overall score and add it as well to the tempobj
+          tempObj.total_score = project.total_score
+          // adding the tempobj to the judge useState
+          tempArr = [...tempArr, tempObj]
+        } catch (err) {
+          console.error('Failed loading the judges evaluation', err)
+        }
+      }
+      setProjectJudgeData(tempArr)
+    }
+  }
+
+  const handleClearProjectJudgeData = () => {
+    setProjectJudgeData([])
+  }
+
+
+
   return (
     <>
-    {evaluationCriteriaNames && (
+    {projectJudgeData.length > 0 && (
+      <>
+      <button className="btn btn-primary" onClick={handleClearProjectJudgeData}>Hide Projects panelist info</button>
+      <div className="overflow-x-auto">
+        <h2>Panelist information for contestant {projectJudgeData[0].projectName}</h2>
+        <p>Panelists in this table have completed their evaluation for this contestant</p>
+        <table className="table">
+        <thead>
+          <tr>
+            <th>Panelist name</th>
+            {projectJudgeData[0].evaluationCriteriaOrder.map(criteria => {
+              return <th key={criteria}>{criteria}</th>
+            })}
+            <th>Overall Score</th>
+          </tr>
+        </thead>
+          {projectJudgeData.map(judge => {
+            return (
+              <>
+                <tbody>
+                  <tr>
+                    <td className="font-bold">{judge.fullname}</td>
+                    {judge.evaluationCriteriaOrder.map(criteria => {
+                      return <td key={criteria}>{judge.evaluation_scores[`${criteria}`] || 0}</td>
+                    })}
+                    <td>{judge.total_score || 0}</td>
+                  </tr>
+                </tbody>
+              </>
+            )
+          })}
+        </table>
+        </div>
+      </>
+    )}
+    {(evaluationCriteriaNames && projectJudgeData.length === 0) && (
       <>
         <div className="overflow-x-auto">
         <table className="table">
@@ -163,7 +252,7 @@ const EventStatisticPage = () => {
                         </div>
                       </div>
                     </td>
-                    <td>{project.amount_of_judges} / {eventData.judges.length}</td>
+                    <td onClick={() => handleJudgesView(project)}>{project.amount_of_judges} / {eventData.judges.length}</td>
                     {evaluationCriteriaNames.map(criteria => {
                       return <td key={criteria}>{project[`${criteria}_score`] || 0}</td>
                     })}
