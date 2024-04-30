@@ -56,7 +56,7 @@ class RegisterValidationView(GenericAPIView):
 class RegisterPasswordView(GenericAPIView):
     serializer_class = RegisterPasswordSerializer
     # TODO change permissions to Judges  >> to test better!
-    permission_classes = [IsJudgeUser, ]
+    permission_classes = [AllowAny, ]
 
     def patch(self, request, *args, **kwargs):
         data = request.data
