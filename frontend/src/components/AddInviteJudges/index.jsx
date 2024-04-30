@@ -29,7 +29,7 @@ const AddInviteJudges = () => {
     if (judges.every(allFieldsFilled)) {
       dispatch(
         addJudge({
-          id: Date.now(),
+          // id: Date.now(),
           firstName: '',
           lastName: '',
           email: '',
