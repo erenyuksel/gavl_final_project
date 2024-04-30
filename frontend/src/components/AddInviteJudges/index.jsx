@@ -51,14 +51,14 @@ const AddInviteJudges = () => {
     <div className="m-10 ">
       <div className="flex  justify-center mb-5">
         <button
-          className="btn btn-primary shadow-xl mr-2"
+          className="btn btn-primary hover:bg-gray-300 hover:border-gray-300 shadow-xl mr-2"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? 'Hide Judges' : 'Show Judges'}
         </button>
         {isOpen && (
           <button
-            className="btn btn-success shadow-xl"
+            className="btn btn-success hover:bg-gray-300 hover:border-gray-300 shadow-xl"
             onClick={handleAddJudge}
           >
             Add Judge
@@ -153,7 +153,7 @@ const AddInviteJudges = () => {
                 <div className="flex -mx-3 ">
                   <div className="w-full px-3 mt-5 mb-6 md:mb-5 ">
                     <button
-                      className="btn btn-error shadow-xl"
+                      className="btn btn-error hover:bg-gray-300 hover:border-gray-300 shadow-xl"
                       onClick={() => handleRemoveJudge(judge.id)}
                     >
                       Remove Judge
