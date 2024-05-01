@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import Papa from 'papaparse'
 import JudgeAxios from '../../axios/JudgeAxios'
+import SuccessMessage from '../Alerts/SuccessMessage'
 
 function ImportCSV({ event_id }) {
   const [data, setData] = useState([])
   const [progress, setProgress] = useState(0)
+  const [successMessage, setSuccessMessage] = useState('')
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
@@ -50,6 +52,7 @@ function ImportCSV({ event_id }) {
             name: project.name,
             content: JSON.stringify(project),
             description: project.description,
+            project_logo: project.project_logo
           })
           return response.data.id
         }),
@@ -67,6 +70,13 @@ function ImportCSV({ event_id }) {
           await JudgeAxios.patch(`/events/${event_id}/`, {
             projects: combined_ids,
           })
+          // if successful show the successmessage
+          setSuccessMessage('Uploading Projects was successful')
+          // hide successmessage after 3 seconds again
+          setTimeout(() => {
+            setSuccessMessage('')
+          }, 3000)
+
         } catch (error) {
           console.error('Error updating event:', error)
         }
@@ -78,6 +88,11 @@ function ImportCSV({ event_id }) {
 
   return (
     <div className='card bg-base-100 p-5'>
+      {successMessage && (
+      <div>
+        <SuccessMessage message={successMessage} />
+      </div>
+      )}
       <div>
       <h2>Project Data Importer</h2>
       <p>Upload your CSV file here. </p>
