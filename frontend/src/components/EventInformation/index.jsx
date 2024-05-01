@@ -11,11 +11,14 @@ const EventInformationSection = ({ event }) => {
   // set admin priviliges to view edit event and statistics page
   useEffect(() => {
     if (userProfile) {
+      console.log("🚀 ~ useEffect ~ userProfile:", userProfile)
       if (userProfile.role === 'Organisation Admin' || userProfile.role === 'Admin') {
         setIsAdmin(true)
       }
     }
   }, [userProfile])
+
+
 
   // handler to navigate user to the Edit Event page
   const handleEditEventNav = () => {
@@ -42,6 +45,11 @@ const EventInformationSection = ({ event }) => {
   return (
     <>
       <div className="flex flex-col w-100 items-center">
+        {userProfile.organisation.logo && (
+        <div className='m-5 rounded-full w-14 h-14'>
+          <img src={userProfile.organisation.logo} alt='Organisation logo' />
+        </div>
+        )}
         <h1>{event.name}</h1>
         <div>
           <h2>{event.description}</h2>

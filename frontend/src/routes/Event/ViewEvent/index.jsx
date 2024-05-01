@@ -25,11 +25,6 @@ const ViewEvent = () => {
         <div className="w-100 flex flex-col items-center">
             <div className="w-full max-w-16xl p-4 flex flex-col items-center gap-6 bg-gold">
                 <div className="card bg-base-100 shadow-xl w-full lg:w-2/3 xl:w-1/2 p-5">
-
-
-                    {/*<div className="w-100 flex flex-col items-center">*/}
-                    {/*  <div className="w-3/4">*/}
-                    {/*    <div className="card bg-base-100 shadow-xl p-7">*/}
                     <EventInformationSection event={eventData}/>
                 </div>
                 <div>
