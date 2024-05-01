@@ -15,7 +15,7 @@ const EventProjectCard = ({ project }) => {
         className="flex flex-col pt-3 items-center card card-side bg-base-100 shadow-xl cursor-pointer hover:bg-gray-100 ease-in-outj"
         onClick={handleProjectView}
       >
-        <figure
+        <figure>
           {parsedContent.project_logo ? (
             <div className="bg-inherit text-neutral-content rounded-full h-20 w-20 m-5">
               <img
