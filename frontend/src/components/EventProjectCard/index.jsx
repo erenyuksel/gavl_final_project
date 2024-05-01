@@ -25,7 +25,7 @@ const EventProjectCard = ({ project }) => {
               />
             </div>
           ) : (
-            <div className="bg-primary text-black font-bold rounded-full h-20 w-20 flex items-center justify-center m-5 border">
+            <div className="bg-primary text-black font-bold rounded-full h-20 w-20 flex items-center justify-center m-5">
               {parsedContent['name'].charAt(0).toUpperCase()}
             </div>
           )}
