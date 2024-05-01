@@ -52,6 +52,7 @@ function ImportCSV({ event_id }) {
             name: project.name,
             content: JSON.stringify(project),
             description: project.description,
+            project_logo: project.project_logo
           })
           return response.data.id
         }),

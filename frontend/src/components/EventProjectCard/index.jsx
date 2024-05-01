@@ -10,14 +10,13 @@ const EventProjectCard = ({ project }) => {
     navigate(`/project/${project.id}`)
   }
 
-  const default_logo_path = './.'
   return (
     <>
       <div className="flex flex-col pt-3 items-center card card-side bg-base-100 shadow-xl cursor-pointer hover:bg-gray-100 ease-in-outj" onClick={handleProjectView}>
         <figure>
           <img
             // src={project.project_logo || "../../assets/default_project_logo.jpeg"}
-            src={defaultProjectLogo}
+            src={project.project_logo || defaultProjectLogo}
             alt="Project logo"
             className='rounded-full h-20 w-20 mt-5'
           />
