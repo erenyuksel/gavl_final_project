@@ -23,7 +23,7 @@ const EventProjectCard = ({ project }) => {
             className="rounded-full h-20 w-20 mt-5"
           /> */}
           {parsedContent.project_logo ? (
-            <div className="bg-inherit text-neutral-content rounded-full h-20 w-20">
+            <div className="bg-inherit text-neutral-content rounded-full h-20 w-20 m-5">
               <img
                 src={parsedContent.project_logo}
                 alt={parsedContent.project_logo}
@@ -31,7 +31,7 @@ const EventProjectCard = ({ project }) => {
               />
             </div>
           ) : (
-            <div className="bg-primary text-black font-bold rounded-full h-20 w-20 flex items-center justify-center border">
+            <div className="bg-primary text-black font-bold rounded-full h-20 w-20 flex items-center justify-center m-5 border">
               {parsedContent['name'].charAt(0).toUpperCase()}
             </div>
           )}
