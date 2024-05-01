@@ -5,19 +5,23 @@ const ProjectPersonOfContact = ({ project }) => {
     <>
       <div className="card flex-row w-96 bg-base-100">
         <div className="card-body items-center text-center justify-center">
-          <div className="avatar placeholder">
-            {parsedContent.logo ? (
-              <div className="bg-neutral text-neutral-content rounded-full w-24">
-                <img src={parsedContent.logo} alt={parsedContent.name} />
+          <figure>
+            {parsedContent.project_logo ? (
+              <div className="bg-inherit text-neutral-content rounded-full h-20 w-20">
+                <img
+                  src={parsedContent.project_logo}
+                  alt={parsedContent.project_logo}
+                  className="object-contain h-full w-full"
+                />
               </div>
             ) : (
-              <div className="bg-primary text-black rounded-full w-24 flex items-center justify-center">
+              <div className="bg-primary text-black rounded-full h-20 w-20 flex items-center justify-center">
                 <span className="text-2xl font-bold">
                   {parsedContent['Contact Person'].charAt(0).toUpperCase()}
                 </span>
               </div>
             )}
-          </div>
+          </figure>
           <h2 className="card-title">{parsedContent['Contact Person']}</h2>
           <p>
             <strong>Position:</strong>{' '}
