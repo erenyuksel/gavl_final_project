@@ -1,11 +1,15 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useNavigate, useLocation, useParams} from 'react-router-dom'
 import JudgeAxios from '../../../axios/JudgeAxios'
 import ImportCSV from '../../../components/ImportCsv'
 import AddEventInformation from "../../../components/AddEventInformation/index.jsx";
-import {setEventInformation, updateEventInformationField} from "../../../store/slices/newEventSlice.js";
+import {
+    setEventInformation,
+    updateEventInformationField
+} from "../../../store/slices/newEventSlice.js";
 import {useDispatch, useSelector} from 'react-redux'
-import EventRubric from "../../../components/AddEventRubric/event_rubric.jsx";
+import EditEventRubric from "../../../components/EditEventRubric/edit_event_rubric.jsx";
+import {updateEventEvaluationCriteria} from "../../../store/slices/rubricSlice.js";
 
 
 const EditEvent = () => {
@@ -14,12 +18,7 @@ const EditEvent = () => {
     const {id} = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-
-    // useEffect(() => {
-    //     dispatch(setEventInformation({}))
-    // }, []);
-
+    const rubrics = useRef(null)
     const location = useLocation();
 
     useEffect(() => {
@@ -32,12 +31,10 @@ const EditEvent = () => {
         // Call the function with the current location initially
         handleLocationChange(location);
 
-        console.log("ZZZZZZZ33333333ZZZZZZZZZz -- return")
-
         // Call the function whenever location changes
         return () => {
             dispatch(setEventInformation({}))
-            console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZz -- return")
+            console.log(" -- return")
         }; // If needed, perform cleanup
     }, [location]); // Re-run the effect only if location changes
 
@@ -50,10 +47,8 @@ const EditEvent = () => {
 
                     Object.entries(response.data).forEach(([key, value]) => {
                         // console.log(key, value);
-                        if (key === 'name') {
+                        if (key === 'name')
                             dispatch(updateEventInformationField({field: key, value: value}));
-                            // console.log(key, value);
-                        }
 
                         if (key === 'start_date')
                             dispatch(updateEventInformationField({field: key, value: value}));
@@ -63,6 +58,26 @@ const EditEvent = () => {
 
                         if (key === 'description')
                             dispatch(updateEventInformationField({field: key, value: value}));
+                    })
+
+                    const response2 = await JudgeAxios.get(`/rubrics/${response.data.rubrics}`)
+
+                    // console.log(response2.data)
+                    rubrics.current = JSON.parse(response2.data.criteria_json);
+                    // console.log(rubrics); // Outputs: { id: 1, name: 'Alice', roles: [ 'admin', 'user' ] }
+
+                    rubrics.current.map((rubric) => {
+                        if (!rubric.name || !rubric.description) {
+                            console.error('Please input Evaluation Criteria information')
+                        } else {
+                            try {
+                                // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
+                                dispatch(updateEventEvaluationCriteria(rubric))
+                                // console.log(rubric)
+                            } catch (error) {
+                                console.error(error)
+                            }
+                        }
                     })
                 } catch
                     (error) {
@@ -108,15 +123,21 @@ const EditEvent = () => {
                     <AddEventInformation/>
                     <ImportCSV event_id={id}/>
 
+
+                    {rubrics.current && rubrics.current.map((obj) =>
+                        <div key={obj.uuid} className="text-center  flex  flex-col items-center">
+                            <EditEventRubric obj={obj.uuid}/>
+                        </div>
+                    )}
                     {/*<div className="text-center  flex  flex-col items-center">*/}
-                    {/*    <EventRubric/>*/}
+                    {/*    <EditEventRubric obj=''/>*/}
                     {/*</div>*/}
 
-                    <div className="w-full p-4 flex flex-row items-center gap-6">
-                        <button className="btn mt-8" onClick={handleUpdate}>
+                    <div className="w-full p-4 flex flex-row justify-center gap-6">
+                        <button className="btn btn-success mt-8" onClick={handleUpdate}>
                             Update Event
                         </button>
-                        <button className="btn mt-8" onClick={handleDelete}>
+                        <button className="btn btn-error mt-8" onClick={handleDelete}>
                             Delete Event
                         </button>
                     </div>

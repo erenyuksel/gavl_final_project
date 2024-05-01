@@ -3,6 +3,7 @@ import userReducer from './slices/userSlice'
 import eventReducer from './slices/newEventSlice'
 import evaluationReducer from './slices/evaluationSlice'
 import judgesReducer from './slices/judgesSlice'
+import rubricReducer from './slices/rubricSlice'
 
 const store = configureStore({
 
@@ -20,6 +21,7 @@ const store = configureStore({
         event: eventReducer,
         evaluation: evaluationReducer,
         judges: judgesReducer,
+        rubric: rubricReducer,
     },
 })
 
