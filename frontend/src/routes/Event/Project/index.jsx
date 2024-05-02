@@ -42,9 +42,12 @@ const Project = () => {
         <>
           <ProjectHeader project={projectData} />
           <div className="flex">
-            <div className="flex-1 left-project-container w-100 flex-col items-center">
-              <div className="w-full max-w-16xl p-4 flex flex-col items-center gap-6 bg-gold">
-                <div className="card bg-base-100 shadow-xl w-full lg:w-2/3 xl:w-1/2 p-5">
+            <div className="flex-1 w-100">
+              <div className="p-4 flex flex-col items-center">
+                <div
+                  className={`card bg-base-100 shadow-xl ${isOpen ? 'xl:w-3/5' : 'xl:w-full'} p-5 border"
+                `}
+                >
                   {/* New button to toggle the collapsed section */}
                   <div className="flex justify-end mb-4">
                     <button
@@ -68,13 +71,11 @@ const Project = () => {
                   <div>
                     <ProjectLogo project={projectData} />
                   </div>
-                  {/* edit theme industry */}
                   <div className="flex justify-evenly">
                     <ProjectThemeIndustry project={projectData} />
-                    {/* add value proposition here */}
                   </div>
                   <div className="flex justify-evenly">
-                    <ProjectValueProposition project={projectData} />
+                      <ProjectValueProposition project={projectData} />
                   </div>
                   <div className="flex justify-evenly">
                     <ProjectFinancial project={projectData} />
@@ -86,8 +87,8 @@ const Project = () => {
                   <div className="flex justify-evenly">
                     <ProjectAffectedCard project={projectData} />
                   </div>
-                  <div className="flex justify-evenly">
-                    <ProblemSolution project={projectData}/>
+                  <div>
+                    <ProblemSolution project={projectData} />
                   </div>
                   <div className="flex justify-evenly">
                     <ProjectSupportPriority project={projectData} />
@@ -95,12 +96,11 @@ const Project = () => {
                   <div className="flex justify-evenly">
                     <ProjectPersonOfContact project={projectData} />
                   </div>
-                  <div className="flex justify-evenly"></div>
                 </div>
               </div>
             </div>
             {!isOpen && (
-              <div className="flex-1 collapsed-component">
+              <div className="flex-1 collapsed-component border">
                 <div className="p-4 cursor-pointer" onClick={toggleEvaluation}>
                   <h2 className="text-lg font-bold mb-2">
                     Evaluation Criteria
