@@ -57,9 +57,8 @@ const AddNewEvent = () => {
                                 const response = await JudgeAxios.post(
                                     `/users/?event_name=${eventInfo.eventName}`,
                                     {
-                                        id: judge.id,
-                                        first_name: judge.firstName,
-                                        last_name: judge.lastName,
+                                        first_name: judge.first_name,
+                                        last_name: judge.last_name,
                                         email: judge.email,
                                         username: judge.username,
                                         role: 'Judge',
