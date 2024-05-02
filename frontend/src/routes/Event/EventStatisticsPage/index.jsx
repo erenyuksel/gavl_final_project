@@ -208,7 +208,7 @@ const EventStatisticPage = () => {
                     {judge.evaluationCriteriaOrder.map(criteria => {
                       return <td key={criteria}>{judge.evaluation_scores[`${criteria}`] || 0}</td>
                     })}
-                    <td>{judge.total_score || 0}</td>
+                    <td>{judge.total_score ? judge.total_score.toFixed(1) : 0}</td>
                   </tr>
                 </tbody>
               </>
@@ -259,7 +259,7 @@ const EventStatisticPage = () => {
                     {evaluationCriteriaNames.map(criteria => {
                       return <td key={criteria}>{project[`${criteria}_score`] || 0}</td>
                     })}
-                    <td>{project.total_score || 0}</td>
+                    <td>{project.total_score ? project.total_score.toFixed(1) : 0}</td>
                   </tr>
                 </tbody>
               </>

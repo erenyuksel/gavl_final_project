@@ -6,7 +6,6 @@ const ProjectFinancial = ({ project }) => {
     <>
       <div className="card flex-row bg-base-100">
         <div className="card-body">
-          <h2 className="card-title justify-center">Organization Financials</h2>
           <p className="text-center">
             <strong>Team size: </strong>
             {parsedContent['Team size']}
