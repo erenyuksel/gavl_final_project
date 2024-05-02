@@ -1,9 +1,9 @@
 import AddProjectContent from '../../../components/AddProjectContent/add_project_content'
 import AddEventInformation from '../../../components/AddEventInformation'
 import EventRubric from '../../../components/AddEventRubric/event_rubric'
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import JudgeAxios from '../../../axios/JudgeAxios'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
     clearEventEvaluationCriteria,
     clearEventProjectStructure,
@@ -101,26 +101,15 @@ const AddNewEvent = () => {
     }
 
     return (
-        // <div className="w-full">
         <div className="w-100 flex flex-col items-center">
-            <div className="w-full max-w-16xl p-4 flex flex-col items-center gap-6 bg-gold">
-                <div className="card bg-base-100 shadow-xl w-full lg:w-2/3 xl:w-1/2 p-5">
-
-
-                    <div className="text-center  mt-10">
+                <div className="card bg-base-100 shadow-xl w-full lg:w-2/3 xl:w-1/2 p-5 flex flex-col gap-y-8">
+                    <div className="text-center">
                         <h1>Create New Event</h1>
                     </div>
-                    <AddEventInformation/>
-                    <div className="text-center p-3">
-                        <AddProjectContent/>
-                    </div>
-                    <div className="text-center  flex  flex-col items-center">
-                        <EventRubric/>
-                    </div>
-                    {/* Eren will work on styling these components */}
-                    <div className="text-center  p-3">
-                        <AddInviteJudges/>
-                    </div>
+                    <AddEventInformation />
+                    <AddProjectContent />
+                    <EventRubric />
+                    <AddInviteJudges />
                     <div className="flex justify-center mt-10 mb-5 text-center">
                         <button
                             className="flex btn  bg-gray-400 rounded   shadow-xl mr-2"
@@ -130,7 +119,6 @@ const AddNewEvent = () => {
                         </button>
                     </div>
                 </div>
-            </div>
         </div>
     )
 }
