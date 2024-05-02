@@ -45,7 +45,7 @@ const EventInformationSection = ({ event }) => {
   return (
     <>
       <div className="flex flex-col w-100 items-center">
-        {userProfile.organisation.logo && (
+        {userProfile && (
         <div className='m-5 rounded-full w-14 h-14'>
           <img src={userProfile.organisation.logo} alt='Organisation logo' />
         </div>
