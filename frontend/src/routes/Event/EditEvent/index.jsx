@@ -9,12 +9,13 @@ import {
 } from "../../../store/slices/newEventSlice.js";
 import {useDispatch, useSelector} from 'react-redux'
 import EditEventRubric from "../../../components/EditEventRubric/edit_event_rubric.jsx";
-import {updateEventEvaluationCriteria} from "../../../store/slices/rubricSlice.js";
+import {updateEvaluationCriteria} from "../../../store/slices/rubricSlice.js";
 
 
 const EditEvent = () => {
     const [eventData, setEventData] = useState({})
     const eventInfo = useSelector((state) => state.event.eventInformation)
+    const eventEvaluationCriteria = useSelector((state) => state.rubric.evaluationCriteria)
     const {id} = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -43,7 +44,7 @@ const EditEvent = () => {
                 try {
                     const response = await JudgeAxios.get(`events/${id}/`)
                     setEventData(response.data)
-                    console.log(response.data);
+                    console.log("get EVENT", response.data);
 
                     Object.entries(response.data).forEach(([key, value]) => {
                         // console.log(key, value);
@@ -64,19 +65,16 @@ const EditEvent = () => {
 
                     // console.log(response2.data)
                     rubrics.current = JSON.parse(response2.data.criteria_json);
-                    // console.log(rubrics); // Outputs: { id: 1, name: 'Alice', roles: [ 'admin', 'user' ] }
+                    console.log("-----RUBRICS USEEFFECT", rubrics); // Outputs: { id: 1, name: 'Alice', roles: [ 'admin', 'user' ] }
 
                     rubrics.current.map((rubric) => {
-                        if (!rubric.name || !rubric.description) {
-                            console.error('Please input Evaluation Criteria information')
-                        } else {
-                            try {
-                                // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
-                                dispatch(updateEventEvaluationCriteria(rubric))
-                                // console.log(rubric)
-                            } catch (error) {
-                                console.error(error)
-                            }
+                        // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 mapping", rubric)
+                        try {
+                            // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
+                            dispatch(updateEvaluationCriteria(rubric))
+                            // console.log(rubric)
+                        } catch (error) {
+                            console.error(error)
                         }
                     })
                 } catch
@@ -85,7 +83,7 @@ const EditEvent = () => {
                 }
             }
             getEventData()
-            // console.log("eventInfo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", eventInfo)
+            console.log("eventInfo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", eventInfo)
         }, []
     )
 
@@ -100,10 +98,28 @@ const EditEvent = () => {
     }
 
     const handleUpdate = async () => {
+        // checking if event form was filled out and there is at least the basic info, a contestant field and an evaluation criteria set
+        // if (
+        //     eventInfo &&
+        //     eventEvaluationCriteria.length > 0
+        // ) {
         try {
-            await JudgeAxios.patch(`events/${id}/`, {
-                name: eventInfo.name,
+
+            console.log("############################## ", JSON.stringify(eventEvaluationCriteria))
+            // creating the rubrics obj which is stored on the event
+            const res = await JudgeAxios.patch(`rubrics/${eventData.rubrics}`, {
+                criteria_json: JSON.stringify(eventEvaluationCriteria),
             })
+
+            const response = await JudgeAxios.patch(`events/${id}/`, {
+                name: eventInfo.name,
+                start_date: eventInfo.start_date,
+                end_date: eventInfo.end_date,
+                description: eventInfo.description,
+                rubrics: res.data.id,
+            })
+
+            console.log(")))))))))))))))))))))))))))))))))))))))))))", response)
 
         } catch (error) {
             console.error(error)
@@ -111,6 +127,7 @@ const EditEvent = () => {
 
         navigate(`/event/${id}`)
     }
+
 
     return (
         <div className="w-100 flex flex-col items-center">
@@ -123,12 +140,13 @@ const EditEvent = () => {
                     <AddEventInformation/>
                     <ImportCSV event_id={id}/>
 
-
                     {rubrics.current && rubrics.current.map((obj) =>
                         <div key={obj.uuid} className="text-center  flex  flex-col items-center">
                             <EditEventRubric obj={obj.uuid}/>
                         </div>
                     )}
+
+                    {/*we need empty rubric component as possibility for the user to add new rubric*/}
                     {/*<div className="text-center  flex  flex-col items-center">*/}
                     {/*    <EditEventRubric obj=''/>*/}
                     {/*</div>*/}
