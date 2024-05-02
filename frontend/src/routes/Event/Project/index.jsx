@@ -103,7 +103,7 @@ const Project = () => {
               <div className="flex-1 collapsed-component border">
                 <div className="p-4 cursor-pointer" onClick={toggleEvaluation}>
                   <h2 className="text-lg font-bold mb-2">
-                    Evaluation Criteria
+                    Evaluation
                   </h2>
                 </div>
 

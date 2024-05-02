@@ -80,8 +80,6 @@ const AddNewEvent = () => {
                                 judges: judgeIds,
                             },
                         )
-                        console.log('Event updatet with judges:', patchResponse)
-                        console.log('Event ID', response.data.id)
                     } catch (error) {
                         console.error('Error updating event with judges:', error)
                     }

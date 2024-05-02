@@ -1,6 +1,5 @@
 const ProjectFinancial = ({ project }) => {
   const parsedContent = JSON.parse(project.content)
-  console.log(parsedContent)
 
   return (
     <>

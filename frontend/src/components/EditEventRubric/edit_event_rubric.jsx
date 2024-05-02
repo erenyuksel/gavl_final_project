@@ -61,7 +61,6 @@ const EditEventRubric = ({obj}) => {
             // if (criteriaSlice && criteriaSlice.scales) {
             setCriteriaForm(criteriaSlice)
             // criteriaSlice.scales.map((scale) => {
-            //     console.log("map useEffect", scale)
             //     setScaleForm(scale)
             // })
 
@@ -71,9 +70,7 @@ const EditEventRubric = ({obj}) => {
                     uuid: scale.uuid || uuidv4(),  // Ensure each scale has a UUID
                 })));
             }
-            console.log("INSIDE $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
         }
-        console.log("OUTSIDE $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
     }, [criteriaSlice])
 
     // useEffect(() => {
@@ -81,7 +78,6 @@ const EditEventRubric = ({obj}) => {
     //     clearScales()
     //     setNewScales(scaleForm)
     //
-    //     console.log("UUUUUUUUUUUd^^^^CRIT====useEffect=====ERIA^^^^^^^UEUUUUUUUUUUUUUUUUUUU", criteriaForm)
     //
     //     dispatch(updateEvaluationCriteria(criteriaForm))
     //
@@ -89,14 +85,8 @@ const EditEventRubric = ({obj}) => {
 
     function handleScaleChange(e, uuid) {
 
-        // console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU", e)
-        console.log("UUUUUUUUUUUva UUID  UUUUUUUUUUUUUUUUUUU", uuid)
-
 
         const {name, value} = e.target
-        console.log("UUUUUUUUUUUdNAMEionUUUUUUUUUUUUUUUUUUU", name)
-        console.log("UUUUUUUUUUUdesVALUEUUUUUUUUUUUUUUUUUUU", value)
-
 
         setScaleForm(prevScales =>
             prevScales.map(scale =>
@@ -111,15 +101,11 @@ const EditEventRubric = ({obj}) => {
         //     )
         // }));
         //
-        // console.log("UUUUUUUUUUUd^^^^CRITERIA^^^^^^^UEUUUUUUUUUUUUUUUUUUU", criteriaForm)
         //
         //
 
-        console.log("___before_________________", criteriaForm)
-        console.log("___before scale_________________", scaleForm)
         clearScales()
         setNewScales(scaleForm)
-        console.log("___after_________________", criteriaForm)
         // dispatch(updateEvaluationCriteria(criteriaForm))
 
     }
