@@ -61,7 +61,6 @@ const InviteJury = () => {
         password_repeat: userInviteData.passwordRepeat,
       })
       dispatch(setEmail(userInviteData.email))
-      console.log('Patch user invite:', response)
       navigate('/login')
     } catch (error) {
       console.error(error)

@@ -11,7 +11,6 @@ const EventInformationSection = ({ event }) => {
   // set admin priviliges to view edit event and statistics page
   useEffect(() => {
     if (userProfile) {
-      console.log("🚀 ~ useEffect ~ userProfile:", userProfile)
       if (userProfile.role === 'Organisation Admin' || userProfile.role === 'Admin') {
         setIsAdmin(true)
       }

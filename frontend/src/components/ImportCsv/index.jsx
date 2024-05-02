@@ -36,9 +36,6 @@ function ImportCSV({ event_id }) {
     })
   }
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   const handleProjectCreation = async (e) => {
     e.preventDefault()
