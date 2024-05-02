@@ -88,19 +88,18 @@ const EventRubric = () => {
 
   return (
     <>
-      <div className="flex shadow w-full flex-col items-center m-14   pt-5">
-        <h2>Defining Evaluation Criteria</h2>
+    <div className='card shadow-lg p-5'>
+      <div className="flex flex-col items-center">
+        <h2>Evaluation criterias</h2>
         <p>
-          Define the criteria that you will use to evaluate all contestants.
+          Define the criteria that you will use to evaluate all contestants from this event.
         </p>
-        <div className="m-5 mt-10">
+        <div className="m-3">
           <h3>
-            <span className="underline underline-offset-auto font-bold  ">
-              Criteria
-            </span>
+            Criteria
           </h3>
         </div>
-        <div className="w-full sm:w-[40rem]">
+        <div className="w-full mb-3">
           <input
             className="input shadow input-bordered"
             type="text"
@@ -110,9 +109,9 @@ const EventRubric = () => {
             onChange={handleInputChange}
           ></input>
         </div>
-        <div className="w-full sm:w-[40rem] m-3">
+        <div className="w-full">
           <textarea
-            className="input input-bordered shadow w-full sm:w-[40rem]"
+            className="input input-bordered shadow w-full"
             type="text"
             placeholder="Description"
             value={formData.description}
@@ -121,11 +120,9 @@ const EventRubric = () => {
           ></textarea>
         </div>
 
-        <div className=" mt-10">
+        <div className="m-3">
           <h3>
-            <span className="underline underline-offset-auto font-bold">
-              Scale
-            </span>
+            Scale
           </h3>
           {evaluationCriteriaScales.map((obj) => (
             <EvaluationCriteriaScale obj={obj} key={obj.uuid} />
@@ -158,6 +155,11 @@ const EventRubric = () => {
             Add scale
           </button>
         </div>
+
+
+
+
+        
         <button
           className="btn m-10  bg-gray-400 shadow-xl"
           onClick={handlAddCriteria}
@@ -171,6 +173,7 @@ const EventRubric = () => {
           return <EvaluationCriteriaCard obj={obj} key={obj.uuid} />
         })}
       </div>
+    </div>
     </>
   )
 }

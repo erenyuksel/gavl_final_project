@@ -37,12 +37,11 @@ const AddProjectContent = () => {
   }
 
   return (
-    <div className="p-10">
-      <div className="flex-row justify-between m-5">
-        <h2>Defining Project Information</h2>
+    <div className='card shadow-lg p-5'>
+      <div className="flex flex-col mb-5 items-center text-center ">
+        <h2>Contestant file configuration</h2>
         <p>
-          Define here the information which the contestants need to provide to
-          participate in your event.
+          Which information should your contestants provide in their project profile? Define field name and type along with the structure.
         </p>
       </div>
       <div className="flex justify-center join">
