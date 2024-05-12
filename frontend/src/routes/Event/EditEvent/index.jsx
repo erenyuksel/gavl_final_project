@@ -64,7 +64,6 @@ const EditEvent = () => {
                         try {
                             // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
                             dispatch(updateEvaluationCriteria(rubric))
-<<<<<<< HEAD
                             // dispatch(updateEvaluationCriteriaScale(rubric.scales[0]))
 
                             if (rubric && rubric.scales.length) {
@@ -72,10 +71,8 @@ const EditEvent = () => {
                                     dispatch(updateEvaluationCriteriaScale(scale))
                                 })
                             }
-
                             // console.log(rubric)
-=======
->>>>>>> main
+
                         } catch (error) {
                             console.error(error)
                         }

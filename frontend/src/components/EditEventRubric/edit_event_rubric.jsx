@@ -53,9 +53,8 @@ const EditEventRubric = ({rubric}) => {
         }));
     };
 
-
     useEffect(() => {
-<<<<<<< HEAD
+
         setCriteriaForm(rubric)
         if (rubric.scales) {
             setScaleForm(rubric.scales)
@@ -63,61 +62,6 @@ const EditEventRubric = ({rubric}) => {
         console.log(" $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   scale -++++++++++", scaleForm)
         console.log(" $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
     }, [])
-=======
-        if (criteriaSlice && criteriaForm.uuid === '') {
-            // if (criteriaSlice && criteriaSlice.scales && criteriaForm.uuid === '' && scaleForm.uuid === '') {
-            // if (criteriaSlice && criteriaSlice.scales) {
-            setCriteriaForm(criteriaSlice)
-            // criteriaSlice.scales.map((scale) => {
-            //     setScaleForm(scale)
-            // })
-
-            if (criteriaSlice.scales) {
-                setScaleForm(criteriaSlice.scales.map(scale => ({
-                    ...scale,
-                    uuid: scale.uuid || uuidv4(),  // Ensure each scale has a UUID
-                })));
-            }
-        }
-    }, [criteriaSlice])
-
-    // useEffect(() => {
-    //
-    //     clearScales()
-    //     setNewScales(scaleForm)
-    //
-    //
-    //     dispatch(updateEvaluationCriteria(criteriaForm))
-    //
-    // }, [scaleForm]);
-
-    function handleScaleChange(e, uuid) {
-
-
-        const {name, value} = e.target
-
-        setScaleForm(prevScales =>
-            prevScales.map(scale =>
-                scale.uuid === uuid ? {...scale, [name]: value} : scale
-            ))
-
-
-        // setCriteriaForm(prevForm => ({
-        //     ...prevForm,
-        //     scales: prevForm.scales.map(scale =>
-        //         scale.uuid === uuid ? {...scale, [name]: value} : scale
-        //     )
-        // }));
-        //
-        //
-        //
-
-        clearScales()
-        setNewScales(scaleForm)
-        // dispatch(updateEvaluationCriteria(criteriaForm))
-
-    }
->>>>>>> main
 
 
     useEffect(() => {
