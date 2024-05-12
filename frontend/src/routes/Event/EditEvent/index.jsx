@@ -134,7 +134,7 @@ const EditEvent = () => {
                     <div className="text-center">
                         <h1>Edit {eventData.name}</h1>
                     </div>
-                    <AddEventInformation/>
+                    <AddEventInformation eventInformation={eventData}/>
                     <ImportCSV event_id={id}/>
 
                     {rubrics.current && rubrics.current.map((obj) =>
