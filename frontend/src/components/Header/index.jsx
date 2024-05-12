@@ -9,7 +9,6 @@ function Header() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.user.user)
-    console.log("HEADER currentUser", currentUser)
 
     const handleLogout = () => {
         localStorage.removeItem('token')

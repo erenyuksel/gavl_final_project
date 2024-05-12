@@ -161,7 +161,7 @@ const ProjectEvaluation = ({ project }) => {
                   className="flex flex-col p-4 w-100 drop-shadow-md rounded border mb-5"
                 >
                   <div className="flex flex-col justify-center">
-                    <span className="">{evaluationCriteria.name}</span>
+                    <h3 className="">{evaluationCriteria.name}</h3>
                     <span>{evaluationCriteria.description}</span>
                   </div>
                   <div>

@@ -34,7 +34,6 @@ const ListEventPage = () => {
     const fetchEvents = async () => {
       try {
         const response = await JudgeAxios.get(`/events/`)
-        /* console.log('Fetched events data:', response.data) */
         setEvents(response.data)
       } catch (error) {
         console.error('To fetch the events was not possible', error)

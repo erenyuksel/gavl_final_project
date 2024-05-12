@@ -23,7 +23,6 @@ function App() {
     useEffect(() => {
         if ((token !== null) && (user === null)) {
             getCurrentUser()
-            console.log('APPP')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);

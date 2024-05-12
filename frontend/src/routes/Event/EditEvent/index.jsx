@@ -25,8 +25,6 @@ const EditEvent = () => {
     useEffect(() => {
         // Function to run on location change
         const handleLocationChange = (currentLocation) => {
-            console.log('New location:', currentLocation.pathname);
-            // Your logic here, e.g., check if the user really wants to navigate away
         };
 
         // Call the function with the current location initially
@@ -35,7 +33,6 @@ const EditEvent = () => {
         // Call the function whenever location changes
         return () => {
             dispatch(setEventInformation({}))
-            console.log(" -- return")
         }; // If needed, perform cleanup
     }, [location]); // Re-run the effect only if location changes
 
@@ -44,10 +41,8 @@ const EditEvent = () => {
                 try {
                     const response = await JudgeAxios.get(`events/${id}/`)
                     setEventData(response.data)
-                    console.log("get EVENT", response.data);
 
                     Object.entries(response.data).forEach(([key, value]) => {
-                        // console.log(key, value);
                         if (key === 'name')
                             dispatch(updateEventInformationField({field: key, value: value}));
 
@@ -63,15 +58,13 @@ const EditEvent = () => {
 
                     const response2 = await JudgeAxios.get(`/rubrics/${response.data.rubrics}`)
 
-                    // console.log(response2.data)
                     rubrics.current = JSON.parse(response2.data.criteria_json);
-                    console.log("-----RUBRICS USEEFFECT", rubrics); // Outputs: { id: 1, name: 'Alice', roles: [ 'admin', 'user' ] }
 
                     rubrics.current.map((rubric) => {
-                        // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 mapping", rubric)
                         try {
                             // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
                             dispatch(updateEvaluationCriteria(rubric))
+<<<<<<< HEAD
                             // dispatch(updateEvaluationCriteriaScale(rubric.scales[0]))
 
                             if (rubric && rubric.scales.length) {
@@ -81,6 +74,8 @@ const EditEvent = () => {
                             }
 
                             // console.log(rubric)
+=======
+>>>>>>> main
                         } catch (error) {
                             console.error(error)
                         }
@@ -91,7 +86,6 @@ const EditEvent = () => {
                 }
             }
             getEventData()
-            console.log("eventInfo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", eventInfo)
         }, []
     )
 
@@ -113,7 +107,6 @@ const EditEvent = () => {
         // ) {
         try {
 
-            console.log("############################## ", JSON.stringify(eventEvaluationCriteria))
             // creating the rubrics obj which is stored on the event
             const res = await JudgeAxios.patch(`rubrics/${eventData.rubrics}`, {
                 criteria_json: JSON.stringify(eventEvaluationCriteria),
@@ -127,7 +120,6 @@ const EditEvent = () => {
                 rubrics: res.data.id,
             })
 
-            console.log(")))))))))))))))))))))))))))))))))))))))))))", response)
 
         } catch (error) {
             console.error(error)

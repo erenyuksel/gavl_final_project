@@ -11,7 +11,6 @@ const EventInformationSection = ({ event }) => {
   // set admin priviliges to view edit event and statistics page
   useEffect(() => {
     if (userProfile) {
-      console.log("🚀 ~ useEffect ~ userProfile:", userProfile)
       if (userProfile.role === 'Organisation Admin' || userProfile.role === 'Admin') {
         setIsAdmin(true)
       }
@@ -31,8 +30,14 @@ const EventInformationSection = ({ event }) => {
   }
 
   // checks the event start and end dates and provides event status
-  const getStatus = (startDate, endDate) => {
+  const getStatus = (startDateString, endDateString) => {
+    const startDate = new Date(startDateString)
+    const endDate = new Date(endDateString)
+    console.log("🚀 ~ getStatus ~ endDate:", endDate)
+    console.log("🚀 ~ getStatus ~ startDate:", startDate)
     const currentDate = new Date();
+    console.log("🚀 ~ getStatus ~ currentDate:", currentDate)
+    
     if (currentDate < startDate) {
       return <p className="badge badge-lg bg-orange-300">upcoming</p>
     } else if (currentDate >= startDate && currentDate <= endDate) {
@@ -46,8 +51,10 @@ const EventInformationSection = ({ event }) => {
     <>
       <div className="flex flex-col w-100 items-center">
         {userProfile && (
-        <div className='m-5 rounded-full w-14 h-14'>
-          <img src={userProfile.organisation.logo} alt='Organisation logo' />
+        <div className='m-5 rounded-full w-16 h-16'>
+          <img src={userProfile.organisation.logo ? userProfile.organisation.logo : 'https://www.climb-it.fr/wp-content/uploads/2020/03/logo-placeholder-png-2.png'} 
+          alt='Organisation logo'
+          className='rounded-full' />
         </div>
         )}
         <h1>{event.name}</h1>

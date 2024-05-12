@@ -2,7 +2,6 @@ import { FaGlobe, FaLinkedin, FaYoutube } from 'react-icons/fa'
 
 const ProjectHeader = ({ project }) => {
   const parsedContent = JSON.parse(project.content)
-  console.log(parsedContent)
 
   return (
     <>

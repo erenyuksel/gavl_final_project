@@ -206,7 +206,7 @@ const EventStatisticPage = () => {
                   <tr>
                     <td className="font-bold">{judge.fullname}</td>
                     {judge.evaluationCriteriaOrder.map(criteria => {
-                      return <td key={criteria}>{judge.evaluation_scores[`${criteria}`] || 0}</td>
+                      return <td key={criteria}>{judge.evaluation_scores[`${criteria}`]}</td>
                     })}
                     <td>{judge.total_score ? judge.total_score.toFixed(1) : 0}</td>
                   </tr>
@@ -257,7 +257,7 @@ const EventStatisticPage = () => {
                     </td>
                     <td onClick={() => handleJudgesView(project)}>{project.amount_of_judges} / {eventData.judges.length}</td>
                     {evaluationCriteriaNames.map(criteria => {
-                      return <td key={criteria}>{project[`${criteria}_score`] || 0}</td>
+                      return <td key={criteria}>{project[`${criteria}_score`] ? project[`${criteria}_score`].toFixed(1) : 0}</td>
                     })}
                     <td>{project.total_score ? project.total_score.toFixed(1) : 0}</td>
                   </tr>

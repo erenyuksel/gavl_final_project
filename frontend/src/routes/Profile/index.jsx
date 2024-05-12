@@ -151,16 +151,12 @@ const Profile = () => {
             } else {
                 formData.append(key, userMeData[key]);
             }
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(key, value);
-            // }
         })
         try {
             const response = await JudgeAxios.patch(`/users/me/`, formData)
             setIsEditing(false)
 
             for (let [key, value] of formData.entries()) {
-                console.log(key, value);
                 if (key !== 'organisation')
                     dispatch(updateUserField({field: key, value: value}));
             }

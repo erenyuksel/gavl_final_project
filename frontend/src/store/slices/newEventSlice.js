@@ -17,8 +17,6 @@ const newEventSlice = createSlice({
         updateEventInformationField: (state, action) => {
             const {field, value} = action.payload;
             state.eventInformation[field] = value
-
-            console.log("^^^^^^^^^^^^^^^^updateEventInformationField", field, value)
         },
 
         // adds a new obj to the event project structure arr, is used to define the structur of the information the contestants hold
