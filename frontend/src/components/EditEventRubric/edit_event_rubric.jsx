@@ -2,19 +2,18 @@ import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import PropTypes from "prop-types";
 import {v4 as uuidv4} from "uuid";
-import {updateEvaluationCriteria} from "../../store/slices/rubricSlice.js";
+import {updateEvaluationCriteria, updateEvaluationCriteriaScale} from "../../store/slices/rubricSlice.js";
+import EditEventScale from "./edit_event_scale.jsx";
 
 
-const EditEventRubric = ({obj}) => {
+const EditEventRubric = ({rubric}) => {
 
-    const criteriaSlice = useSelector((state) => state.rubric.evaluationCriteria.find(crit => crit.uuid === obj))
-    // const scaleSlice = criteriaSlice.scales
-    //useSelector((state) => state.rubric.eventEvaluationCriteriaScales)
+    console.log("------------EditEventRubric----------------   obj", rubric)
     const dispatch = useDispatch()
 
     // use state for storing the evaluation criteria object. incl. the scales
     const [criteriaForm, setCriteriaForm] = useState({
-        uuid:'',
+        uuid: '',
         name: '',
         description: '',
         scales: [],
@@ -56,73 +55,13 @@ const EditEventRubric = ({obj}) => {
 
 
     useEffect(() => {
-        if (criteriaSlice && criteriaForm.uuid === '') {
-            // if (criteriaSlice && criteriaSlice.scales && criteriaForm.uuid === '' && scaleForm.uuid === '') {
-            // if (criteriaSlice && criteriaSlice.scales) {
-            setCriteriaForm(criteriaSlice)
-            // criteriaSlice.scales.map((scale) => {
-            //     console.log("map useEffect", scale)
-            //     setScaleForm(scale)
-            // })
-
-            if (criteriaSlice.scales) {
-                setScaleForm(criteriaSlice.scales.map(scale => ({
-                    ...scale,
-                    uuid: scale.uuid || uuidv4(),  // Ensure each scale has a UUID
-                })));
-            }
-            console.log("INSIDE $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
+        setCriteriaForm(rubric)
+        if (rubric.scales) {
+            setScaleForm(rubric.scales)
         }
-        console.log("OUTSIDE $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
-    }, [criteriaSlice])
-
-    // useEffect(() => {
-    //
-    //     clearScales()
-    //     setNewScales(scaleForm)
-    //
-    //     console.log("UUUUUUUUUUUd^^^^CRIT====useEffect=====ERIA^^^^^^^UEUUUUUUUUUUUUUUUUUUU", criteriaForm)
-    //
-    //     dispatch(updateEvaluationCriteria(criteriaForm))
-    //
-    // }, [scaleForm]);
-
-    function handleScaleChange(e, uuid) {
-
-        // console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU", e)
-        console.log("UUUUUUUUUUUva UUID  UUUUUUUUUUUUUUUUUUU", uuid)
-
-
-        const {name, value} = e.target
-        console.log("UUUUUUUUUUUdNAMEionUUUUUUUUUUUUUUUUUUU", name)
-        console.log("UUUUUUUUUUUdesVALUEUUUUUUUUUUUUUUUUUUU", value)
-
-
-        setScaleForm(prevScales =>
-            prevScales.map(scale =>
-                scale.uuid === uuid ? {...scale, [name]: value} : scale
-            ))
-
-
-        // setCriteriaForm(prevForm => ({
-        //     ...prevForm,
-        //     scales: prevForm.scales.map(scale =>
-        //         scale.uuid === uuid ? {...scale, [name]: value} : scale
-        //     )
-        // }));
-        //
-        // console.log("UUUUUUUUUUUd^^^^CRITERIA^^^^^^^UEUUUUUUUUUUUUUUUUUUU", criteriaForm)
-        //
-        //
-
-        console.log("___before_________________", criteriaForm)
-        console.log("___before scale_________________", scaleForm)
-        clearScales()
-        setNewScales(scaleForm)
-        console.log("___after_________________", criteriaForm)
-        // dispatch(updateEvaluationCriteria(criteriaForm))
-
-    }
+        console.log(" $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   scale -++++++++++", scaleForm)
+        console.log(" $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
+    }, [])
 
 
     useEffect(() => {
@@ -211,36 +150,9 @@ const EditEventRubric = ({obj}) => {
                     </h3>
                 </div>
 
-                {scaleForm && scaleForm.length && scaleForm.map((scale) => (
+                {rubric && rubric.scales.length && rubric.scales.map((scale) => (
                     <div className="flex flex-wrap items-center w-full sm:w-[40rem] m-3" key={scale.uuid}>
-                        <div className="flex w-1/2 flex-grow items-center">
-                            <input
-                                className="input shadow input-bordered"
-                                type="number"
-                                placeholder="Value"
-                                value={scale.value}
-                                name="value"
-                                onChange={(e) => handleScaleChange(e, scale.uuid)}
-                            />
-                            <input
-                                className="input input-bordered shadow flex w-full min-w-0 m-3"
-                                type="text"
-                                placeholder="Description"
-                                value={scale.description}
-                                name="description"
-                                onChange={(e) => handleScaleChange(e, scale.uuid)}
-                            />
-                        </div>
-
-                        <button className="btn btn-ghost btn-circle" onClick={handleRemoveScale}>
-                            <div className="indicator">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     strokeWidth={1.5} stroke="red" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                </svg>
-                            </div>
-                        </button>
+                        <EditEventScale obj={scale}/>
                     </div>
                 ))}
 
@@ -252,14 +164,14 @@ const EditEventRubric = ({obj}) => {
                             placeholder="Value"
                             value={addedScaleForm.value}
                             name="value"
-                            onChange={handleScaleChange}
+                            // onChange={handleScaleChange}
                         />
                         <textarea
                             className="input input-bordered shadow flex w-full min-w-0 m-3"
                             placeholder="Description"
                             value={addedScaleForm.description}
                             name="description"
-                            onChange={handleScaleChange}
+                            // onChange={handleScaleChange}
                         />
                     </div>
                     <button className="btn btn-ghost btn-circle" onClick={handleAddScale}>
@@ -288,7 +200,7 @@ const EditEventRubric = ({obj}) => {
 }
 
 EditEventRubric.propTypes = {
-    obj: PropTypes.string // Add additional fields as necessary
+    rubric: PropTypes.object // Add additional fields as necessary
 };
 
 export default EditEventRubric

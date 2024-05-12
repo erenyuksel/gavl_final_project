@@ -9,7 +9,7 @@ import {
 } from "../../../store/slices/newEventSlice.js";
 import {useDispatch, useSelector} from 'react-redux'
 import EditEventRubric from "../../../components/EditEventRubric/edit_event_rubric.jsx";
-import {updateEvaluationCriteria} from "../../../store/slices/rubricSlice.js";
+import {updateEvaluationCriteria, updateEvaluationCriteriaScale} from "../../../store/slices/rubricSlice.js";
 
 
 const EditEvent = () => {
@@ -72,6 +72,14 @@ const EditEvent = () => {
                         try {
                             // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
                             dispatch(updateEvaluationCriteria(rubric))
+                            // dispatch(updateEvaluationCriteriaScale(rubric.scales[0]))
+
+                            if (rubric && rubric.scales.length) {
+                                rubric.scales.map((scale) => {
+                                    dispatch(updateEvaluationCriteriaScale(scale))
+                                })
+                            }
+
                             // console.log(rubric)
                         } catch (error) {
                             console.error(error)
@@ -142,15 +150,9 @@ const EditEvent = () => {
 
                     {rubrics.current && rubrics.current.map((obj) =>
                         <div key={obj.uuid} className="text-center  flex  flex-col items-center">
-                            <EditEventRubric obj={obj.uuid}/>
+                            <EditEventRubric rubric={obj}/>
                         </div>
                     )}
-
-                    {/*we need empty rubric component as possibility for the user to add new rubric*/}
-                    {/*<div className="text-center  flex  flex-col items-center">*/}
-                    {/*    <EditEventRubric obj=''/>*/}
-                    {/*</div>*/}
-
                     <div className="w-full p-4 flex flex-row justify-center gap-6">
                         <button className="btn btn-success mt-8" onClick={handleUpdate}>
                             Update Event
