@@ -1,13 +1,21 @@
 import {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import PropTypes from "prop-types";
 import {v4 as uuidv4} from "uuid";
-import {updateEvaluationCriteria, updateEvaluationCriteriaScale} from "../../store/slices/rubricSlice.js";
+import {
+    addEvaluationCriteriaScale,
+    removeEvaluationCriteriaScale,
+    updateEvaluationCriteria
+} from "../../store/slices/rubricSlice.js";
 import EditEventScale from "./edit_event_scale.jsx";
 
 
 const EditEventRubric = ({rubric}) => {
 
+<<<<<<< HEAD
+=======
+    // console.log("------------EditEventRubric----------------   obj", rubric)
+>>>>>>> main
     const dispatch = useDispatch()
 
     // use state for storing the evaluation criteria object. incl. the scales
@@ -18,6 +26,8 @@ const EditEventRubric = ({rubric}) => {
         scales: [],
     })
 
+    const [scales, setScales] = useState(rubric.scales)
+
     // const [addedCriteriaForm, setAddedCriteriaForm] = useState({
     //     uuid: uuidv4(),
     //     name: '',
@@ -25,12 +35,6 @@ const EditEventRubric = ({rubric}) => {
     //     scales: [],
     // })
 
-    // useState for storing the form input of a ev. criteria scale
-    const [scaleForm, setScaleForm] = useState([{
-        uuid: '',
-        value: '',
-        description: '',
-    }])
 
     const [addedScaleForm, setAddedScaleForm] = useState({
         uuid: uuidv4(),
@@ -38,26 +42,16 @@ const EditEventRubric = ({rubric}) => {
         description: '',
     })
 
-    const clearScales = () => {
-        setCriteriaForm(prevForm => ({
-            ...prevForm,
-            scales: [] // Sets scales to an empty array
-        }));
-    };
-
-    const setNewScales = (newScales) => {
-        setCriteriaForm(prevForm => ({
-            ...prevForm,
-            scales: newScales
-        }));
-    };
-
     useEffect(() => {
 
         setCriteriaForm(rubric)
+<<<<<<< HEAD
         if (rubric.scales) {
             setScaleForm(rubric.scales)
         }
+=======
+        // console.log(" $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
+>>>>>>> main
     }, [])
 
 
@@ -99,17 +93,31 @@ const EditEventRubric = ({rubric}) => {
 // handling storing an scale in the redux eventSlice
     const handleAddScale = (e) => {
         e.preventDefault()
-        // dispatch(updateEventEvaluationCriteriaScales(scaleForm))
-        setScaleForm({
+        dispatch(addEvaluationCriteriaScale(addedScaleForm))
+
+        setScales([...scales, addedScaleForm]);
+
+        setAddedScaleForm({
             uuid: uuidv4(),
             value: '',
             description: '',
         })
     }
 
+    const handleScaleChange = (e) => {
+        const {name, value} = e.target
+        setAddedScaleForm({
+            ...addedScaleForm,
+            [name]: value,
+        })
+    }
+
     const handleRemoveScale = (uuid) => {
-        setScaleForm(prevScales =>
+        setScales(prevScales =>
             prevScales.filter(scale => scale.uuid !== uuid));
+
+        // setScales(scales.filter(scale => scale.uuid !== uuid));
+        dispatch(removeEvaluationCriteriaScale(uuid));
     }
 
     return (
@@ -145,43 +153,44 @@ const EditEventRubric = ({rubric}) => {
                         Scales
                     </h3>
                 </div>
-
-                {rubric && rubric.scales.length && rubric.scales.map((scale) => (
-                    <div className="flex flex-wrap items-center w-full sm:w-[40rem] m-3" key={scale.uuid}>
-                        <EditEventScale obj={scale}/>
-                    </div>
-                ))}
-
                 <div className="flex flex-wrap items-center w-full sm:w-[40rem] m-3">
+                    {/*changed from rubric.scales to state Scale*/}
+                    {scales && scales.length > 0 && scales.map((scale) => (
+                        <div key={scale.uuid}>
+                            <EditEventScale obj={scale} deleteScale={() => handleRemoveScale(scale.uuid)}/>
+                        </div>
+                    ))}
                     <div className="flex w-1/2 flex-grow items-center">
                         <input
                             className="input shadow input-bordered"
                             type="number"
-                            placeholder="Value"
+                            placeholder="Add value"
                             value={addedScaleForm.value}
                             name="value"
-                            // onChange={handleScaleChange}
+                            onChange={handleScaleChange}
                         />
                         <textarea
                             className="input input-bordered shadow flex w-full min-w-0 m-3"
-                            placeholder="Description"
+                            placeholder="Add description"
                             value={addedScaleForm.description}
                             name="description"
-                            // onChange={handleScaleChange}
+                            onChange={handleScaleChange}
                         />
                     </div>
-                    <button className="btn btn-ghost btn-circle" onClick={handleAddScale}>
+                    <button
+                        className="btn btn-ghost btn-circle"
+                        onClick={handleAddScale}
+                        disabled={!addedScaleForm.value || !addedScaleForm.description}  // Button disabled if fields are empty
+                    >
                         <div className="indicator">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 stroke-width="1.5"
-                                 stroke="green" className="w-6 h-6">
+                                 stroke-width="1.5" stroke="green" className="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                             </svg>
                         </div>
                     </button>
                 </div>
-
                 <div className="flex w-full justify-center flex-row items-center">
                     <button
                         className="btn btn-error m-10  shadow-xl"
