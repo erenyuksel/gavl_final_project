@@ -162,8 +162,10 @@ const EventStatisticPage = () => {
           })
           // store all the scores on the tempobj
           const evaluationData = JSON.parse(judges_evaluation[0].json_data_rating)
+          console.log("🚀 ~ handleJudgesView ~ evaluationData:", evaluationData)
           tempObj.evaluation_scores = evaluationData
-          // calculating the overall score and add it as well to the tempobj
+          // calculating the overall score of the judge and add it as well to the tempobj
+          
           tempObj.total_score = project.total_score
           // adding the tempobj to the judge useState
           tempArr = [...tempArr, tempObj]
