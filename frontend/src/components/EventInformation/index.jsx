@@ -33,10 +33,7 @@ const EventInformationSection = ({ event }) => {
   const getStatus = (startDateString, endDateString) => {
     const startDate = new Date(startDateString)
     const endDate = new Date(endDateString)
-    console.log("🚀 ~ getStatus ~ endDate:", endDate)
-    console.log("🚀 ~ getStatus ~ startDate:", startDate)
     const currentDate = new Date();
-    console.log("🚀 ~ getStatus ~ currentDate:", currentDate)
     
     if (currentDate < startDate) {
       return <p className="badge badge-lg bg-orange-300">upcoming</p>

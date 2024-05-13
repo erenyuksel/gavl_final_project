@@ -119,7 +119,6 @@ const EditEventRubric = ({rubric, removeRubric}) => {
     return (
         <>
             <div className="flex shadow w-full flex-col items-center m-14   pt-5">
-                <h2>Updating Evaluation Criteria</h2>
                 <div className="m-5 mt-10">
                     <h3>
                         Criteria
@@ -147,7 +146,7 @@ const EditEventRubric = ({rubric, removeRubric}) => {
 
                 <div className=" mt-10">
                     <h3>
-                        Scale
+                        Scales
                     </h3>
                 </div>
                 <div className="flex flex-wrap items-center w-full sm:w-[40rem] m-3">

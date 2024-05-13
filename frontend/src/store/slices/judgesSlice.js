@@ -15,7 +15,7 @@ const judgesSlice = createSlice({
       state.judges.push(action.payload)
     },
     removeJudge: (state, action) => {
-      state.judges = state.judges.filter((judge) => judge.uuid !== action.payload)
+      state.judges = state.judges.filter((judge) => judge.email !== action.payload)
     },
   },
 })
