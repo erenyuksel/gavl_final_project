@@ -7,11 +7,8 @@ import {updateEvaluationCriteriaScale} from "../../store/slices/rubricSlice.js";
 // eslint-disable-next-line react/prop-types
 const EditEventScale = ({obj, deleteScale}) => {
 
-<<<<<<< HEAD
-=======
     // console.log("----------------------------   obj", obj)
    const dispatch = useDispatch()
->>>>>>> main
 
     const [scaleForm, setScaleForm] = useState([{
         uuid: '',
@@ -21,17 +18,11 @@ const EditEventScale = ({obj, deleteScale}) => {
 
     useEffect(() => {
         setScaleForm(obj)
-<<<<<<< HEAD
-    }, [])
-
-    useEffect(() => {
-=======
         // console.log("INSIDE ----EditEventScale---------------useEffect-------------   useEffect", scaleForm)
     }, [])
 
     useEffect(() => {
         // console.log("          ^^^^scaleForm====useEffect=====^^^^^^^      ", scaleForm)
->>>>>>> main
         dispatch(updateEvaluationCriteriaScale(scaleForm))
     }, [scaleForm]);
 
