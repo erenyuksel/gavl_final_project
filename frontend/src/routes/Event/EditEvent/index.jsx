@@ -9,7 +9,11 @@ import {
 } from "../../../store/slices/newEventSlice.js";
 import {useDispatch, useSelector} from 'react-redux'
 import EditEventRubric from "../../../components/EditEventRubric/edit_event_rubric.jsx";
-import {updateEvaluationCriteria, updateEvaluationCriteriaScale} from "../../../store/slices/rubricSlice.js";
+import {
+    removeEvaluationCriteria,
+    updateEvaluationCriteria,
+    updateEvaluationCriteriaScale
+} from "../../../store/slices/rubricSlice.js";
 
 
 const EditEvent = () => {
@@ -19,7 +23,7 @@ const EditEvent = () => {
     const {id} = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const rubrics = useRef(null)
+    const [rubrics, setRubrics] = useState([])
     const location = useLocation();
 
     useEffect(() => {
@@ -58,9 +62,9 @@ const EditEvent = () => {
 
                     const response2 = await JudgeAxios.get(`/rubrics/${response.data.rubrics}`)
 
-                    rubrics.current = JSON.parse(response2.data.criteria_json);
+                    setRubrics(JSON.parse(response2.data.criteria_json));
 
-                    rubrics.current.map((rubric) => {
+                    rubrics.map((rubric) => {
                         try {
                             // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
                             dispatch(updateEvaluationCriteria(rubric))
@@ -97,18 +101,12 @@ const EditEvent = () => {
     }
 
     const handleUpdate = async () => {
-        // checking if event form was filled out and there is at least the basic info, a contestant field and an evaluation criteria set
-        // if (
-        //     eventInfo &&
-        //     eventEvaluationCriteria.length > 0
-        // ) {
         try {
 
             // creating the rubrics obj which is stored on the event
             const res = await JudgeAxios.patch(`rubrics/${eventData.rubrics}`, {
                 criteria_json: JSON.stringify(eventEvaluationCriteria),
             })
-
             const response = await JudgeAxios.patch(`events/${id}/`, {
                 name: eventInfo.name,
                 start_date: eventInfo.start_date,
@@ -116,15 +114,22 @@ const EditEvent = () => {
                 description: eventInfo.description,
                 rubrics: res.data.id,
             })
-
-
         } catch (error) {
             console.error(error)
         }
-
         navigate(`/event/${id}`)
     }
 
+    const handleRemoveRubric = (uuid) => {
+       // console.log("h----------handleRemoveRubric -----aa", uuid, rubrics)
+
+        setRubrics(prevRubrics =>
+            prevRubrics.filter(rubric => rubric.uuid !== uuid));
+
+        dispatch(removeEvaluationCriteria(uuid));
+
+        // console.log("h----------handleRemoveRubric -----after", uuid, rubrics)
+    }
 
     return (
         <div className="w-100 flex flex-col items-center">
@@ -137,9 +142,9 @@ const EditEvent = () => {
                     <AddEventInformation eventInformation={eventData}/>
                     <ImportCSV event_id={id}/>
 
-                    {rubrics.current && rubrics.current.map((obj) =>
+                    {rubrics && rubrics.map((obj) =>
                         <div key={obj.uuid} className="text-center  flex  flex-col items-center">
-                            <EditEventRubric rubric={obj}/>
+                            <EditEventRubric rubric={obj} removeRubric={() => handleRemoveRubric(obj.uuid)}/>
                         </div>
                     )}
                     <div className="w-full p-4 flex flex-row justify-center gap-6">

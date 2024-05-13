@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { setEventInformation } from '../../store/slices/newEventSlice'
+import {useState, useEffect} from 'react'
+import {useDispatch} from 'react-redux'
+import {setEventInformation} from '../../store/slices/newEventSlice'
 import PropTypes from "prop-types";
 
 const AddEventInformation = ({eventInformation}) => {
@@ -9,20 +9,20 @@ const AddEventInformation = ({eventInformation}) => {
 
     const dispatch = useDispatch()
 
-    //sets inital value of the event und refers to the Redux store
+    //sets initial value of the event und refers to the Redux store
     const [formData, setFormData] = useState({
         name: '',
-        start_date:  null,
-        end_date:  '',
-        description:  '',
+        start_date: '',
+        end_date: '',
+        description: '',
     })
 
     useEffect(() => {
         if (eventInformation && eventInformation.name) {
-            setFormData(eventInformation)
+             setFormData(eventInformation)
             // console.log("useEffect addEventInfo useEffect @@ @@ @@ @@ @@", eventInformation)
         }
-    }, [ eventInformation])
+    }, [eventInformation])
 
     //if user changes something on the form it will store it in the redux
     useEffect(() => {
@@ -32,10 +32,10 @@ const AddEventInformation = ({eventInformation}) => {
 
     //updates the useState to store the changes in the form
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const {name, value} = e.target
         setFormData((prevState) => ({
             ...prevState,
-            [name]: value,
+            [name]: value || ''
         }))
     }
 

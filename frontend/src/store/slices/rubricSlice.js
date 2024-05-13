@@ -17,9 +17,14 @@ const rubricSlice = createSlice({
         // adds a new obj to the event project structure arr, is used to define the structur of the information the contestants hold
         updateEvaluationCriteria: (state, action) => {
 
-            if (Array.isArray(state.eventEvaluationCriteria)) {
-                state.evaluationCriteria = [...state.evaluationCriteria, action.payload];
-                // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
+            if (Array.isArray(state.evaluationCriteria)) {
+                const search_result = state.evaluationCriteria.find((criteria) => criteria.uuid === action.payload.uuid)
+                // console.log("^^^^^^^^^^^^^search res", search_result)
+
+                if (typeof search_result === 'undefined') {
+                    state.evaluationCriteria = [...state.evaluationCriteria, action.payload];
+                    // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
+                }
             } else {
                 // If not an array, initialize it as an array with the current payload
                 state.evaluationCriteria = [action.payload];
@@ -30,10 +35,15 @@ const rubricSlice = createSlice({
 
         // removes an evaluation criteria from the list, not used yet
         removeEvaluationCriteria: (state, action) => {
-            const newArr = state.eventEvaluationCriteria.filter(obj => {
+
+            // console.log("SLICE ----- REMOVE-- BEFORE -- uuid", action.payload, state.evaluationCriteria)
+
+            const newArr = state.evaluationCriteria.filter(obj => {
                 return obj.uuid !== action.payload
             })
-            state.eventEvaluationCriteria = newArr
+            state.evaluationCriteria = newArr
+
+             // console.log("SLICE ----- REMOVE-- AFTER -- uuid", newArr)
         },
 
 
