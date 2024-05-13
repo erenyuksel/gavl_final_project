@@ -4,7 +4,6 @@ const rubricSlice = createSlice({
     name: 'rubric',
     initialState: {
         evaluationCriteria: [],
-        evaluationCriteriaScale: [],
     },
     reducers: {
 
@@ -29,20 +28,49 @@ const rubricSlice = createSlice({
         },
 
 
-        // adding the evaluation criteria scales to the evaluation criteria obj and then storing it in the arr
-        addScaleEvaluationCriteria: (state, action) => {
-            const newObj = action.payload
-            newObj['scales'] = state.evaluationCriteriaScales
-            state.evaluationCriteria = [...state.evaluationCriteria, newObj]
-        },
-
-
         // removes an evaluation criteria from the list, not used yet
         removeEvaluationCriteria: (state, action) => {
             const newArr = state.eventEvaluationCriteria.filter(obj => {
                 return obj.uuid !== action.payload
             })
             state.eventEvaluationCriteria = newArr
+        },
+
+
+        // adding the evaluation criteria scales to the evaluation criteria obj and then storing it in the arr
+        addEvaluationCriteriaScale: (state, action) => {
+
+  //          console.log("SLICE ----- ADD---- ", action.payload, state.evaluationCriteria)
+
+             const addedCriteriaScale = state.evaluationCriteria.map(crit => {
+                if (crit.scales) {
+                    const updatedScales = [...crit.scales, action.payload];
+                    return {...crit, scales: updatedScales};
+                } else {
+                    crit['scales'] = action.payload;
+                    return crit;
+                }
+            });
+
+             state.evaluationCriteria = addedCriteriaScale
+
+     //        console.log("SLICE ----- ADD-- AFTER -- uuid", addedCriteriaScale)
+        },
+
+
+        removeEvaluationCriteriaScale: (state, action) => {
+     //       console.log("SLICE ----- REMOVE---- uuid", action.payload, state.evaluationCriteria)
+
+            const removedCriteriaScale = state.evaluationCriteria.map(crit => {
+                if (crit.scales) {
+                    const updatedScales = crit.scales.filter(scale => scale.uuid !== action.payload);
+                    return {...crit, scales: updatedScales};
+                }
+                return crit;
+            });
+
+            state.evaluationCriteria = removedCriteriaScale
+      //      console.log("SLICE ----- REMOVE-- AFTER -- uuid", state.eventEvaluationCriteria)
         },
 
         updateEvaluationCriteriaScale: (state, action) => {
@@ -60,9 +88,9 @@ const rubricSlice = createSlice({
             });
 
             // setCriteria(updatedCriteria);
-            console.log("...................................important moment", action.payload)
+          //  console.log("...................................important moment payload", action.payload)
             state.evaluationCriteria = updatedCriteria;
-            console.log("...................................important moment 2", updatedCriteria )
+         //   console.log("...................................important moment 2 updatedCriteria", updatedCriteria)
         }
     },
 })
@@ -70,9 +98,8 @@ export const {
     clearEvaluationCriteria,
     updateEvaluationCriteria,
     removeEvaluationCriteria,
-    addScaleEvaluationCriteria,
+    addEvaluationCriteriaScale,
     updateEvaluationCriteriaScale,
-    clearEvaluationCriteriaScales,
     updateEvaluationCriteriaField,
     removeEvaluationCriteriaScale
 } = rubricSlice.actions
