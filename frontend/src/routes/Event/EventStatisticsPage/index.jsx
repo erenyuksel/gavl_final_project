@@ -131,7 +131,7 @@ const EventStatisticPage = () => {
     }
   });
 
-
+  // if the user clicks on the panelist number of an contestant it shows the table with all the evaluation scores of each panelist which completed his evaluation
   const handleJudgesView = async (project) => {
     if (project) {
       try {
@@ -162,11 +162,10 @@ const EventStatisticPage = () => {
           })
           // store all the scores on the tempobj
           const evaluationData = JSON.parse(judges_evaluation[0].json_data_rating)
-          console.log("🚀 ~ handleJudgesView ~ evaluationData:", evaluationData)
           tempObj.evaluation_scores = evaluationData
           // calculating the overall score of the judge and add it as well to the tempobj
-          
-          tempObj.total_score = project.total_score
+          const tempOverallScore = Object.values(evaluationData).reduce((a, b) => Number(a) + Number(b)) / Object.keys(evaluationData).length
+          tempObj.total_score = tempOverallScore
           // adding the tempobj to the judge useState
           tempArr = [...tempArr, tempObj]
         } catch (err) {
