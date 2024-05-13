@@ -16,7 +16,7 @@ class JudgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'role']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'role']
 
 
 class UserSerializer(serializers.ModelSerializer):

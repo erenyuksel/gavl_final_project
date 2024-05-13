@@ -11,7 +11,6 @@ const rubricSlice = createSlice({
             const {field, value, id} = action.payload;
             state.evaluationCriteria[id][field] = value//???
 
-            // console.log("^^^^^^^^^^^^^^^^updateEventEvaluationCriteriaField", field, value, id)
         },
 
         // adds a new obj to the event project structure arr, is used to define the structur of the information the contestants hold
@@ -19,7 +18,6 @@ const rubricSlice = createSlice({
 
             if (Array.isArray(state.eventEvaluationCriteria)) {
                 state.evaluationCriteria = [...state.evaluationCriteria, action.payload];
-                // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
             } else {
                 // If not an array, initialize it as an array with the current payload
                 state.evaluationCriteria = [action.payload];

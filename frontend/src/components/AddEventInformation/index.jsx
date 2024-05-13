@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 
 const AddEventInformation = ({eventInformation}) => {
 
-    // console.log("addEventInfo - - - - - - - - -", eventInformation)
 
     const dispatch = useDispatch()
 
@@ -20,7 +19,6 @@ const AddEventInformation = ({eventInformation}) => {
     useEffect(() => {
         if (eventInformation && eventInformation.name) {
             setFormData(eventInformation)
-            // console.log("useEffect addEventInfo useEffect @@ @@ @@ @@ @@", eventInformation)
         }
     }, [ eventInformation])
 

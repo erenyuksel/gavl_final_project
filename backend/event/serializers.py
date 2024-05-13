@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Event
 from contestant_project.serializers import ContestantProjectSerializer
+from user.serializers import JudgeSerializer
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -13,4 +14,5 @@ class EventSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['projects'] = ContestantProjectSerializer(instance.projects, many=True).data
+        representation['judges'] = JudgeSerializer(instance.judges, many=True).data
         return representation
