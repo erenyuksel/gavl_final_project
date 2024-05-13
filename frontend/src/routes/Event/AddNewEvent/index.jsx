@@ -103,7 +103,7 @@ const AddNewEvent = () => {
                     <div className="text-center">
                         <h1>Create New Event</h1>
                     </div>
-                    <AddEventInformation />
+                    <AddEventInformation  eventInformation={null}/>
                     <AddProjectContent />
                     <EventRubric />
                     <AddInviteJudges />

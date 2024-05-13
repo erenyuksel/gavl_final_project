@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setEventInformation } from '../../store/slices/newEventSlice'
+import PropTypes from "prop-types";
 
-const AddEventInformation = () => {
+const AddEventInformation = ({eventInformation}) => {
+
+    // console.log("addEventInfo - - - - - - - - -", eventInformation)
+
     const dispatch = useDispatch()
-    const eventInformation = useSelector((state) => state.event.eventInformation)
 
     //sets inital value of the event und refers to the Redux store
     const [formData, setFormData] = useState({
-        name: eventInformation.name || '',
-        start_date: eventInformation.start_date || null,
-        end_date: eventInformation.end_date || '',
-        description: eventInformation.description || '',
+        name: '',
+        start_date:  null,
+        end_date:  '',
+        description:  '',
     })
 
+    useEffect(() => {
+        if (eventInformation && eventInformation.name) {
+            setFormData(eventInformation)
+            // console.log("useEffect addEventInfo useEffect @@ @@ @@ @@ @@", eventInformation)
+        }
+    }, [ eventInformation])
 
     //if user changes something on the form it will store it in the redux
     useEffect(() => {
@@ -87,5 +96,9 @@ const AddEventInformation = () => {
         </div>
     )
 }
+
+AddEventInformation.propTypes = {
+    eventInformation: PropTypes.object // Add additional fields as necessary
+};
 
 export default AddEventInformation
