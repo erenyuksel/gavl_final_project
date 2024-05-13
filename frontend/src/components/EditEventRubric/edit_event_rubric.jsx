@@ -12,10 +12,7 @@ import EditEventScale from "./edit_event_scale.jsx";
 
 const EditEventRubric = ({rubric}) => {
 
-<<<<<<< HEAD
-=======
     // console.log("------------EditEventRubric----------------   obj", rubric)
->>>>>>> main
     const dispatch = useDispatch()
 
     // use state for storing the evaluation criteria object. incl. the scales
@@ -45,13 +42,7 @@ const EditEventRubric = ({rubric}) => {
     useEffect(() => {
 
         setCriteriaForm(rubric)
-<<<<<<< HEAD
-        if (rubric.scales) {
-            setScaleForm(rubric.scales)
-        }
-=======
         // console.log(" $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
->>>>>>> main
     }, [])
 
 
