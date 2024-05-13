@@ -7,7 +7,6 @@ import {updateEvaluationCriteriaScale} from "../../store/slices/rubricSlice.js";
 
 const EditEventScale = ({obj}) => {
 
-    console.log("----------------------------   obj", obj)
 
     //const scaleSlice = useSelector((state) => state.rubric.evaluationCriteriaScale.find(crit => crit.uuid === obj))
     const dispatch = useDispatch()
@@ -27,11 +26,9 @@ const EditEventScale = ({obj}) => {
 
     useEffect(() => {
         setScaleForm(obj)
-        console.log("INSIDE ----EditEventScale---------------useEffect-------------   useEffect", scaleForm)
     }, [])
 
     useEffect(() => {
-        console.log("          ^^^^scaleForm====useEffect=====^^^^^^^      ", scaleForm)
         dispatch(updateEvaluationCriteriaScale(scaleForm))
     }, [scaleForm]);
 

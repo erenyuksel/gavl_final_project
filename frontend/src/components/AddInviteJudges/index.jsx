@@ -42,7 +42,7 @@ const AddInviteJudges = () => {
 
   //function to remove a judge
   const handleRemoveJudge = (judge) => {
-    dispatch(removeJudge(judge.uuid))
+    dispatch(removeJudge(judge.email))
   }
 
   return (
