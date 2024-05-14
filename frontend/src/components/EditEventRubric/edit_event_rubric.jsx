@@ -25,6 +25,7 @@ const EditEventRubric = ({rubric, removeRubric, addRubric}) => {
     })
 
     const [scales, setScales] = useState(rubric.scales)
+    // console.log("SCALES---------- get scale--", scales)
 
     const [addedScaleForm, setAddedScaleForm] = useState({
         uuid: uuidv4(),
@@ -67,12 +68,15 @@ const EditEventRubric = ({rubric, removeRubric, addRubric}) => {
             description: '',
             scales: [],
         })
+        setScales([]);
+        // console.log("-------------------REMOVE SCALES", scales)
+
         addRubric()
     }
 
 // handling storing a scale in the redux eventSlice
     const handleAddScale = () => {
-        dispatch(addEvaluationCriteriaScale({crit_uuid: rubric.uuid, scale_form: addedScaleForm}));
+        dispatch(addEvaluationCriteriaScale({crit_uuid: criteriaForm.uuid, scale_form: addedScaleForm}));
 
         setScales([...scales, addedScaleForm]);
 
@@ -81,6 +85,8 @@ const EditEventRubric = ({rubric, removeRubric, addRubric}) => {
             value: '',
             description: '',
         })
+
+        // console.log("SCALES-----------add scale--", scales)
     }
 
     const handleScaleChange = (e) => {
