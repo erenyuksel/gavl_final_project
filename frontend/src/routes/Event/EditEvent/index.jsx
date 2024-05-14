@@ -16,6 +16,7 @@ import {
 } from "../../../store/slices/rubricSlice.js";
 import EditEventAddPanelists from '../../../components/EditEventAddPanelists/index.jsx';
 import {setJudges} from '../../../store/slices/judgesSlice.js';
+import {v4 as uuidv4} from "uuid";
 
 
 const EditEvent = () => {
@@ -28,6 +29,13 @@ const EditEvent = () => {
     const [rubrics, setRubrics] = useState([])
     const location = useLocation();
     const updatedPanelists = useSelector(state => state.judges.judges)
+
+    const [rubricPropsInformation] = useState({
+        uuid: uuidv4(),
+        name: '',
+        description: '',
+        scales: ''
+    });
 
     useEffect(() => {
         // Function to run on location change
@@ -164,12 +172,19 @@ const EditEvent = () => {
     const handleRemoveRubric = (uuid) => {
         // console.log("h----------handleRemoveRubric -----aa", uuid, rubrics)
 
-        setRubrics(prevRubrics =>
-            prevRubrics.filter(rubric => rubric.uuid !== uuid));
+        if (uuid !== '' || typeof uuid !== 'undefined' || uuid.length > 0) {
+            setRubrics(prevRubrics =>
+                prevRubrics.filter(rubric => rubric.uuid !== uuid));
 
-        dispatch(removeEvaluationCriteria(uuid));
+            dispatch(removeEvaluationCriteria(uuid));
+        }
 
         // console.log("h----------handleRemoveRubric -----after", uuid, rubrics)
+    }
+
+    const handleAddRubric = () => {
+        setRubrics(eventEvaluationCriteria);
+       // console.log("~~~~~~~ added criteria form RUBRICS ", rubrics)
     }
 
     return (
@@ -184,23 +199,25 @@ const EditEvent = () => {
                     <EditEventAddPanelists eventInformation={eventData}/>
 
 
+                    {rubrics && <div className='flex flex-col items-center'>
+                        <h2>Update Evaluation Criterias</h2>
+                        <p>
+                            Update the evaluation criterias of your event.
+                        </p>
+                    </div>}
+
                     {rubrics && rubrics.map((obj) =>
-                        <>
-                            <div className='flex flex-col items-center'>
-                                <h2>Update Evaluation Criterias</h2>
-                                <p>
-                                    Update the evaluation criterias of your event.
-                                </p>
-                            </div>
-                            <div key={obj.uuid} className="text-center  flex  flex-col items-center">
-                                <EditEventRubric rubric={obj} removeRubric={() => handleRemoveRubric(obj.uuid)}/>
-                            </div>
-                        </>
+                        <div key={obj.uuid} className="flex flex-col">
+                            <EditEventRubric rubric={obj} removeRubric={() => handleRemoveRubric(obj.uuid)} className = ".bg-gray-200"/>
+                        </div>
                     )}
+
+                    <EditEventRubric rubric={rubricPropsInformation} addRubric={handleAddRubric}/>
+
                     <ImportCSV event_id={id}/>
                     <div className="w-full p-4 flex flex-row justify-center gap-6">
                         <button className="btn btn-success mt-8" onClick={handleUpdate}>
-                        Update Event
+                            Update Event
                         </button>
                         <button className="btn btn-error mt-8" onClick={handleDelete}>
                             Delete Event
