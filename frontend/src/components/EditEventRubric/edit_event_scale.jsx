@@ -22,7 +22,7 @@ const EditEventScale = ({obj, deleteScale}) => {
     }, [])
 
     useEffect(() => {
-        // console.log("          ^^^^scaleForm====useEffect=====^^^^^^^      ", scaleForm)
+       // console.log("          ^^^^scaleForm====useEffect== edit event scale ===^^^^^^^      ", scaleForm)
         dispatch(updateEvaluationCriteriaScale(scaleForm))
     }, [scaleForm]);
 
@@ -41,8 +41,8 @@ const EditEventScale = ({obj, deleteScale}) => {
     return (
         <>
             {scaleForm && (typeof scaleForm.value !== 'undefined' && typeof scaleForm.description !== 'undefined') &&  (
-                <div className="flex flex-wrap items-center w-full sm:w-[40rem]">
-                    <div className="flex w-1/2 flex-grow items-center">
+                <div className="flex flex-wrap items-center w-full">
+                    <div className="flex flex-grow items-center">
                         <input
                             className="input shadow input-bordered"
                             type="number"

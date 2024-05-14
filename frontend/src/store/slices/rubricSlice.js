@@ -10,24 +10,38 @@ const rubricSlice = createSlice({
         updateEvaluationCriteriaField: (state, action) => {
             const {field, value, id} = action.payload;
             state.evaluationCriteria[id][field] = value//???
-
         },
 
         // adds a new obj to the event project structure arr, is used to define the structur of the information the contestants hold
         updateEvaluationCriteria: (state, action) => {
+           // console.log("^^^^^^^^^^^^^payload", action.payload)
 
             if (Array.isArray(state.evaluationCriteria)) {
                 const search_result = state.evaluationCriteria.find((criteria) => criteria.uuid === action.payload.uuid)
-                // console.log("^^^^^^^^^^^^^search res", search_result)
+                //console.log("^^^^^^^^^^^^^search res", search_result)
 
                 if (typeof search_result === 'undefined') {
                     state.evaluationCriteria = [...state.evaluationCriteria, action.payload];
-                    // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
+                   // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
+                } else {
+                    const updatedCriteria = state.evaluationCriteria.map(crit => {
+                        if (crit.uuid === action.payload.uuid) {
+                            return {
+                                ...crit,
+                                name: action.payload.name,
+                                description: action.payload.description,
+                                scales: action.payload.scales || []
+                            };
+                        }
+                        return crit;
+                    });
+                    state.evaluationCriteria = updatedCriteria;
+                    //console.log("^^^^^^^^^^^^^^^^ELSE &&&&&&  updatedCriteria", updatedCriteria)
                 }
             } else {
                 // If not an array, initialize it as an array with the current payload
                 state.evaluationCriteria = [action.payload];
-                // console.log("^^^^^^^^^^^^^^^^ELSE &&&&   updateEventEvaluationCriteria", state.evaluationCriteria)
+               // console.log("^^^^^^^^^^^^^^^^ELSE &&&&   updateEventEvaluationCriteria", state.evaluationCriteria)
             }
         },
 
@@ -45,29 +59,7 @@ const rubricSlice = createSlice({
             // console.log("SLICE ----- REMOVE-- AFTER -- uuid", newArr)
         },
 
-
-        // adding the evaluation criteria scales to the evaluation criteria obj and then storing it in the arr
-        addEvaluationCriteriaScale: (state, action) => {
-
-            //          console.log("SLICE ----- ADD---- ", action.payload, state.evaluationCriteria)
-
-            const addedCriteriaScale = state.evaluationCriteria.map(crit => {
-                if (crit.scales) {
-                    const updatedScales = [...crit.scales, action.payload];
-                    return {...crit, scales: updatedScales};
-                } else {
-                    crit['scales'] = action.payload;
-                    return crit;
-                }
-            });
-
-            state.evaluationCriteria = addedCriteriaScale
-
-            //        console.log("SLICE ----- ADD-- AFTER -- uuid", addedCriteriaScale)
-        },
-
-
-        removeEvaluationCriteriaScale: (state, action) => {
+      removeEvaluationCriteriaScale: (state, action) => {
             //       console.log("SLICE ----- REMOVE---- uuid", action.payload, state.evaluationCriteria)
 
             const removedCriteriaScale = state.evaluationCriteria.map(crit => {
@@ -82,10 +74,35 @@ const rubricSlice = createSlice({
             //      console.log("SLICE ----- REMOVE-- AFTER -- uuid", state.eventEvaluationCriteria)
         },
 
-        updateEvaluationCriteriaScale: (state, action) => {
 
+        // adding the evaluation criteria scales to the evaluation criteria obj and then storing it in the arr
+        addEvaluationCriteriaScale: (state, action) => {
+
+            const {crit_uuid, scale_form} = action.payload;
+            //console.log("-------------------SLICE ----- ADD---- ", crit_uuid, scale_form)
+            //console.log("-------------------SLICE ----- state.evaluationCriteria ---- ", state.evaluationCriteria)
+
+            const addedCriteriaScale = state.evaluationCriteria.map(crit => {
+               // console.log("-------------------SLICE ----- crit add  ---- ", crit)
+                if (crit.uuid === crit_uuid) {
+                    if (crit.scales) {
+                        const updatedScales = [...crit.scales, scale_form];
+                        return {...crit, scales: updatedScales};
+                    } else {
+                        crit['scales'] = scale_form;
+                        return crit;
+                    }
+                }
+                return crit;
+            });
+            state.evaluationCriteria = addedCriteriaScale
+            //console.log("SLICE ----- ADD-- AFTER -- uuid", addedCriteriaScale)
+        },
+
+        updateEvaluationCriteriaScale: (state, action) => {
             const updatedCriteria = state.evaluationCriteria.map(crit => {
-                if (crit.scales) {
+                //console.log(" ssssssssssssssss           CRIT ", crit);
+                if (typeof crit !== 'undefined' && typeof crit.scales !== 'undefined') {
                     const updatedScales = crit.scales.map(scale => {
                         if (scale.uuid === action.payload.uuid) {
                             return {...scale, value: action.payload.value, description: action.payload.description};
@@ -95,7 +112,6 @@ const rubricSlice = createSlice({
                     return {...crit, scales: updatedScales};
                 }
             });
-
             // setCriteria(updatedCriteria);
             //  console.log("...................................important moment payload", action.payload)
             state.evaluationCriteria = updatedCriteria;
