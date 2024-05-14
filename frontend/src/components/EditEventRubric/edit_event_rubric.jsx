@@ -10,7 +10,8 @@ import {
 import EditEventScale from "./edit_event_scale.jsx";
 
 
-const EditEventRubric = ({rubric}) => {
+// eslint-disable-next-line react/prop-types
+const EditEventRubric = ({rubric, removeRubric}) => {
 
     // console.log("------------EditEventRubric----------------   obj", rubric)
     const dispatch = useDispatch()
@@ -47,7 +48,8 @@ const EditEventRubric = ({rubric}) => {
 
 
     useEffect(() => {
-        dispatch(updateEvaluationCriteria(criteriaForm))
+        if (criteriaForm.uuid !== '')
+            dispatch(updateEvaluationCriteria(criteriaForm))
     }, [criteriaForm]);
 
 
@@ -59,29 +61,32 @@ const EditEventRubric = ({rubric}) => {
         })
     }
 
-    const handleRemoveCriteria = (e) => {
-        e.preventDefault()
-        // checking if main fields were filled
-        try {
-            // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
-            // dispatch(removeEventEvaluationCriteria(criteriaForm))
-        } catch (error) {
-            console.error(error)
-        } finally {
-            // clearing the redux state for the evaluation criteria scales
-            // dispatch(clearEventEvaluationCriteriaScales())
-            // clearing the evaluation criteria form
-            setCriteriaForm({
-                uuid: uuidv4(),
-                name: '',
-                description: '',
-                scales: [],
-            })
-        }
+    const handleRemoveCriteria = () => {
+        // e.preventDefault()
+        // // checking if main fields were filled
+        // try {
+        //     // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
+        //     // dispatch(removeEventEvaluationCriteria(criteriaForm))
+        // } catch (error) {
+        //     console.error(error)
+        // } finally {
+        //     // clearing the redux state for the evaluation criteria scales
+        //     // dispatch(clearEventEvaluationCriteriaScales())
+        //     // clearing the evaluation criteria form
+        //     setCriteriaForm({
+        //         uuid: uuidv4(),
+        //         name: '',
+        //         description: '',
+        //         scales: [],
+        //     })
+        // }
+
+
+        removeRubric()
     }
 
 
-// handling storing an scale in the redux eventSlice
+// handling storing a scale in the redux eventSlice
     const handleAddScale = (e) => {
         e.preventDefault()
         dispatch(addEvaluationCriteriaScale(addedScaleForm))

@@ -16,8 +16,14 @@ const rubricSlice = createSlice({
         // adds a new obj to the event project structure arr, is used to define the structur of the information the contestants hold
         updateEvaluationCriteria: (state, action) => {
 
-            if (Array.isArray(state.eventEvaluationCriteria)) {
-                state.evaluationCriteria = [...state.evaluationCriteria, action.payload];
+            if (Array.isArray(state.evaluationCriteria)) {
+                const search_result = state.evaluationCriteria.find((criteria) => criteria.uuid === action.payload.uuid)
+                // console.log("^^^^^^^^^^^^^search res", search_result)
+
+                if (typeof search_result === 'undefined') {
+                    state.evaluationCriteria = [...state.evaluationCriteria, action.payload];
+                    // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
+                }
             } else {
                 // If not an array, initialize it as an array with the current payload
                 state.evaluationCriteria = [action.payload];
@@ -28,19 +34,24 @@ const rubricSlice = createSlice({
 
         // removes an evaluation criteria from the list, not used yet
         removeEvaluationCriteria: (state, action) => {
-            const newArr = state.eventEvaluationCriteria.filter(obj => {
+
+            // console.log("SLICE ----- REMOVE-- BEFORE -- uuid", action.payload, state.evaluationCriteria)
+
+            const newArr = state.evaluationCriteria.filter(obj => {
                 return obj.uuid !== action.payload
             })
-            state.eventEvaluationCriteria = newArr
+            state.evaluationCriteria = newArr
+
+            // console.log("SLICE ----- REMOVE-- AFTER -- uuid", newArr)
         },
 
 
         // adding the evaluation criteria scales to the evaluation criteria obj and then storing it in the arr
         addEvaluationCriteriaScale: (state, action) => {
 
-  //          console.log("SLICE ----- ADD---- ", action.payload, state.evaluationCriteria)
+            //          console.log("SLICE ----- ADD---- ", action.payload, state.evaluationCriteria)
 
-             const addedCriteriaScale = state.evaluationCriteria.map(crit => {
+            const addedCriteriaScale = state.evaluationCriteria.map(crit => {
                 if (crit.scales) {
                     const updatedScales = [...crit.scales, action.payload];
                     return {...crit, scales: updatedScales};
@@ -50,14 +61,14 @@ const rubricSlice = createSlice({
                 }
             });
 
-             state.evaluationCriteria = addedCriteriaScale
+            state.evaluationCriteria = addedCriteriaScale
 
-     //        console.log("SLICE ----- ADD-- AFTER -- uuid", addedCriteriaScale)
+            //        console.log("SLICE ----- ADD-- AFTER -- uuid", addedCriteriaScale)
         },
 
 
         removeEvaluationCriteriaScale: (state, action) => {
-     //       console.log("SLICE ----- REMOVE---- uuid", action.payload, state.evaluationCriteria)
+            //       console.log("SLICE ----- REMOVE---- uuid", action.payload, state.evaluationCriteria)
 
             const removedCriteriaScale = state.evaluationCriteria.map(crit => {
                 if (crit.scales) {
@@ -68,7 +79,7 @@ const rubricSlice = createSlice({
             });
 
             state.evaluationCriteria = removedCriteriaScale
-      //      console.log("SLICE ----- REMOVE-- AFTER -- uuid", state.eventEvaluationCriteria)
+            //      console.log("SLICE ----- REMOVE-- AFTER -- uuid", state.eventEvaluationCriteria)
         },
 
         updateEvaluationCriteriaScale: (state, action) => {
@@ -86,9 +97,9 @@ const rubricSlice = createSlice({
             });
 
             // setCriteria(updatedCriteria);
-          //  console.log("...................................important moment payload", action.payload)
+            //  console.log("...................................important moment payload", action.payload)
             state.evaluationCriteria = updatedCriteria;
-         //   console.log("...................................important moment 2 updatedCriteria", updatedCriteria)
+            //   console.log("...................................important moment 2 updatedCriteria", updatedCriteria)
         }
     },
 })
