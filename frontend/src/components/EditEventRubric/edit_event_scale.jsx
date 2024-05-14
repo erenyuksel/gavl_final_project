@@ -8,7 +8,7 @@ import {updateEvaluationCriteriaScale} from "../../store/slices/rubricSlice.js";
 const EditEventScale = ({obj, deleteScale}) => {
 
     // console.log("----------------------------   obj", obj)
-   const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     const [scaleForm, setScaleForm] = useState([{
         uuid: '',
@@ -22,7 +22,7 @@ const EditEventScale = ({obj, deleteScale}) => {
     }, [])
 
     useEffect(() => {
-       // console.log("          ^^^^scaleForm====useEffect== edit event scale ===^^^^^^^      ", scaleForm)
+        // console.log("          ^^^^scaleForm====useEffect== edit event scale ===^^^^^^^      ", scaleForm)
         dispatch(updateEvaluationCriteriaScale(scaleForm))
     }, [scaleForm]);
 
@@ -40,7 +40,7 @@ const EditEventScale = ({obj, deleteScale}) => {
 
     return (
         <>
-            {scaleForm && (typeof scaleForm.value !== 'undefined' && typeof scaleForm.description !== 'undefined') &&  (
+            {scaleForm && (typeof scaleForm.value !== 'undefined' && typeof scaleForm.description !== 'undefined') && (
                 <div className="flex flex-wrap items-center w-full">
                     <div className="flex flex-grow items-center">
                         <input

@@ -34,7 +34,7 @@ const EditEvent = () => {
         uuid: uuidv4(),
         name: '',
         description: '',
-        scales: ''
+        scales: []
     });
 
     useEffect(() => {

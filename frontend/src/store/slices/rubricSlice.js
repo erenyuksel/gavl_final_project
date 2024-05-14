@@ -101,7 +101,7 @@ const rubricSlice = createSlice({
 
         updateEvaluationCriteriaScale: (state, action) => {
             const updatedCriteria = state.evaluationCriteria.map(crit => {
-                //console.log(" ssssssssssssssss           CRIT ", crit);
+                // console.log(" .......updateEvaluationCriteriaScale......           CRIT ", crit);
                 if (typeof crit !== 'undefined' && typeof crit.scales !== 'undefined') {
                     const updatedScales = crit.scales.map(scale => {
                         if (scale.uuid === action.payload.uuid) {
@@ -120,12 +120,10 @@ const rubricSlice = createSlice({
     },
 })
 export const {
-    clearEvaluationCriteria,
     updateEvaluationCriteria,
     removeEvaluationCriteria,
     addEvaluationCriteriaScale,
     updateEvaluationCriteriaScale,
-    updateEvaluationCriteriaField,
     removeEvaluationCriteriaScale
 } = rubricSlice.actions
 export default rubricSlice.reducer
