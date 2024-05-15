@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import EditEventRubric from "../../../components/EditEventRubric/edit_event_rubric.jsx";
 import {
     removeEvaluationCriteria,
+    setEvaluationCriteria,
     updateEvaluationCriteria,
     updateEvaluationCriteriaScale
 } from "../../../store/slices/rubricSlice.js";
@@ -53,6 +54,7 @@ const EditEvent = () => {
     }, [location]); // Re-run the effect only if location changes
 
     useEffect(() => {
+            dispatch(setEvaluationCriteria([]))
             const getEventData = async () => {
                 try {
                     const response = await JudgeAxios.get(`events/${id}/`)
@@ -75,6 +77,7 @@ const EditEvent = () => {
                     const response2 = await JudgeAxios.get(`/rubrics/${response.data.rubrics}`)
 
                     setRubrics(JSON.parse(response2.data.criteria_json));
+                    //console.log("fetch rubrics....................", JSON.parse(response2.data.criteria_json))
 
                     rubrics.map((rubric) => {
                         try { // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
@@ -126,6 +129,9 @@ const EditEvent = () => {
                 const res = await JudgeAxios.patch(`rubrics/${eventData.rubrics}`, {
                     criteria_json: JSON.stringify(eventEvaluationCriteria),
                 })
+
+                //console.log("updating such rubrics.................", eventEvaluationCriteria)
+
                 const response = await JudgeAxios.patch(`events/${id}/`, {
                     name: eventInfo.name,
                     start_date: eventInfo.start_date,
@@ -172,7 +178,7 @@ const EditEvent = () => {
                             judges: panelistIDs,
                         },
                     )
-
+                    dispatch(setEvaluationCriteria([]))
                     dispatch(setJudges([]))
                 }
             } catch (error) {
@@ -198,7 +204,7 @@ const EditEvent = () => {
 
     const handleAddRubric = () => {
         setRubrics(eventEvaluationCriteria);
-       // console.log("~~~~~~~ added criteria form RUBRICS ", rubrics)
+        // console.log("~~~~~~~ added criteria form RUBRICS ", rubrics)
     }
 
     return (
