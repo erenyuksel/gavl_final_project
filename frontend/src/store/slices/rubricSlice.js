@@ -7,14 +7,13 @@ const rubricSlice = createSlice({
     },
     reducers: {
 
-        updateEvaluationCriteriaField: (state, action) => {
-            const {field, value, id} = action.payload;
-            state.evaluationCriteria[id][field] = value//???
+        setEvaluationCriteria: (state, action) => {
+            state.evaluationCriteria = action.payload
         },
 
         // adds a new obj to the event project structure arr, is used to define the structur of the information the contestants hold
         updateEvaluationCriteria: (state, action) => {
-           // console.log("^^^^^^^^^^^^^payload", action.payload)
+            // console.log("^^^^^^^^^^^^^payload", action.payload)
 
             if (Array.isArray(state.evaluationCriteria)) {
                 const search_result = state.evaluationCriteria.find((criteria) => criteria.uuid === action.payload.uuid)
@@ -22,7 +21,7 @@ const rubricSlice = createSlice({
 
                 if (typeof search_result === 'undefined') {
                     state.evaluationCriteria = [...state.evaluationCriteria, action.payload];
-                   // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
+                    // console.log("^^^^^^^^^^^^^^^^IF  &&&&&&  updateEventEvaluationCriteria", state.evaluationCriteria)
                 } else {
                     const updatedCriteria = state.evaluationCriteria.map(crit => {
                         if (crit.uuid === action.payload.uuid) {
@@ -41,7 +40,7 @@ const rubricSlice = createSlice({
             } else {
                 // If not an array, initialize it as an array with the current payload
                 state.evaluationCriteria = [action.payload];
-               // console.log("^^^^^^^^^^^^^^^^ELSE &&&&   updateEventEvaluationCriteria", state.evaluationCriteria)
+                // console.log("^^^^^^^^^^^^^^^^ELSE &&&&   updateEventEvaluationCriteria", state.evaluationCriteria)
             }
         },
 
@@ -59,7 +58,7 @@ const rubricSlice = createSlice({
             // console.log("SLICE ----- REMOVE-- AFTER -- uuid", newArr)
         },
 
-      removeEvaluationCriteriaScale: (state, action) => {
+        removeEvaluationCriteriaScale: (state, action) => {
             //       console.log("SLICE ----- REMOVE---- uuid", action.payload, state.evaluationCriteria)
 
             const removedCriteriaScale = state.evaluationCriteria.map(crit => {
@@ -83,7 +82,7 @@ const rubricSlice = createSlice({
             //console.log("-------------------SLICE ----- state.evaluationCriteria ---- ", state.evaluationCriteria)
 
             const addedCriteriaScale = state.evaluationCriteria.map(crit => {
-               // console.log("-------------------SLICE ----- crit add  ---- ", crit)
+                // console.log("-------------------SLICE ----- crit add  ---- ", crit)
                 if (crit.uuid === crit_uuid) {
                     if (crit.scales) {
                         const updatedScales = [...crit.scales, scale_form];
@@ -120,6 +119,7 @@ const rubricSlice = createSlice({
     },
 })
 export const {
+    setEvaluationCriteria,
     updateEvaluationCriteria,
     removeEvaluationCriteria,
     addEvaluationCriteriaScale,
