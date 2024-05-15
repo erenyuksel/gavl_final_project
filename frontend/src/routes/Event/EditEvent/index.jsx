@@ -55,7 +55,7 @@ const EditEvent = () => {
     useEffect(() => {
             const getEventData = async () => {
                 try {
-                    const response = await JudgeAxios.get(`events/${id+788}/`)
+                    const response = await JudgeAxios.get(`events/${id}/`)
                     setEventData(response.data)
 
                     Object.entries(response.data).forEach(([key, value]) => {
