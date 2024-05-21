@@ -38,6 +38,7 @@ const EditEvent = () => {
         scales: []
     });
     const [errorMessage, setErrorMessage] = useState('')
+    const [isRubricsDisabled, setIsRubricsDisabled] = useState(true)
 
     useEffect(() => {
         // Function to run on location change
@@ -74,10 +75,19 @@ const EditEvent = () => {
                             dispatch(updateEventInformationField({field: key, value: value}));
                     })
 
-                    const response2 = await JudgeAxios.get(`/rubrics/${response.data.rubrics}`)
+                    const response_rubrics = await JudgeAxios.get(`/rubrics/${response.data.rubrics}`)
+                    const response_eval_by_rubric = await JudgeAxios.get(`/rubrics/${response.data.rubrics}/evaluations/`)
+                    // console.log("fetch EVAL rubrics....................", response_eval_by_rubric.data)
+                    if (response_eval_by_rubric.data && response_eval_by_rubric.data.length > 0) {
+                        setIsRubricsDisabled(true)
+                        // console.log("DISABLED IS TRUE")
+                    } else {
+                         setIsRubricsDisabled(false)
+                    }
 
-                    setRubrics(JSON.parse(response2.data.criteria_json));
-                    //console.log("fetch rubrics....................", JSON.parse(response2.data.criteria_json))
+
+                    setRubrics(JSON.parse(response_rubrics.data.criteria_json));
+                    // console.log("fetch rubrics....................", JSON.parse(response_rubrics.data.criteria_json))
 
                     rubrics.map((rubric) => {
                         try { // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
@@ -228,11 +238,11 @@ const EditEvent = () => {
 
                     {rubrics && rubrics.map((obj) =>
                         <div key={obj.uuid} className="flex flex-col">
-                            <EditEventRubric rubric={obj} removeRubric={() => handleRemoveRubric(obj.uuid)}/>
+                            <EditEventRubric rubric={obj} removeRubric={() => handleRemoveRubric(obj.uuid)} isDisabled={isRubricsDisabled}/>
                         </div>
                     )}
 
-                    <EditEventRubric rubric={rubricPropsInformation} addRubric={handleAddRubric}/>
+                    <EditEventRubric rubric={rubricPropsInformation} addRubric={handleAddRubric} isDisabled={isRubricsDisabled}/>
 
                     <ImportCSV event_id={id}/>
                     <div className="w-full p-4 flex flex-row justify-center gap-6">
