@@ -29,18 +29,16 @@ class ListUsersView(ListCreateAPIView):
             # link = 'http://127.0.0.1:8000/backend/users/invite/?token={}'.format(tokens['access'])
             # link1 = 'https://judge.propulsion-learn.ch/backend/users/invite/?token={}'.format(tokens['access'])
 
-            link = 'http://localhost:5173/invite/{}'.format(tokens['access'])
+            # link = 'http://localhost:5173/invite/{}'.format(tokens['access'])
             link1 = 'https://judge.propulsion-learn.ch/invite/{}'.format(tokens['access'])
 
-            print(link)
             # send email
             if serializer.is_valid():
                 html_message = f'''\
                 <html>
                   <body>
-                    <p>Here is the local <a href="{link}">invitation link</a> we wanted.</p>
-                    <br>
-                    <p>Here is the global <a href="{link1}">invitation link</a> we wanted.</p>
+                    <p>Dear {user.first_name},</p>
+                    <p>Here is the <a href="{link1}">invitation link</a></p>
                   </body>
                 </html>
                 '''
