@@ -58,7 +58,7 @@ const Login = () => {
           <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-ms flex flex-col">
               {/* For background autofill */}
-              <style jsx>{`
+              <style jsx="true">{`
                 input:-webkit-autofill {
                   -webkit-box-shadow: 0 0 0 30px white inset !important;
                   -webkit-text-fill-color: inherit !important;
