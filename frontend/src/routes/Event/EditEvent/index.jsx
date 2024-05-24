@@ -12,10 +12,12 @@ import EditEventRubric from "../../../components/EditEventRubric/edit_event_rubr
 import { updateEvaluationCriteria, updateEvaluationCriteriaScale } from "../../../store/slices/rubricSlice.js";
 import EditEventAddPanelists from '../../../components/EditEventAddPanelists/index.jsx';
 import { setJudges } from '../../../store/slices/judgesSlice.js';
+import ProjectDelete from '../../../components/ProjectDelete/index.jsx';
 
 
 const EditEvent = () => {
     const [eventData, setEventData] = useState({})
+    // const [projectData, setProjectData] = useState([]);
     const eventInfo = useSelector((state) => state.event.eventInformation)
     const eventEvaluationCriteria = useSelector((state) => state.rubric.evaluationCriteria)
     const { id } = useParams()
@@ -24,6 +26,26 @@ const EditEvent = () => {
     const rubrics = useRef(null)
     const location = useLocation();
     const updatedPanelists = useSelector(state => state.judges.judges)
+
+
+    // Fetching Projects to delete
+    // useEffect(() => {
+    //   const getProjectData = async () => {
+    //     try {
+    //       const response = await JudgeAxios.get(`projects/${id}/`)
+    //       if (Array.isArray(response.data)) {
+    //         setProjectData(response.data)
+    //       } else {
+    //         console.error(
+    //           'Invalid response data. Expected an array of projects.',
+    //         )
+    //       }
+    //     } catch (error) {
+    //       console.error(error)
+    //     }
+    //   }
+    //   getProjectData()
+    // }, [id])
 
     useEffect(() => {
         // Function to run on location change
@@ -184,6 +206,8 @@ const EditEvent = () => {
                             <EditEventRubric rubric={obj} />
                         </div>
                     )}
+
+                    <ProjectDelete/>
                     <ImportCSV event_id={id} />
                     <div className="w-full p-4 flex flex-row justify-center gap-6">
                         <button className="btn btn-success mt-8" onClick={handleUpdate}>
