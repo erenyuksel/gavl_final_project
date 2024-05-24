@@ -10,8 +10,17 @@ import {
     setEventInformation,
 } from '../../../store/slices/newEventSlice'
 import AddInviteJudges from '../../../components/AddInviteJudges'
+import {useState} from "react";
 
 const AddNewEvent = () => {
+
+    const [eventPropsInformation] = useState({
+        name: '',
+        description: '',
+        startDate: '',
+        endDate: ''
+    });
+
     const eventInfo = useSelector((state) => state.event.eventInformation)
     const eventProjectStructure = useSelector(
         (state) => state.event.eventProjectStructure,
@@ -103,7 +112,7 @@ const AddNewEvent = () => {
                     <div className="text-center">
                         <h1>Create New Event</h1>
                     </div>
-                    <AddEventInformation  eventInformation={null}/>
+                    <AddEventInformation eventInformation={eventPropsInformation} />
                     <AddProjectContent />
                     <EventRubric />
                     <AddInviteJudges />

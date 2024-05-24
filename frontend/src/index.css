@@ -20,6 +20,12 @@ textarea {
   @apply textarea textarea-bordered h-24 border-custom-primary;
 }
 
+textarea[readonly] {
+    background-color: #f0f0f0;
+    color: #6e6e6e;
+    border-color: #e3d9db;
+}
+
 h1 {
   @apply text-3xl font-bold text-gray-800 mt-2 mb-4;
 }

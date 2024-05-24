@@ -10,28 +10,23 @@ import {
 import EditEventScale from "./edit_event_scale.jsx";
 
 
-const EditEventRubric = ({rubric}) => {
+// eslint-disable-next-line react/prop-types
+const EditEventRubric = ({rubric, removeRubric, addRubric, isDisabled}) => {
 
-    // console.log("------------EditEventRubric----------------   obj", rubric)
+    const [isDisabledState, setIsDisabledState] = useState(!!isDisabled);
+    // console.log("------------EditEventRubric----------------   obj", isDisabledState, isDisabled)
     const dispatch = useDispatch()
 
     // use state for storing the evaluation criteria object. incl. the scales
     const [criteriaForm, setCriteriaForm] = useState({
-        uuid: '',
+        uuid: uuidv4(),
         name: '',
         description: '',
         scales: [],
     })
 
     const [scales, setScales] = useState(rubric.scales)
-
-    // const [addedCriteriaForm, setAddedCriteriaForm] = useState({
-    //     uuid: uuidv4(),
-    //     name: '',
-    //     description: '',
-    //     scales: [],
-    // })
-
+    // console.log("SCALES---------- get scale--", scales)
 
     const [addedScaleForm, setAddedScaleForm] = useState({
         uuid: uuidv4(),
@@ -40,14 +35,18 @@ const EditEventRubric = ({rubric}) => {
     })
 
     useEffect(() => {
-
+        //console.log(" $$..........EditEventRubric...............   useEffectv RuBRIC", rubric)
         setCriteriaForm(rubric)
-        // console.log(" $$$$$$$$$$$$$$EditEventRubric$$$$$$$$$$$$$$$$$44   useEffect", criteriaForm)
+        //console.log(" $$..........EditEventRubric...............   useEffect", criteriaForm)
     }, [])
 
 
     useEffect(() => {
-        dispatch(updateEvaluationCriteria(criteriaForm))
+        //console.log(" ==========================  useEffectv criteriaForm", criteriaForm)
+        if (criteriaForm.uuid !== '' && criteriaForm.name !== '') {
+            //console.log("  ==========================  useEffectv criteriaForm ----- INSIDE ")
+            dispatch(updateEvaluationCriteria(criteriaForm))
+        }
     }, [criteriaForm]);
 
 
@@ -59,32 +58,26 @@ const EditEventRubric = ({rubric}) => {
         })
     }
 
-    const handleRemoveCriteria = (e) => {
-        e.preventDefault()
-        // checking if main fields were filled
-        try {
-            // storing the evaluation criteria obj in redux, the evaluation criteria scales are added in the reducer function
-            // dispatch(removeEventEvaluationCriteria(criteriaForm))
-        } catch (error) {
-            console.error(error)
-        } finally {
-            // clearing the redux state for the evaluation criteria scales
-            // dispatch(clearEventEvaluationCriteriaScales())
-            // clearing the evaluation criteria form
-            setCriteriaForm({
-                uuid: uuidv4(),
-                name: '',
-                description: '',
-                scales: [],
-            })
-        }
+    const handleRemoveCriteria = () => {
+        removeRubric()
     }
 
+    const handleAddCriteria = () => {
+        setCriteriaForm({
+            uuid: uuidv4(),
+            name: '',
+            description: '',
+            scales: [],
+        })
+        setScales([]);
+        // console.log("-------------------REMOVE SCALES", scales)
 
-// handling storing an scale in the redux eventSlice
-    const handleAddScale = (e) => {
-        e.preventDefault()
-        dispatch(addEvaluationCriteriaScale(addedScaleForm))
+        addRubric()
+    }
+
+// handling storing a scale in the redux eventSlice
+    const handleAddScale = () => {
+        dispatch(addEvaluationCriteriaScale({crit_uuid: criteriaForm.uuid, scale_form: addedScaleForm}));
 
         setScales([...scales, addedScaleForm]);
 
@@ -93,6 +86,8 @@ const EditEventRubric = ({rubric}) => {
             value: '',
             description: '',
         })
+
+        // console.log("SCALES-----------add scale--", scales)
     }
 
     const handleScaleChange = (e) => {
@@ -112,91 +107,108 @@ const EditEventRubric = ({rubric}) => {
     }
 
     return (
-        <>
-            <div className="flex shadow w-full flex-col items-center m-14   pt-5">
-                <div className="m-5 mt-10">
-                    <h3>
-                        Criteria
-                    </h3>
-                </div>
-                <div className="w-full sm:w-[40rem]">
-                    <input
-                        className="input shadow input-bordered"
-                        type="text"
-                        placeholder="Name"
-                        value={criteriaForm.name}
-                        name="name"
-                        onChange={handleCriteriaChange}
-                    ></input>
-                </div>
-                <div className="w-full sm:w-[40rem] m-3">
+        <div className='flex flex-col justify-between card shadow-lg p-5'>
+            {/*<div className="flex shadow w-full flex-col items-center m-14 pt-5">*/}
+            <h3>
+                Criteria
+            </h3>
+            <div className="w-full">
+                <input
+                    className="input shadow input-bordered"
+                    type="text"
+                    placeholder="Name"
+                    value={criteriaForm.name}
+                    name="name"
+                    onChange={handleCriteriaChange}
+                    readOnly={isDisabledState}
+                ></input>
+            </div>
+            <div className="w-full my-3">
           <textarea
-              className="input input-bordered shadow w-full sm:w-[40rem]"
+              className="input input-bordered shadow w-full"
               placeholder="Description"
               value={criteriaForm.description}
               name="description"
               onChange={handleCriteriaChange}
+              readOnly={isDisabledState}
           ></textarea>
-                </div>
+            </div>
 
-                <div className=" mt-10">
-                    <h3>
-                        Scales
-                    </h3>
-                </div>
-                <div className="flex flex-wrap items-center w-full sm:w-[40rem] m-3">
-                    {/*changed from rubric.scales to state Scale*/}
-                    {scales && scales.length > 0 && scales.map((scale) => (
-                        <div key={scale.uuid}>
-                            <EditEventScale obj={scale} deleteScale={() => handleRemoveScale(scale.uuid)}/>
-                        </div>
-                    ))}
-                    <div className="flex w-1/2 flex-grow items-center">
-                        <input
-                            className="input shadow input-bordered"
-                            type="number"
-                            placeholder="Add value"
-                            value={addedScaleForm.value}
-                            name="value"
-                            onChange={handleScaleChange}
-                        />
-                        <textarea
-                            className="input input-bordered shadow flex w-full min-w-0 m-3"
-                            placeholder="Add description"
-                            value={addedScaleForm.description}
-                            name="description"
-                            onChange={handleScaleChange}
-                        />
+            <div className=" mt-10">
+                <h3>
+                    Scales
+                </h3>
+            </div>
+            <div className="flex flex-wrap items-center w-full">
+                {/*changed from rubric.scales to state Scale*/}
+                {scales && scales.length > 0 && scales.map((scale) => (
+                    <div className="w-full" key={scale.uuid}>
+                        <EditEventScale obj={scale} deleteScale={() => handleRemoveScale(scale.uuid)} isDisabled={isDisabledState}/>
                     </div>
-                    <button
-                        className="btn btn-ghost btn-circle"
-                        onClick={handleAddScale}
-                        disabled={!addedScaleForm.value || !addedScaleForm.description}  // Button disabled if fields are empty
-                    >
-                        <div className="indicator">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 stroke-width="1.5" stroke="green" className="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                            </svg>
+                ))}
+                {!isDisabledState && (
+                    <>
+                        <div className="flex w-1/2 flex-grow items-center">
+                            <input
+                                className="input shadow input-bordered"
+                                type="number"
+                                placeholder="Add value"
+                                value={addedScaleForm.value}
+                                name="value"
+                                onChange={handleScaleChange}
+                                 />
+                            <textarea
+                                className="input input-bordered shadow flex w-full min-w-0 m-3"
+                                placeholder="Add description"
+                                value={addedScaleForm.description}
+                                name="description"
+                                onChange={handleScaleChange}
+                            />
                         </div>
-                    </button>
-                </div>
+                        <button
+                            className="btn btn-ghost btn-circle"
+                            onClick={handleAddScale}
+                            disabled={!addedScaleForm.value || !addedScaleForm.description}  // Button disabled if fields are empty
+                        >
+                            <div className="indicator">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="green" className="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                </svg>
+                            </div>
+                        </button>
+                    </>
+                )}
+            </div>
+            {rubric && rubric.name ? (
                 <div className="flex w-full justify-center flex-row items-center">
-                    <button
-                        className="btn btn-error m-10  shadow-xl"
-                        onClick={handleRemoveCriteria}
+                    <button disabled={isDisabledState}
+                            className="btn btn-error m-4  shadow-xl"
+                            onClick={handleRemoveCriteria}
                     >
                         Remove Criteria
                     </button>
-                </div>
-            </div>
-        </>
+                </div>) : (
+                <div className="flex w-full justify-center flex-row items-center">
+                    <button
+                        disabled={!criteriaForm.name || !criteriaForm.description}
+                        className="btn btn-success m-4  shadow-xl"
+                        onClick={handleAddCriteria}
+                    >
+                        Add Criteria
+                    </button>
+                </div>)
+            }
+        </div>
     )
 }
 
 EditEventRubric.propTypes = {
-    rubric: PropTypes.object // Add additional fields as necessary
+  rubric: PropTypes.object.isRequired, // Define rubric prop as an object and mark it as required
+  removeRubric: PropTypes.func, // Define removeRubric prop as a function and mark it as required
+  addRubric: PropTypes.func, // Define addRubric prop as a function and mark it as required
+  isDisabled: PropTypes.bool.isRequired // Define isDisabled prop as a boolean (optional)
 };
 
 export default EditEventRubric

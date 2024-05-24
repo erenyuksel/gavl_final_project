@@ -5,10 +5,11 @@ import {updateEvaluationCriteriaScale} from "../../store/slices/rubricSlice.js";
 
 
 // eslint-disable-next-line react/prop-types
-const EditEventScale = ({obj, deleteScale}) => {
+const EditEventScale = ({obj, deleteScale, isDisabled}) => {
 
     // console.log("----------------------------   obj", obj)
-   const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const [isDisabledState, setIsDisabledState] = useState(!!isDisabled);
 
     const [scaleForm, setScaleForm] = useState([{
         uuid: '',
@@ -22,7 +23,7 @@ const EditEventScale = ({obj, deleteScale}) => {
     }, [])
 
     useEffect(() => {
-        // console.log("          ^^^^scaleForm====useEffect=====^^^^^^^      ", scaleForm)
+        // console.log("          ^^^^scaleForm====useEffect== edit event scale ===^^^^^^^      ", scaleForm)
         dispatch(updateEvaluationCriteriaScale(scaleForm))
     }, [scaleForm]);
 
@@ -40,9 +41,9 @@ const EditEventScale = ({obj, deleteScale}) => {
 
     return (
         <>
-            {scaleForm && (typeof scaleForm.value !== 'undefined' && typeof scaleForm.description !== 'undefined') &&  (
-                <div className="flex flex-wrap items-center w-full sm:w-[40rem]">
-                    <div className="flex w-1/2 flex-grow items-center">
+            {scaleForm && (typeof scaleForm.value !== 'undefined' && typeof scaleForm.description !== 'undefined') && (
+                <div className="flex flex-wrap items-center w-full">
+                    <div className="flex flex-grow items-center">
                         <input
                             className="input shadow input-bordered"
                             type="number"
@@ -50,6 +51,7 @@ const EditEventScale = ({obj, deleteScale}) => {
                             value={scaleForm.value}
                             name="value"
                             onChange={handleScaleChange}
+                            readOnly={isDisabledState}
                         />
                         <input
                             className="input input-bordered shadow flex w-full min-w-0 m-3"
@@ -58,16 +60,19 @@ const EditEventScale = ({obj, deleteScale}) => {
                             value={scaleForm.description}
                             name="description"
                             onChange={handleScaleChange}
+                            readOnly={isDisabledState}
                         />
-                        <button className="btn btn-ghost btn-circle" onClick={handleRemoveScale}>
-                            <div className="indicator">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     strokeWidth={1.5} stroke="red" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                </svg>
-                            </div>
-                        </button>
+                        {!isDisabledState && (
+                            <button className="btn btn-ghost btn-circle" onClick={handleRemoveScale}>
+                                <div className="indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         strokeWidth={1.5} stroke="red" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round"
+                                              d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                    </svg>
+                                </div>
+                            </button>
+                        )}
                     </div>
                 </div>
             )}
@@ -76,7 +81,8 @@ const EditEventScale = ({obj, deleteScale}) => {
 }
 
 EditEventScale.propTypes = {
-    obj: PropTypes.object // Add additional fields as necessary
+    obj: PropTypes.object.isRequired, // Add additional fields as necessary
+    removeScale: PropTypes.func.isRequired, // Define prop as a function and mark it as required
+    isDisabled: PropTypes.bool // Define isDisabled prop as a boolean (optional)
 };
-
 export default EditEventScale
