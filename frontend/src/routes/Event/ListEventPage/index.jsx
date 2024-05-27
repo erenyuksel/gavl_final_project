@@ -32,24 +32,28 @@ const ListEventPage = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token])
+    const fetchEvents = async () => {
+        try {
+            const response = await JudgeAxios.get(`/events/`)
+            setEvents(response.data)
+        } catch (error) {
+            setErrorMessage('To fetch the events was not possible, ' + error.message)
+            // console.error('To fetch the events was not possible', error)
+        }
+    }
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const response = await JudgeAxios.get(`/events/`)
-                setEvents(response.data)
-            } catch (error) {
-                setErrorMessage('To fetch the events was not possible, ' + error.message)
-                // console.error('To fetch the events was not possible', error)
-            }
-        }
-
         fetchEvents()
     }, [])
 
     const handleSearch = (e) => {
         const {value} = e.target
         setSearchMessage(value);
+    }
+
+    const refreshEventList = () => {
+        // console.log("event list try to refresh")
+        fetchEvents()
     }
 
     return (
@@ -75,6 +79,7 @@ const ListEventPage = () => {
                         title={event.name}
                         description={event.description}
                         event_id={event.id}
+                        refreshEventList={refreshEventList}
                     />
                 ))}
                 {isAdmin && (
