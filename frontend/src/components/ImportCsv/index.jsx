@@ -83,15 +83,14 @@ function ImportCSV({ event_id }) {
   }
 
   return (
-    <div className='card bg-base-100 p-5'>
+    <div className='card bg-base-100 p-5 shadow'>
       {successMessage && (
       <div>
         <SuccessMessage message={successMessage} />
       </div>
       )}
       <div>
-      <h2>Project Data Importer</h2>
-      <p>Upload your CSV file here. </p>
+      <h3>Data Importer: you can upload your CSV file here</h3>
       <br/>
       </div>
       <div>
