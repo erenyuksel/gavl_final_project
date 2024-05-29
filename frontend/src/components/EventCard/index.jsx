@@ -4,11 +4,16 @@ import {useState} from "react";
 import ErrorMessage from "../Alerts/ErrorMessage.jsx";
 import SuccessMessage from "../Alerts/SuccessMessage.jsx";
 import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 //import to find in ListEventPage
 const EventCard = ({title, description, event_id, refreshEventList}) => {
 
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
+    const user = useSelector((state) => state.user.user)
+    const isAdmin =
+        (user && user.role === 'Organisation Admin') ||
+        (user && user.role === 'Admin')
 
     function getCookie(name) {
         let cookieValue = null;
@@ -43,7 +48,7 @@ const EventCard = ({title, description, event_id, refreshEventList}) => {
             setTimeout(() => {
                 setSuccessMessage('')
             }, 2000)
-            console.log(response.data)
+            //console.log(response.data)
 
         } catch
             (error) {
@@ -60,9 +65,11 @@ const EventCard = ({title, description, event_id, refreshEventList}) => {
                     <Link to={`/event/${event_id}`} className="btn btn-primary">
                         View Event
                     </Link>
-                    <button className="btn btn-primary" onClick={() => duplicateEvent(event_id)}>
-                        Duplicate Event
-                    </button>
+
+                    {isAdmin && (
+                        <button className="btn btn-primary" onClick={() => duplicateEvent(event_id)}>
+                            Duplicate Event
+                        </button>)}
                 </div>
             </div>
             {errorMessage && (
@@ -81,10 +88,10 @@ const EventCard = ({title, description, event_id, refreshEventList}) => {
 }
 
 EventCard.propTypes = {
-  title: PropTypes.string.isRequired, // Define rubric prop as an object and mark it as required
-  refreshEventList: PropTypes.func, // Define removeRubric prop as a function and mark it as required
-  event_id: PropTypes.number.isRequired, // Define addRubric prop as a function and mark it as required
-  description: PropTypes.string.isRequired // Define isDisabled prop as a boolean (optional)
+    title: PropTypes.string.isRequired, // Define rubric prop as an object and mark it as required
+    refreshEventList: PropTypes.func, // Define removeRubric prop as a function and mark it as required
+    event_id: PropTypes.number.isRequired, // Define addRubric prop as a function and mark it as required
+    description: PropTypes.string.isRequired // Define isDisabled prop as a boolean (optional)
 };
 
 export default EventCard
