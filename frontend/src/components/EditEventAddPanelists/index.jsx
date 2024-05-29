@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import {
     setJudges,
     removeJudge,
@@ -9,7 +9,7 @@ import JudgeAxios from "../../axios/JudgeAxios"
 import ErrorMessage from "../Alerts/ErrorMessage.jsx";
 
 
-const EditEventAddPanelists = ({eventInformation}) => {
+const EditEventAddPanelists = ({ eventInformation }) => {
     const dispatch = useDispatch()
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -22,7 +22,7 @@ const EditEventAddPanelists = ({eventInformation}) => {
 
     //updates form usestate when editing form
     const handleInputChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setFormData({
             ...formData,
             [name]: value,
@@ -40,18 +40,19 @@ const EditEventAddPanelists = ({eventInformation}) => {
     }
 
     const getPanelistInfo = async () => {
-        try {
-            const response = await JudgeAxios.get(`events/${eventInformation.id}/`)
-            dispatch(setJudges(response.data.judges))
-        } catch (err) {
-            setErrorMessage('Failed loading Events panelist data, ' + err.message)
-            console.error('Failed loading Events panelist data', err)
-        }
+            console.log(eventInformation)
+            try {
+                const response = await JudgeAxios.get(`events/${eventInformation.id}/`)
+                dispatch(setJudges(response.data.judges))
+            } catch (err) {
+                setErrorMessage('Failed loading Events panelist data, ' + err.message)
+                console.error('Failed loading Events panelist data', err)
+            }
     }
 
 
     useEffect(() => {
-        if (eventInformation) {
+        if (eventInformation.id) {
             getPanelistInfo()
         }
     }, [eventInformation])
@@ -139,12 +140,12 @@ const EditEventAddPanelists = ({eventInformation}) => {
                                     </div>
                                     <div>
                                         <button className="btn btn-ghost btn-circle"
-                                                onClick={() => handleRemoveJudge(panelist)}>
+                                            onClick={() => handleRemoveJudge(panelist)}>
                                             <div className="indicator">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                     strokeWidth={1.5} stroke="red" className="w-6 h-6">
+                                                    strokeWidth={1.5} stroke="red" className="w-6 h-6">
                                                     <path strokeLinecap="round" strokeLinejoin="round"
-                                                          d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                        d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                 </svg>
                                             </div>
                                         </button>
@@ -157,7 +158,7 @@ const EditEventAddPanelists = ({eventInformation}) => {
             )}
             {errorMessage && (
                 <div>
-                    <ErrorMessage message={errorMessage}/>
+                    <ErrorMessage message={errorMessage} />
                 </div>
             )}
         </div>
