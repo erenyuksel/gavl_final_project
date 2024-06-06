@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import JudgeAxios from "../../../axios/JudgeAxios"
+import * as XLSX from 'xlsx'
 
 
 const EventStatisticPage = () => {
@@ -180,98 +181,179 @@ const EventStatisticPage = () => {
     setProjectJudgeData([])
   }
 
+ const handleExportToExcel = () => {
+   // Create a new workbook
+   const workbook = XLSX.utils.book_new()
+
+   // Create a worksheet for the project table data
+   const projectTableWorksheet = XLSX.utils.json_to_sheet(projectTableData)
+   XLSX.utils.book_append_sheet(
+     workbook,
+     projectTableWorksheet,
+     'Project Table',
+   )
+
+   // Create a worksheet for the project judge data
+   const projectJudgeWorksheet = XLSX.utils.json_to_sheet(projectJudgeData)
+   XLSX.utils.book_append_sheet(
+     workbook,
+     projectJudgeWorksheet,
+     'Project Judge Data',
+   )
+
+   // Generate the Excel file
+   const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
+
+   // Create a Blob from the Excel file data
+   const excelData = new Blob([excelBuffer], {
+     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+   })
+
+   // Create a temporary link to download the file
+   const link = document.createElement('a')
+   link.href = window.URL.createObjectURL(excelData)
+   link.download = 'statistics.xlsx'
+   link.click()
+ }
 
 
   return (
     <>
-    {projectJudgeData.length > 0 && (
-      <div className="w-100 flex flex-col items-center">
-      
-      <div className="overflow-x-auto w-3/4 card bg-base-100 shadow-xl p-3">
-        <h2>Panelist information for contestant {projectJudgeData[0].projectName}</h2>
-        <p className="mb-5">Panelists in this table have completed their evaluation for this contestant</p>
-        <table className="table">
-        <thead>
-          <tr>
-            <th>Panelist name</th>
-            {projectJudgeData[0].evaluationCriteriaOrder.map(criteria => {
-              return <th key={criteria}>{criteria}</th>
-            })}
-            <th>Overall Score</th>
-          </tr>
-        </thead>
-          {projectJudgeData.map(judge => {
-            return (
-              <>
-                <tbody>
-                  <tr>
-                    <td className="font-bold">{judge.fullname}</td>
-                    {judge.evaluationCriteriaOrder.map(criteria => {
-                      return <td key={criteria}>{judge.evaluation_scores[`${criteria}`]}</td>
-                    })}
-                    <td>{judge.total_score ? judge.total_score.toFixed(1) : 0}</td>
-                  </tr>
-                </tbody>
-              </>
-            )
-          })}
-        </table>
-        <div className="flex m-4 justify-center">
-        <button className="btn btn-primary" onClick={handleClearProjectJudgeData}>Hide Projects panelist info</button>
+      {projectJudgeData.length > 0 && (
+        <div className="w-100 flex flex-col items-center">
+          <div className="overflow-x-auto w-3/4 card bg-base-100 shadow-xl p-3">
+            <h2>
+              Panelist information for contestant{' '}
+              {projectJudgeData[0].projectName}
+            </h2>
+            <p className="mb-5">
+              Panelists in this table have completed their evaluation for this
+              contestant
+            </p>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Panelist name</th>
+                  {projectJudgeData[0].evaluationCriteriaOrder.map(
+                    (criteria) => {
+                      return <th key={criteria}>{criteria}</th>
+                    },
+                  )}
+                  <th>Overall Score</th>
+                </tr>
+              </thead>
+              {projectJudgeData.map((judge) => {
+                return (
+                  <>
+                    <tbody>
+                      <tr>
+                        <td className="font-bold">{judge.fullname}</td>
+                        {judge.evaluationCriteriaOrder.map((criteria) => {
+                          return (
+                            <td key={criteria}>
+                              {judge.evaluation_scores[`${criteria}`]}
+                            </td>
+                          )
+                        })}
+                        <td>
+                          {judge.total_score ? judge.total_score.toFixed(1) : 0}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </>
+                )
+              })}
+            </table>
+            <div className="flex m-4 justify-center">
+              <button
+                className="btn btn-primary"
+                onClick={handleClearProjectJudgeData}
+              >
+                Hide Projects panelist info
+              </button>
+            </div>
+          </div>
         </div>
+      )}
+      {evaluationCriteriaNames && projectJudgeData.length === 0 && (
+        <div className="w-100 flex justify-center">
+          <div className="overflow-x-auto w-3/4 card bg-base-100 shadow-xl p-3">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort('name')}>Project Name</th>
+                  <th>Complete Evaluations</th>
+                  {evaluationCriteriaNames.map((criteria) => {
+                    return (
+                      <th
+                        key={criteria}
+                        onClick={() => handleSort(`${criteria}_score`)}
+                      >
+                        {criteria}
+                      </th>
+                    )
+                  })}
+                  <th onClick={() => handleSort('total_score')}>
+                    Overall Score
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              {projectTableData && (
+                <>
+                  {sortedData.map((project) => {
+                    return (
+                      <>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div className="flex items-center gap-3">
+                                <div className="avatar">
+                                  <div className="mask mask-squircle w-12 h-12">
+                                    <img src={project.logo} />
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className="font-bold">
+                                    {project.name}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td onClick={() => handleJudgesView(project)}>
+                              {project.amount_of_judges} /{' '}
+                              {eventData.judges.length}
+                            </td>
+                            {evaluationCriteriaNames.map((criteria) => {
+                              return (
+                                <td key={criteria}>
+                                  {project[`${criteria}_score`]
+                                    ? project[`${criteria}_score`].toFixed(1)
+                                    : 0}
+                                </td>
+                              )
+                            })}
+                            <td>
+                              {project.total_score
+                                ? project.total_score.toFixed(1)
+                                : 0}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </>
+                    )
+                  })}
+                </>
+              )}
+            </table>
+            <div className="text-center p-20 h-40">
+              <button className="btn btn-primary" onClick={handleExportToExcel}>
+                Export to Excel
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    )}
-    {(evaluationCriteriaNames && projectJudgeData.length === 0) && (
-      <div className="w-100 flex justify-center">
-        <div className="overflow-x-auto w-3/4 card bg-base-100 shadow-xl p-3">
-        <table className="table">
-        <thead>
-          <tr>
-            <th onClick={() => handleSort('name')} >Project Name</th>
-            <th>Complete Evaluations</th>
-            {evaluationCriteriaNames.map(criteria => {
-              return <th key={criteria} onClick={() => handleSort(`${criteria}_score`)}>{criteria}</th>
-            })}
-            <th onClick={() => handleSort('total_score')}>Overall Score</th>
-            <th></th>
-          </tr>
-        </thead>
-        {projectTableData && (
-          <>
-          {sortedData.map(project => {
-            return (
-              <>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
-                            <img src={project.logo} />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold">{project.name}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td onClick={() => handleJudgesView(project)}>{project.amount_of_judges} / {eventData.judges.length}</td>
-                    {evaluationCriteriaNames.map(criteria => {
-                      return <td key={criteria}>{project[`${criteria}_score`] ? project[`${criteria}_score`].toFixed(1) : 0}</td>
-                    })}
-                    <td>{project.total_score ? project.total_score.toFixed(1) : 0}</td>
-                  </tr>
-                </tbody>
-              </>
-            )
-          })}
-          </>
-          )}
-        </table>
-        </div>
-      </div>
-    )}
+      )}
     </>
   )
 }
